@@ -1,18 +1,17 @@
 // Ciblage des éléments du DOM
 const filters = document.querySelectorAll(".filters input[type='checkbox']");
-const startDateInput = document.getElementById("start-date");
-const endDateInput = document.getElementById("end-date");
 const searchButton = document.getElementById("search-btn");
 const entriesTable = document.getElementById("entries-tbody");
 
-// Fonction pour effectuer une recherche via l'API DuckDuckGo
-async function performDuckDuckGoSearch() {
+// Configuration API
+const API_KEY = "AIzaSyCnzFFRnsDl3U22TfPYz2iEG4HkNPn_4PM"; // Ta clé API
+const SEARCH_ENGINE_ID = "076048ef2f0074904"; // Ton ID de moteur de recherche
+
+// Fonction pour effectuer une recherche via Google Custom Search API
+async function performGoogleSearch() {
     const selectedFilters = Array.from(filters)
         .filter(filter => filter.checked)
         .map(filter => filter.value);
-
-    const startDate = startDateInput.value;
-    const endDate = endDateInput.value;
 
     // Génération de mots-clés spécifiques pour chaque filtre
     let query = "";
@@ -34,7 +33,7 @@ async function performDuckDuckGoSearch() {
         query = "veille formation pour organisme de formation";
     }
 
-    const apiUrl = `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&pretty=1`;
+    const apiUrl = `https://www.googleapis.com/customsearch/v1?key=${API_KEY}&cx=${SEARCH_ENGINE_ID}&q=${encodeURIComponent(query)}`;
 
     try {
         console.log("Requête générée : ", query);
@@ -49,13 +48,13 @@ async function performDuckDuckGoSearch() {
         console.log("Structure complète des données reçues : ", JSON.stringify(data, null, 2));
 
         // Vérifie si les résultats sont exploitables
-        if (!data.RelatedTopics || data.RelatedTopics.length === 0) {
+        if (!data.items || data.items.length === 0) {
             console.warn("Aucun résultat trouvé. Utilisation de résultats fictifs.");
-            updateTable(generateMockResults(query, selectedFilters, startDate, endDate));
+            updateTable(generateMockResults(query, selectedFilters));
             return;
         }
 
-        const results = parseDuckDuckGoResults(data, selectedFilters, startDate, endDate);
+        const results = parseGoogleSearchResults(data, selectedFilters);
         console.log("Résultats parsés : ", results);
 
         updateTable(results);
@@ -65,22 +64,20 @@ async function performDuckDuckGoSearch() {
     }
 }
 
-// Fonction pour parser les résultats de DuckDuckGo
-function parseDuckDuckGoResults(data, filters, startDate, endDate) {
-    if (!data.RelatedTopics) return [];
-
-    return data.RelatedTopics.map((item, index) => ({
+// Fonction pour parser les résultats de Google Custom Search API
+function parseGoogleSearchResults(data, filters) {
+    return data.items.map(item => ({
         date: new Date().toISOString().split("T")[0], // Date actuelle
-        source: "DuckDuckGo",
-        content: item.Text || "Résumé non disponible",
-        action: "Non défini", // Action requise (modifiable selon logique métier)
+        source: item.displayLink || "Source inconnue",
+        content: item.snippet || "Résumé non disponible",
+        action: "Revue requise", // Action requise (modifiable selon logique métier)
         deadline: "Non définie", // Date d'échéance (modifiable)
         category: filters.join(", ") || "Non catégorisé"
     }));
 }
 
 // Fonction pour générer des résultats fictifs
-function generateMockResults(query, filters, startDate, endDate) {
+function generateMockResults(query, filters) {
     return [
         {
             date: "2025-01-25",
@@ -127,4 +124,4 @@ function updateTable(results) {
 }
 
 // Ajout d'un événement au bouton "Rechercher"
-searchButton.addEventListener("click", performDuckDuckGoSearch);
+searchButton.addEventListener("click", performGoogleSearch);
