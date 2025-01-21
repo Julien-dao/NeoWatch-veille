@@ -110,13 +110,20 @@ nav {
 /* Filtres */
 .filters {
     display: flex;
-    flex-direction: column; /* Empile les cases à cocher */
-    gap: 0.5rem; /* Espacement entre les cases */
+    flex-wrap: wrap; /* Permet d'aller à la ligne si nécessaire */
+    gap: 1rem; /* Espacement entre les options */
+    margin-bottom: 2rem; /* Espacement sous les filtres */
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
 }
 
 .filters h3 {
+    width: 100%; /* Titre prend toute la largeur */
     font-size: 1.2rem;
-    margin: 0 0 0.5rem;
+    margin-bottom: 1rem;
+    color: #333;
 }
 
 .filters label {
@@ -124,6 +131,13 @@ nav {
     align-items: center;
     gap: 0.5rem;
     font-size: 1rem;
+    cursor: pointer;
+}
+
+.filters input[type="checkbox"] {
+    width: 1.2rem;
+    height: 1.2rem;
+    cursor: pointer;
 }
 
 /* Zone principale */

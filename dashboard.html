@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="dashboard">
-        <!-- Barre de navigation latérale -->
+        <!-- Barre latérale -->
         <aside class="sidebar">
             <h2>NeoWatch</h2>
             <nav>
@@ -21,21 +21,6 @@
                 <a href="#" class="nav-item"><span>📄</span> CGV</a>
                 <a href="#" class="nav-item logout"><span>🚪</span> Déconnexion</a>
             </nav>
-
-            <!-- Barre de recherche -->
-            <div class="search-section">
-                <h3>Rechercher</h3>
-                <input type="text" class="search-bar" placeholder="Rechercher...">
-            </div>
-
-            <!-- Filtres -->
-            <div class="filters">
-                <h3>Filtres</h3>
-                <label><input type="checkbox" value="legal"> Légal</label>
-                <label><input type="checkbox" value="competences"> Compétences</label>
-                <label><input type="checkbox" value="innovation"> Innovation</label>
-                <label><input type="checkbox" value="handicap"> Handicap</label>
-            </div>
         </aside>
 
         <!-- Zone principale -->
@@ -45,12 +30,23 @@
                 <p>Voici les dernières informations sur votre veille.</p>
             </header>
 
+            <!-- Filtres au-dessus des entrées récentes -->
+            <section class="filters">
+                <h3>Filtrer les entrées</h3>
+                <label><input type="checkbox" value="legale"> ⚖️ Légale et réglementaire</label>
+                <label><input type="checkbox" value="competence"> 🎯 Compétence, métier et emploi</label>
+                <label><input type="checkbox" value="innovation"> 💡 Innovation pédagogique et technologique</label>
+                <label><input type="checkbox" value="handicap"> ♿ Handicap</label>
+            </section>
+
+            <!-- Cartes -->
             <section class="dashboard-cards">
                 <div class="card">Recherches restantes : <strong>85</strong></div>
                 <div class="card">Entrées sous le seuil : <strong>3</strong></div>
                 <div class="card">Mises à jour récentes : <strong>12</strong></div>
             </section>
 
+            <!-- Table des entrées récentes -->
             <section class="dashboard-table">
                 <h2>Entrées récentes</h2>
                 <table>
