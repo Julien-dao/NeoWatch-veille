@@ -21,26 +21,23 @@ async function performGoogleSearch() {
     // Génération de mots-clés spécifiques pour chaque filtre
     let query = "";
     if (selectedFilters.includes("legale")) {
-        query += "veille légale pour organisme de formation veille réglementaire ";
+        query += "Lois sur la formation professionnelle OR droit du travail OR subventions OR Centre de formation par apprentis OR nouvelle loi formation professionnelle ";
     }
     if (selectedFilters.includes("competence")) {
-        query += "veille sur les métiers pour organisme de formation ";
+        query += "reconversion professionnelle OR évolution des métiers OR formations certifiantes site:francetravail.fr OR site:opco.fr OR site:travail.gouv.fr ";
     }
     if (selectedFilters.includes("innovation")) {
-        query += "nouveaux outils pédagogiques pour la formation ";
+        query += "intelligence artificielle OR e-learning OR microlearning OR nouveaux outils en formation OR méthodes pédagogiques innovantes ";
     }
     if (selectedFilters.includes("handicap")) {
-        query += "adaptations formation pour handicap ";
+        query += "Accessibilité numérique OR troubles de l’apprentissage OR aides financières site:agefiph.fr OR site:fiphfp.fr OR site:francetravail.fr ";
     }
 
-    // Si aucun filtre n'est sélectionné, utiliser une requête par défaut
     if (!query.trim()) {
-        query = "veille formation pour organisme de formation";
+        query = "veille juridique France formation professionnelle";
     }
 
-    const apiUrl = `https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(
-        query
-    )}&key=${googleApiKey}&cx=${googleSearchEngineId}`;
+    const apiUrl = `https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(query)}&key=${googleApiKey}&cx=${googleSearchEngineId}`;
 
     try {
         console.log("Requête générée : ", query);
@@ -51,44 +48,41 @@ async function performGoogleSearch() {
         }
 
         const data = await response.json();
-        console.log("Structure complète des données reçues : ", data);
+        console.log("Données reçues : ", JSON.stringify(data, null, 2));
 
-        // Vérifie si les résultats sont exploitables
         if (!data.items || data.items.length === 0) {
             alert("Aucun résultat trouvé pour votre recherche.");
-            updateTable([]); // Affiche un message dans le tableau
+            updateTable([]);
             return;
         }
 
-        const results = parseGoogleSearchResults(data, selectedFilters);
-        console.log("Résultats parsés : ", results);
-
+        const results = parseGoogleSearchResults(data, selectedFilters, startDate, endDate);
         updateTable(results);
     } catch (error) {
         console.error("Erreur lors de la recherche : ", error);
-        alert("Une erreur s'est produite lors de la recherche. Vérifiez votre connexion ou réessayez.");
+        alert("Une erreur s'est produite lors de la recherche.");
     }
 }
 
 // Fonction pour parser les résultats de Google Custom Search
-function parseGoogleSearchResults(data, filters) {
+function parseGoogleSearchResults(data, filters, startDate, endDate) {
     return data.items.map(item => ({
-        date: new Date().toISOString().split("T")[0], // Date actuelle
+        date: item.pagemap?.metatags?.[0]?.["article:published_time"] || "Date non disponible",
         source: item.displayLink || "Google",
+        link: item.link || "#",
         content: item.snippet || "Résumé non disponible",
-        action: "Non défini", // Action requise (modifiable selon logique métier)
-        deadline: "Non définie", // Date d'échéance (modifiable)
+        action: "Non défini",
+        deadline: "Non définie",
         category: filters.join(", ") || "Non catégorisé"
     }));
 }
 
 // Fonction pour mettre à jour la table avec les résultats
 function updateTable(results) {
-    entriesTable.innerHTML = ""; // Vide les entrées existantes
+    entriesTable.innerHTML = "";
 
     if (results.length === 0) {
-        const row = `<tr><td colspan="6">Aucun résultat disponible.</td></tr>`;
-        entriesTable.insertAdjacentHTML("beforeend", row);
+        entriesTable.innerHTML = `<tr><td colspan="6">Aucun résultat disponible.</td></tr>`;
         return;
     }
 
@@ -97,7 +91,7 @@ function updateTable(results) {
             <tr>
                 <td>${result.date}</td>
                 <td>${result.source}</td>
-                <td>${result.content}</td>
+                <td><a href="${result.link}" target="_blank">${result.content}</a></td>
                 <td>${result.action}</td>
                 <td>${result.deadline}</td>
                 <td>${result.category}</td>
