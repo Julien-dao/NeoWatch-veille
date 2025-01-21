@@ -13,14 +13,14 @@
         <aside class="sidebar">
             <h2>NeoWatch</h2>
             <nav>
-                <a href="#" class="nav-item active"><span>📊</span> Vision d'ensemble</a>
-                <a href="#" class="nav-item"><span>🏠</span> Tableau de bord</a>
-                <a href="#" class="nav-item"><span>🔍</span> Recherche</a>
-                <a href="#" class="nav-item"><span>⚙️</span> Paramètres</a>
-                <a href="#" class="nav-item"><span>🔗</span> Lien TP</a>
-                <a href="#" class="nav-item"><span>❓</span> FAQ</a>
-                <a href="#" class="nav-item"><span>📄</span> CGV</a>
-                <a href="#" class="nav-item logout"><span>🚪</span> Déconnexion</a>
+                <a href="#" class="nav-item active" id="overview"><span>📊</span> Vision d'ensemble</a>
+                <a href="#" class="nav-item" id="dashboard"><span>🏠</span> Tableau de bord</a>
+                <a href="#" class="nav-item" id="search"><span>🔍</span> Recherche</a>
+                <a href="#" class="nav-item" id="settings"><span>⚙️</span> Paramètres</a>
+                <a href="#" class="nav-item" id="link-tp"><span>🔗</span> Lien TP</a>
+                <a href="#" class="nav-item" id="faq"><span>❓</span> FAQ</a>
+                <a href="#" class="nav-item" id="cgv"><span>📄</span> CGV</a>
+                <a href="#" class="nav-item logout" id="logout"><span>🚪</span> Déconnexion</a>
             </nav>
         </aside>
 
@@ -35,10 +35,22 @@
             <section class="filters">
                 <h3>Filtrer les entrées</h3>
                 <div class="filter-group">
-                    <label><input type="checkbox" value="legale"> ⚖️ Légale et réglementaire</label>
-                    <label><input type="checkbox" value="competence"> 🎯 Compétence, métier et emploi</label>
-                    <label><input type="checkbox" value="innovation"> 💡 Innovation pédagogique et technologique</label>
-                    <label><input type="checkbox" value="handicap"> ♿ Handicap</label>
+                    <label for="filter-legale">
+                        <input type="checkbox" id="filter-legale" name="filter-category" value="legale">
+                        ⚖️ Légale et réglementaire
+                    </label>
+                    <label for="filter-competence">
+                        <input type="checkbox" id="filter-competence" name="filter-category" value="competence">
+                        🎯 Compétence, métier et emploi
+                    </label>
+                    <label for="filter-innovation">
+                        <input type="checkbox" id="filter-innovation" name="filter-category" value="innovation">
+                        💡 Innovation pédagogique et technologique
+                    </label>
+                    <label for="filter-handicap">
+                        <input type="checkbox" id="filter-handicap" name="filter-category" value="handicap">
+                        ♿ Handicap
+                    </label>
                 </div>
                 <div class="date-filters">
                     <label for="start-date">Date de début :</label>

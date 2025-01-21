@@ -9,15 +9,29 @@ const entriesTable = document.getElementById("entries-tbody");
 async function performDuckDuckGoSearch() {
     const selectedFilters = Array.from(filters)
         .filter(filter => filter.checked)
-        .map(filter => filter.nextSibling.textContent.trim());
+        .map(filter => filter.value);
 
     const startDate = startDateInput.value;
     const endDate = endDateInput.value;
 
-    // Construction de la requête de recherche
-    let query = "NeoWatch veille formation";
-    if (selectedFilters.length > 0) {
-        query += " " + selectedFilters.join(" ");
+    // Génération de mots-clés spécifiques pour chaque filtre
+    let query = "";
+    if (selectedFilters.includes("legale")) {
+        query += "veille légale pour organisme de formation veille réglementaire ";
+    }
+    if (selectedFilters.includes("competence")) {
+        query += "veille sur les métiers pour organisme de formation ";
+    }
+    if (selectedFilters.includes("innovation")) {
+        query += "nouveaux outils pédagogiques pour la formation ";
+    }
+    if (selectedFilters.includes("handicap")) {
+        query += "adaptations formation pour handicap ";
+    }
+
+    // Si aucun filtre n'est sélectionné, utiliser une requête par défaut
+    if (!query.trim()) {
+        query = "veille formation pour organisme de formation";
     }
 
     const apiUrl = `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&pretty=1`;
@@ -37,6 +51,7 @@ async function performDuckDuckGoSearch() {
         // Vérifie si les résultats sont exploitables
         if (!data.RelatedTopics || data.RelatedTopics.length === 0) {
             alert("Aucun résultat trouvé pour votre recherche.");
+            updateTable([]); // Affiche un message dans le tableau
             return;
         }
 
