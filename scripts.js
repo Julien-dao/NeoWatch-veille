@@ -37,7 +37,7 @@ async function performDuckDuckGoSearch() {
     const apiUrl = `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&pretty=1`;
 
     try {
-        console.log("Recherche en cours : ", query);
+        console.log("Requête générée : ", query);
         const response = await fetch(apiUrl);
 
         // Vérifie si la réponse est correcte
@@ -46,7 +46,7 @@ async function performDuckDuckGoSearch() {
         }
 
         const data = await response.json();
-        console.log("Données reçues de l'API : ", data);
+        console.log("Structure complète des données reçues : ", JSON.stringify(data, null, 2));
 
         // Vérifie si les résultats sont exploitables
         if (!data.RelatedTopics || data.RelatedTopics.length === 0) {
@@ -69,14 +69,19 @@ async function performDuckDuckGoSearch() {
 function parseDuckDuckGoResults(data, filters, startDate, endDate) {
     if (!data.RelatedTopics) return [];
 
-    return data.RelatedTopics.map(item => ({
-        date: new Date().toISOString().split("T")[0], // Date actuelle
-        source: "DuckDuckGo",
-        content: item.Text || "Résumé non disponible",
-        action: "Non défini", // Action requise (modifiable selon logique métier)
-        deadline: "Non définie", // Date d'échéance (modifiable)
-        category: filters.join(", ") || "Non catégorisé"
-    }));
+    return data.RelatedTopics.map((item, index) => {
+        // Log de chaque item pour validation
+        console.log(`Item ${index}:`, item);
+
+        return {
+            date: new Date().toISOString().split("T")[0], // Date actuelle
+            source: "DuckDuckGo",
+            content: item.Text || "Résumé non disponible",
+            action: "Non défini", // Action requise (modifiable selon logique métier)
+            deadline: "Non définie", // Date d'échéance (modifiable)
+            category: filters.join(", ") || "Non catégorisé"
+        };
+    });
 }
 
 // Fonction pour mettre à jour la table avec les résultats
