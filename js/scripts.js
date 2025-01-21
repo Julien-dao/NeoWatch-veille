@@ -5,8 +5,8 @@ const endDateInput = document.getElementById("end-date");
 const refreshButton = document.querySelector(".refresh-button");
 const entriesTable = document.querySelector(".dashboard-table tbody");
 
-// Fonction pour générer une recherche Google
-function performGoogleSearch() {
+// Fonction pour effectuer une recherche via l'API DuckDuckGo
+async function performDuckDuckGoSearch() {
     const selectedFilters = Array.from(filters)
         .filter(filter => filter.checked)
         .map(filter => filter.nextSibling.textContent.trim());
@@ -19,21 +19,35 @@ function performGoogleSearch() {
     if (selectedFilters.length > 0) {
         query += " " + selectedFilters.join(" ");
     }
-    if (startDate) {
-        query += ` après ${startDate}`;
-    }
-    if (endDate) {
-        query += ` avant ${endDate}`;
-    }
 
-    // Simulation de résultats Google (à remplacer par une vraie API si nécessaire)
-    const mockResults = [
-        { date: "2025-01-20", category: selectedFilters[0] || "Légale", source: "Google", summary: `Résultat pour "${query}"` },
-        { date: "2025-01-19", category: selectedFilters[1] || "Innovation", source: "Google", summary: `Autre résultat pour "${query}"` }
-    ];
+    const apiUrl = `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&pretty=1`;
 
-    // Mise à jour de la table "Entrées récentes"
-    updateTable(mockResults);
+    try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error("Erreur lors de la récupération des résultats");
+
+        const data = await response.json();
+        const results = parseDuckDuckGoResults(data);
+
+        // Limitation à 100 résultats
+        const limitedResults = results.slice(0, 100);
+        updateTable(limitedResults);
+    } catch (error) {
+        console.error("Erreur : ", error);
+        alert("Une erreur s'est produite lors de la recherche.");
+    }
+}
+
+// Fonction pour parser les résultats de DuckDuckGo
+function parseDuckDuckGoResults(data) {
+    if (!data.RelatedTopics) return [];
+
+    return data.RelatedTopics.map(item => ({
+        date: new Date().toISOString().split("T")[0], // Date actuelle
+        category: "DuckDuckGo",
+        source: "DuckDuckGo",
+        summary: item.Text || "Résultat sans résumé disponible"
+    }));
 }
 
 // Fonction pour mettre à jour la table avec les résultats
@@ -54,4 +68,4 @@ function updateTable(results) {
 }
 
 // Ajout d'un événement au bouton "Actualiser"
-refreshButton.addEventListener("click", performGoogleSearch);
+refreshButton.addEventListener("click", performDuckDuckGoSearch);
