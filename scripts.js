@@ -1,17 +1,22 @@
 // Ciblage des éléments du DOM
 const filters = document.querySelectorAll(".filters input[type='checkbox']");
+const startDateInput = document.getElementById("start-date");
+const endDateInput = document.getElementById("end-date");
 const searchButton = document.getElementById("search-btn");
 const entriesTable = document.getElementById("entries-tbody");
 
-// Configuration API
-const API_KEY = "AIzaSyCnzFFRnsDl3U22TfPYz2iEG4HkNPn_4PM"; // Ta clé API
-const SEARCH_ENGINE_ID = "076048ef2f0074904"; // Ton ID de moteur de recherche
+// Configuration de l'API Google Custom Search
+const googleApiKey = "AIzaSyDbcwk2XlpO_IET7xi8_3rksFNdfNKh9iM";
+const googleSearchEngineId = "076048ef2f0074904";
 
-// Fonction pour effectuer une recherche via Google Custom Search API
+// Fonction pour effectuer une recherche via l'API Google Custom Search
 async function performGoogleSearch() {
     const selectedFilters = Array.from(filters)
         .filter(filter => filter.checked)
         .map(filter => filter.value);
+
+    const startDate = startDateInput.value;
+    const endDate = endDateInput.value;
 
     // Génération de mots-clés spécifiques pour chaque filtre
     let query = "";
@@ -33,7 +38,9 @@ async function performGoogleSearch() {
         query = "veille formation pour organisme de formation";
     }
 
-    const apiUrl = `https://www.googleapis.com/customsearch/v1?key=${API_KEY}&cx=${SEARCH_ENGINE_ID}&q=${encodeURIComponent(query)}`;
+    const apiUrl = `https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(
+        query
+    )}&key=${googleApiKey}&cx=${googleSearchEngineId}`;
 
     try {
         console.log("Requête générée : ", query);
@@ -49,12 +56,12 @@ async function performGoogleSearch() {
 
         // Vérifie si les résultats sont exploitables
         if (!data.items || data.items.length === 0) {
-            console.warn("Aucun résultat trouvé. Utilisation de résultats fictifs.");
-            updateTable(generateMockResults(query, selectedFilters));
+            alert("Aucun résultat trouvé pour votre recherche.");
+            updateTable([]); // Affiche un message dans le tableau
             return;
         }
 
-        const results = parseGoogleSearchResults(data, selectedFilters);
+        const results = parseGoogleSearchResults(data, selectedFilters, startDate, endDate);
         console.log("Résultats parsés : ", results);
 
         updateTable(results);
@@ -64,38 +71,16 @@ async function performGoogleSearch() {
     }
 }
 
-// Fonction pour parser les résultats de Google Custom Search API
-function parseGoogleSearchResults(data, filters) {
+// Fonction pour parser les résultats de Google Custom Search
+function parseGoogleSearchResults(data, filters, startDate, endDate) {
     return data.items.map(item => ({
         date: new Date().toISOString().split("T")[0], // Date actuelle
-        source: item.displayLink || "Source inconnue",
+        source: item.displayLink || "Google",
         content: item.snippet || "Résumé non disponible",
-        action: "Revue requise", // Action requise (modifiable selon logique métier)
+        action: "Non défini", // Action requise (modifiable selon logique métier)
         deadline: "Non définie", // Date d'échéance (modifiable)
         category: filters.join(", ") || "Non catégorisé"
     }));
-}
-
-// Fonction pour générer des résultats fictifs
-function generateMockResults(query, filters) {
-    return [
-        {
-            date: "2025-01-25",
-            source: "Simulation",
-            content: `Résultat fictif pour la requête : "${query}"`,
-            action: "Revue requise",
-            deadline: "2025-02-01",
-            category: filters.join(", ") || "Non catégorisé"
-        },
-        {
-            date: "2025-01-24",
-            source: "Simulation",
-            content: `Autre résultat fictif pour : "${query}"`,
-            action: "Validation nécessaire",
-            deadline: "2025-02-02",
-            category: filters.join(", ") || "Non catégorisé"
-        }
-    ];
 }
 
 // Fonction pour mettre à jour la table avec les résultats
