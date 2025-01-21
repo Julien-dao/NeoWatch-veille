@@ -1,70 +1,81 @@
-// Ciblage des éléments du DOM
-const filters = document.querySelectorAll(".filters input[type='checkbox']");
-const startDateInput = document.getElementById("start-date");
-const endDateInput = document.getElementById("end-date");
-const refreshButton = document.getElementById("refresh-btn");
-const entriesTable = document.getElementById("entries-tbody");
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeoWatch - Tableau de Bord</title>
+    <link href="styles.css" rel="stylesheet">
+    <script src="scripts.js" defer></script> <!-- Lien vers le fichier JS -->
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Barre latérale -->
+        <aside class="sidebar">
+            <h2>NeoWatch</h2>
+            <nav>
+                <a href="#" class="nav-item active"><span>📊</span> Vision d'ensemble</a>
+                <a href="#" class="nav-item"><span>🏠</span> Tableau de bord</a>
+                <a href="#" class="nav-item"><span>🔍</span> Recherche</a>
+                <a href="#" class="nav-item"><span>⚙️</span> Paramètres</a>
+                <a href="#" class="nav-item"><span>🔗</span> Lien TP</a>
+                <a href="#" class="nav-item"><span>❓</span> FAQ</a>
+                <a href="#" class="nav-item"><span>📄</span> CGV</a>
+                <a href="#" class="nav-item logout"><span>🚪</span> Déconnexion</a>
+            </nav>
+        </aside>
 
-// Fonction pour effectuer une recherche via l'API DuckDuckGo
-async function performDuckDuckGoSearch() {
-    const selectedFilters = Array.from(filters)
-        .filter(filter => filter.checked)
-        .map(filter => filter.nextSibling.textContent.trim());
+        <!-- Zone principale -->
+        <main class="main">
+            <header class="dashboard-header">
+                <h1>Bienvenue, [Nom de l'utilisateur]</h1>
+                <p>Voici les dernières informations sur votre veille.</p>
+            </header>
 
-    const startDate = startDateInput.value;
-    const endDate = endDateInput.value;
+            <!-- Filtres au-dessus des entrées récentes -->
+            <section class="filters">
+                <h3>Filtrer les entrées</h3>
+                <div class="filter-group">
+                    <label><input type="checkbox" value="legale"> ⚖️ Légale et réglementaire</label>
+                    <label><input type="checkbox" value="competence"> 🎯 Compétence, métier et emploi</label>
+                    <label><input type="checkbox" value="innovation"> 💡 Innovation pédagogique et technologique</label>
+                    <label><input type="checkbox" value="handicap"> ♿ Handicap</label>
+                </div>
+                <div class="date-filters">
+                    <label for="start-date">Date de début :</label>
+                    <input type="date" id="start-date" name="start-date">
+                    <label for="end-date">Date de fin :</label>
+                    <input type="date" id="end-date" name="end-date">
+                </div>
+                <button class="refresh-button" id="search-btn">Rechercher</button>
+            </section>
 
-    // Construction de la requête de recherche
-    let query = "NeoWatch veille formation";
-    if (selectedFilters.length > 0) {
-        query += " " + selectedFilters.join(" ");
-    }
+            <!-- Cartes -->
+            <section class="dashboard-cards">
+                <div class="card">Recherches restantes : <strong>85</strong></div>
+                <div class="card">Entrées sous le seuil : <strong>3</strong></div>
+                <div class="card">Mises à jour récentes : <strong>12</strong></div>
+            </section>
 
-    const apiUrl = `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&pretty=1`;
-
-    try {
-        const response = await fetch(apiUrl);
-        if (!response.ok) throw new Error("Erreur lors de la récupération des résultats");
-
-        const data = await response.json();
-        const results = parseDuckDuckGoResults(data);
-
-        // Mise à jour de la table "Entrées récentes"
-        updateTable(results);
-    } catch (error) {
-        console.error("Erreur : ", error);
-        alert("Une erreur s'est produite lors de la recherche.");
-    }
-}
-
-// Fonction pour parser les résultats de DuckDuckGo
-function parseDuckDuckGoResults(data) {
-    if (!data.RelatedTopics) return [];
-
-    return data.RelatedTopics.map(item => ({
-        date: new Date().toISOString().split("T")[0], // Date actuelle
-        category: "DuckDuckGo",
-        source: "DuckDuckGo",
-        summary: item.Text || "Résultat sans résumé disponible"
-    }));
-}
-
-// Fonction pour mettre à jour la table avec les résultats
-function updateTable(results) {
-    entriesTable.innerHTML = ""; // Vide les entrées existantes
-    results.forEach(result => {
-        const row = `
-            <tr>
-                <td>${result.date}</td>
-                <td>${result.category}</td>
-                <td>${result.source}</td>
-                <td>${result.summary}</td>
-                <td><button>Voir</button></td>
-            </tr>
-        `;
-        entriesTable.insertAdjacentHTML("beforeend", row);
-    });
-}
-
-// Ajout d'un événement au bouton "Actualiser"
-refreshButton.addEventListener("click", performDuckDuckGoSearch);
+            <!-- Table des entrées récentes -->
+            <section class="dashboard-table">
+                <h2>Entrées récentes</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date d'article</th>
+                            <th>Source web</th>
+                            <th>Contenu de l'article</th>
+                            <th>Action requise</th>
+                            <th>Date d'échéance</th>
+                            <th>Catégorie</th>
+                        </tr>
+                    </thead>
+                    <tbody id="entries-tbody">
+                        <!-- Les entrées générées dynamiquement apparaîtront ici -->
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

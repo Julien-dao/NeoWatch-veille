@@ -2,8 +2,8 @@
 const filters = document.querySelectorAll(".filters input[type='checkbox']");
 const startDateInput = document.getElementById("start-date");
 const endDateInput = document.getElementById("end-date");
-const refreshButton = document.querySelector(".refresh-button");
-const entriesTable = document.querySelector(".dashboard-table tbody");
+const searchButton = document.getElementById("search-btn");
+const entriesTable = document.getElementById("entries-tbody");
 
 // Fonction pour effectuer une recherche via l'API DuckDuckGo
 async function performDuckDuckGoSearch() {
@@ -27,11 +27,9 @@ async function performDuckDuckGoSearch() {
         if (!response.ok) throw new Error("Erreur lors de la récupération des résultats");
 
         const data = await response.json();
-        const results = parseDuckDuckGoResults(data);
+        const results = parseDuckDuckGoResults(data, selectedFilters, startDate, endDate);
 
-        // Limitation à 100 résultats
-        const limitedResults = results.slice(0, 100);
-        updateTable(limitedResults);
+        updateTable(results);
     } catch (error) {
         console.error("Erreur : ", error);
         alert("Une erreur s'est produite lors de la recherche.");
@@ -39,14 +37,16 @@ async function performDuckDuckGoSearch() {
 }
 
 // Fonction pour parser les résultats de DuckDuckGo
-function parseDuckDuckGoResults(data) {
+function parseDuckDuckGoResults(data, filters, startDate, endDate) {
     if (!data.RelatedTopics) return [];
 
     return data.RelatedTopics.map(item => ({
         date: new Date().toISOString().split("T")[0], // Date actuelle
-        category: "DuckDuckGo",
         source: "DuckDuckGo",
-        summary: item.Text || "Résultat sans résumé disponible"
+        content: item.Text || "Résumé non disponible",
+        action: "Non défini", // Action requise (modifiable selon logique métier)
+        deadline: "Non définie", // Date d'échéance (modifiable)
+        category: filters.join(", ") || "Non catégorisé"
     }));
 }
 
@@ -57,15 +57,16 @@ function updateTable(results) {
         const row = `
             <tr>
                 <td>${result.date}</td>
-                <td>${result.category}</td>
                 <td>${result.source}</td>
-                <td>${result.summary}</td>
-                <td><button>Voir</button></td>
+                <td>${result.content}</td>
+                <td>${result.action}</td>
+                <td>${result.deadline}</td>
+                <td>${result.category}</td>
             </tr>
         `;
         entriesTable.insertAdjacentHTML("beforeend", row);
     });
 }
 
-// Ajout d'un événement au bouton "Actualiser"
-refreshButton.addEventListener("click", performDuckDuckGoSearch);
+// Ajout d'un événement au bouton "Rechercher"
+searchButton.addEventListener("click", performDuckDuckGoSearch);
