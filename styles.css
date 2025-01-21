@@ -68,12 +68,23 @@ nav {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    font-size: 1rem;
     transition: background-color 0.3s;
 }
 
 .nav-item:hover,
 .nav-item.active {
     background-color: #6366f1;
+}
+
+/* Déconnexion spécifique */
+.nav-item.logout {
+    background-color: #e11d48; /* Rouge pour déconnexion */
+    color: white;
+}
+
+.nav-item.logout:hover {
+    background-color: #be123c;
 }
 
 /* Barre de recherche */
