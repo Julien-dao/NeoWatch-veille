@@ -1,6 +1,6 @@
 /* Styles globaux */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
@@ -29,11 +29,30 @@ h1 {
     font-size: 1.5rem;
 }
 
+/* Notification */
+.notification {
+    position: fixed;
+    top: 4rem;
+    right: 1rem;
+    background-color: #e11d48;
+    color: white;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    font-size: 1rem;
+    display: none; /* Par défaut, la notification est masquée */
+    z-index: 100;
+}
+
+.notification.show {
+    display: block; /* Affiche la notification lorsqu'elle est active */
+}
+
 /* Tableau de bord */
 .dashboard {
     display: flex;
     height: 100%;
-    margin-top: 4rem; /* Pour éviter que le header recouvre le contenu */
+    margin-top: 4rem;
 }
 
 /* Barre latérale */
@@ -43,21 +62,19 @@ h1 {
     color: white;
     padding: 1rem;
     display: flex;
-    flex-direction: column; /* Aligne tout verticalement */
-    gap: 2rem; /* Espacement entre les sections */
+    flex-direction: column;
+    gap: 2rem;
 }
 
-/* Titre de la barre latérale */
 .sidebar h2 {
     font-size: 1.5rem;
     margin: 0 0 1rem;
 }
 
-/* Navigation */
 nav {
     display: flex;
-    flex-direction: column; /* Liens empilés */
-    gap: 1rem; /* Espacement entre les liens */
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .nav-item {
@@ -79,108 +96,12 @@ nav {
 
 /* Déconnexion spécifique */
 .nav-item.logout {
-    background-color: #e11d48; /* Rouge pour déconnexion */
+    background-color: #e11d48;
     color: white;
 }
 
 .nav-item.logout:hover {
     background-color: #be123c;
-}
-
-/* Barre de recherche */
-.search-section {
-    display: flex;
-    flex-direction: column; /* Aligne tout verticalement */
-    gap: 0.5rem; /* Espacement entre le titre et le champ */
-}
-
-.search-section h3 {
-    font-size: 1.2rem;
-    margin: 0;
-}
-
-.search-bar {
-    width: 100%;
-    padding: 0.5rem;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-}
-
-/* Filtres */
-.filters {
-    display: flex;
-    flex-wrap: wrap; /* Permet d'aller à la ligne si nécessaire */
-    gap: 1rem; /* Espacement entre les options */
-    margin-bottom: 2rem; /* Espacement sous les filtres */
-    padding: 1rem;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-}
-
-.filters h3 {
-    width: 100%; /* Titre prend toute la largeur */
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-    color: #333;
-}
-
-.filter-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
-
-.filters label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 1rem;
-    cursor: pointer;
-}
-
-.filters input[type="checkbox"] {
-    width: 1.2rem;
-    height: 1.2rem;
-    cursor: pointer;
-}
-
-/* Filtres par date */
-.date-filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    align-items: center;
-    margin-top: 1rem;
-}
-
-.date-filters label {
-    font-size: 1rem;
-}
-
-.date-filters input[type="date"] {
-    padding: 0.5rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-/* Bouton actualiser */
-.refresh-button {
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    background-color: #4f46e5;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.refresh-button:hover {
-    background-color: #6366f1;
 }
 
 /* Zone principale */
@@ -195,10 +116,37 @@ nav {
     margin-bottom: 1.5rem;
 }
 
+/* Filtres */
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.filters h3 {
+    width: 100%;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.filters label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
 /* Cartes */
 .dashboard-cards {
     display: flex;
-    flex-wrap: wrap; /* Permet d'aller à la ligne si l'espace manque */
+    flex-wrap: wrap;
     gap: 1rem;
     margin-bottom: 2rem;
 }
@@ -237,6 +185,43 @@ th, td {
 
 tr:hover {
     background-color: #f9f9f9;
+}
+
+/* Actions requises */
+.todo-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.todo-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.todo-list input[type="checkbox"] {
+    width: 1.2rem;
+    height: 1.2rem;
+    cursor: pointer;
+}
+
+.todo-list button.add-action {
+    padding: 0.3rem 0.6rem;
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.todo-list button.add-action:hover {
+    background-color: #6366f1;
 }
 
 /* Boutons dans le tableau */
