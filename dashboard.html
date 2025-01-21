@@ -33,10 +33,19 @@
             <!-- Filtres au-dessus des entrées récentes -->
             <section class="filters">
                 <h3>Filtrer les entrées</h3>
-                <label><input type="checkbox" value="legale"> ⚖️ Légale et réglementaire</label>
-                <label><input type="checkbox" value="competence"> 🎯 Compétence, métier et emploi</label>
-                <label><input type="checkbox" value="innovation"> 💡 Innovation pédagogique et technologique</label>
-                <label><input type="checkbox" value="handicap"> ♿ Handicap</label>
+                <div class="filter-group">
+                    <label><input type="checkbox" value="legale"> ⚖️ Légale et réglementaire</label>
+                    <label><input type="checkbox" value="competence"> 🎯 Compétence, métier et emploi</label>
+                    <label><input type="checkbox" value="innovation"> 💡 Innovation pédagogique et technologique</label>
+                    <label><input type="checkbox" value="handicap"> ♿ Handicap</label>
+                </div>
+                <div class="date-filters">
+                    <label for="start-date">Date de début :</label>
+                    <input type="date" id="start-date" name="start-date">
+                    <label for="end-date">Date de fin :</label>
+                    <input type="date" id="end-date" name="end-date">
+                </div>
+                <button class="refresh-button">Actualiser</button>
             </section>
 
             <!-- Cartes -->

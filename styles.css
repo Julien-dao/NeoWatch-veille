@@ -126,6 +126,12 @@ nav {
     color: #333;
 }
 
+.filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
 .filters label {
     display: flex;
     align-items: center;
@@ -138,6 +144,43 @@ nav {
     width: 1.2rem;
     height: 1.2rem;
     cursor: pointer;
+}
+
+/* Filtres par date */
+.date-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.date-filters label {
+    font-size: 1rem;
+}
+
+.date-filters input[type="date"] {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Bouton actualiser */
+.refresh-button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.refresh-button:hover {
+    background-color: #6366f1;
 }
 
 /* Zone principale */
