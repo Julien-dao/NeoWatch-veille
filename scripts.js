@@ -23,16 +23,30 @@ async function performDuckDuckGoSearch() {
     const apiUrl = `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&pretty=1`;
 
     try {
+        console.log("Recherche en cours : ", query);
         const response = await fetch(apiUrl);
-        if (!response.ok) throw new Error("Erreur lors de la récupération des résultats");
+
+        // Vérifie si la réponse est correcte
+        if (!response.ok) {
+            throw new Error(`Erreur HTTP : ${response.status}`);
+        }
 
         const data = await response.json();
+        console.log("Données reçues de l'API : ", data);
+
+        // Vérifie si les résultats sont exploitables
+        if (!data.RelatedTopics || data.RelatedTopics.length === 0) {
+            alert("Aucun résultat trouvé pour votre recherche.");
+            return;
+        }
+
         const results = parseDuckDuckGoResults(data, selectedFilters, startDate, endDate);
+        console.log("Résultats parsés : ", results);
 
         updateTable(results);
     } catch (error) {
-        console.error("Erreur : ", error);
-        alert("Une erreur s'est produite lors de la recherche.");
+        console.error("Erreur lors de la recherche : ", error);
+        alert("Une erreur s'est produite lors de la recherche. Vérifiez votre connexion ou réessayez.");
     }
 }
 
@@ -53,6 +67,13 @@ function parseDuckDuckGoResults(data, filters, startDate, endDate) {
 // Fonction pour mettre à jour la table avec les résultats
 function updateTable(results) {
     entriesTable.innerHTML = ""; // Vide les entrées existantes
+
+    if (results.length === 0) {
+        const row = `<tr><td colspan="6">Aucun résultat disponible.</td></tr>`;
+        entriesTable.insertAdjacentHTML("beforeend", row);
+        return;
+    }
+
     results.forEach(result => {
         const row = `
             <tr>
