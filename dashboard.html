@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeoWatch - Tableau de Bord</title>
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Barre de navigation latérale -->
+        <aside class="sidebar">
+            <h2>NeoWatch</h2>
+            <nav>
+                <a href="#" class="nav-item active"><span>🏠</span> Tableau de bord</a>
+                <a href="#" class="nav-item"><span>🔍</span> Veille</a>
+                <a href="#" class="nav-item"><span>📂</span> Catégories</a>
+                <a href="#" class="nav-item"><span>👥</span> Utilisateurs</a>
+                <a href="#" class="nav-item"><span>⚙️</span> Paramètres</a>
+            </nav>
+        </aside>
+
+        <!-- Zone principale -->
+        <main class="main">
+            <header class="dashboard-header">
+                <h1>Bienvenue, [Nom de l'utilisateur]</h1>
+                <p>Voici les dernières informations sur votre veille.</p>
+            </header>
+
+            <section class="dashboard-cards">
+                <div class="card">Recherches restantes : <strong>85</strong></div>
+                <div class="card">Entrées sous le seuil : <strong>3</strong></div>
+                <div class="card">Mises à jour récentes : <strong>12</strong></div>
+            </section>
+
+            <section class="dashboard-table">
+                <h2>Entrées récentes</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Catégorie</th>
+                            <th>Source</th>
+                            <th>Résumé</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2025-01-20</td>
+                            <td>Légal</td>
+                            <td>Légifrance</td>
+                            <td>Nouvelle réglementation sur les formations courtes.</td>
+                            <td><button>Voir</button></td>
+                        </tr>
+                        <tr>
+                            <td>2025-01-19</td>
+                            <td>Innovation</td>
+                            <td>Ministère</td>
+                            <td>Nouvel outil numérique pour l’apprentissage en ligne.</td>
+                            <td><button>Voir</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
