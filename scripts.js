@@ -50,8 +50,8 @@ async function performDuckDuckGoSearch() {
 
         // Vérifie si les résultats sont exploitables
         if (!data.RelatedTopics || data.RelatedTopics.length === 0) {
-            alert("Aucun résultat trouvé pour votre recherche.");
-            updateTable([]); // Affiche un message dans le tableau
+            console.warn("Aucun résultat trouvé. Utilisation de résultats fictifs.");
+            updateTable(generateMockResults(query, selectedFilters, startDate, endDate));
             return;
         }
 
@@ -69,19 +69,36 @@ async function performDuckDuckGoSearch() {
 function parseDuckDuckGoResults(data, filters, startDate, endDate) {
     if (!data.RelatedTopics) return [];
 
-    return data.RelatedTopics.map((item, index) => {
-        // Log de chaque item pour validation
-        console.log(`Item ${index}:`, item);
+    return data.RelatedTopics.map((item, index) => ({
+        date: new Date().toISOString().split("T")[0], // Date actuelle
+        source: "DuckDuckGo",
+        content: item.Text || "Résumé non disponible",
+        action: "Non défini", // Action requise (modifiable selon logique métier)
+        deadline: "Non définie", // Date d'échéance (modifiable)
+        category: filters.join(", ") || "Non catégorisé"
+    }));
+}
 
-        return {
-            date: new Date().toISOString().split("T")[0], // Date actuelle
-            source: "DuckDuckGo",
-            content: item.Text || "Résumé non disponible",
-            action: "Non défini", // Action requise (modifiable selon logique métier)
-            deadline: "Non définie", // Date d'échéance (modifiable)
+// Fonction pour générer des résultats fictifs
+function generateMockResults(query, filters, startDate, endDate) {
+    return [
+        {
+            date: "2025-01-25",
+            source: "Simulation",
+            content: `Résultat fictif pour la requête : "${query}"`,
+            action: "Revue requise",
+            deadline: "2025-02-01",
             category: filters.join(", ") || "Non catégorisé"
-        };
-    });
+        },
+        {
+            date: "2025-01-24",
+            source: "Simulation",
+            content: `Autre résultat fictif pour : "${query}"`,
+            action: "Validation nécessaire",
+            deadline: "2025-02-02",
+            category: filters.join(", ") || "Non catégorisé"
+        }
+    ];
 }
 
 // Fonction pour mettre à jour la table avec les résultats
