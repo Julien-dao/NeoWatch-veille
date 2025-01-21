@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NeoWatch - Tableau de Bord</title>
     <link href="styles.css" rel="stylesheet">
+    <script src="scripts.js" defer></script> <!-- Lien vers le fichier JS -->
 </head>
 <body>
     <div class="dashboard">
@@ -45,7 +46,7 @@
                     <label for="end-date">Date de fin :</label>
                     <input type="date" id="end-date" name="end-date">
                 </div>
-                <button class="refresh-button">Actualiser</button>
+                <button class="refresh-button" id="refresh-btn">Actualiser</button>
             </section>
 
             <!-- Cartes -->
@@ -68,21 +69,8 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>2025-01-20</td>
-                            <td>Légal</td>
-                            <td>Légifrance</td>
-                            <td>Nouvelle réglementation sur les formations courtes.</td>
-                            <td><button>Voir</button></td>
-                        </tr>
-                        <tr>
-                            <td>2025-01-19</td>
-                            <td>Innovation</td>
-                            <td>Ministère</td>
-                            <td>Nouvel outil numérique pour l’apprentissage en ligne.</td>
-                            <td><button>Voir</button></td>
-                        </tr>
+                    <tbody id="entries-tbody">
+                        <!-- Les entrées générées dynamiquement apparaîtront ici -->
                     </tbody>
                 </table>
             </section>
