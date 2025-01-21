@@ -19,22 +19,11 @@ async function performGoogleSearch() {
     const endDate = endDateInput.value;
 
     // Génération de mots-clés spécifiques pour chaque filtre
-    let query = "";
-    if (selectedFilters.includes("legale")) {
-        query += "Lois sur la formation professionnelle, droit du travail, subventions, Lois sur les CFA, nouvelle loi formation professionnelle ";
-    }
-    if (selectedFilters.includes("competence")) {
-        query += '"reconversion professionnelle", "évolution des métiers", "formations certifiantes" site:francetravail.fr OR site:opco.fr OR site:travail.gouv.fr ';
-    }
-    if (selectedFilters.includes("innovation")) {
-        query += '"intelligence artificielle", "e-learning", "microlearning", "nouveaux outils en formation", "méthodes pédagogiques innovantes" ';
-    }
-    if (selectedFilters.includes("handicap")) {
-        query += '"Accessibilité numérique", "dispositifs pour les troubles de l’apprentissage", "aides financières" site:agefiph.fr OR site:fiphfp.fr OR site:francetravail.fr ';
-    }
+    let query = generateQuery(selectedFilters);
 
     if (!query.trim()) {
-        query = "veille formation pour organisme de formation";
+        alert("Veuillez sélectionner au moins un filtre ou fournir des critères valides.");
+        return;
     }
 
     const apiUrl = `https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(
@@ -50,7 +39,7 @@ async function performGoogleSearch() {
         console.log("Données reçues : ", JSON.stringify(data, null, 2));
 
         if (!data.items || data.items.length === 0) {
-            alert("Aucun résultat trouvé.");
+            alert("Aucun résultat trouvé pour votre recherche.");
             updateTable([]);
             return;
         }
@@ -59,8 +48,28 @@ async function performGoogleSearch() {
         updateTable(results);
     } catch (error) {
         console.error("Erreur lors de la recherche : ", error);
-        alert("Une erreur s'est produite. Réessayez.");
+        alert("Une erreur s'est produite. Veuillez réessayer.");
     }
+}
+
+// Fonction pour générer la requête en fonction des filtres sélectionnés
+function generateQuery(filters) {
+    let query = "";
+
+    if (filters.includes("legale")) {
+        query += "Lois sur la formation professionnelle OR droit du travail OR subventions ";
+    }
+    if (filters.includes("competence")) {
+        query += '"reconversion professionnelle" OR "évolution des métiers" OR "formations certifiantes" site:francetravail.fr OR site:opco.fr OR site:travail.gouv.fr ';
+    }
+    if (filters.includes("innovation")) {
+        query += '"intelligence artificielle" OR "e-learning" OR "microlearning" OR "nouveaux outils en formation" ';
+    }
+    if (filters.includes("handicap")) {
+        query += '"Accessibilité numérique" OR "troubles apprentissage" OR "aides financières" site:agefiph.fr OR site:fiphfp.fr OR site:francetravail.fr ';
+    }
+
+    return query.trim();
 }
 
 // Fonction pour parser les résultats de Google Custom Search
