@@ -46,13 +46,12 @@ async function performGoogleSearch() {
         console.log("Requête générée : ", query);
         const response = await fetch(apiUrl);
 
-        // Vérifie si la réponse est correcte
         if (!response.ok) {
             throw new Error(`Erreur HTTP : ${response.status}`);
         }
 
         const data = await response.json();
-        console.log("Structure complète des données reçues : ", JSON.stringify(data, null, 2));
+        console.log("Structure complète des données reçues : ", data);
 
         // Vérifie si les résultats sont exploitables
         if (!data.items || data.items.length === 0) {
@@ -61,7 +60,7 @@ async function performGoogleSearch() {
             return;
         }
 
-        const results = parseGoogleSearchResults(data, selectedFilters, startDate, endDate);
+        const results = parseGoogleSearchResults(data, selectedFilters);
         console.log("Résultats parsés : ", results);
 
         updateTable(results);
@@ -72,7 +71,7 @@ async function performGoogleSearch() {
 }
 
 // Fonction pour parser les résultats de Google Custom Search
-function parseGoogleSearchResults(data, filters, startDate, endDate) {
+function parseGoogleSearchResults(data, filters) {
     return data.items.map(item => ({
         date: new Date().toISOString().split("T")[0], // Date actuelle
         source: item.displayLink || "Google",
