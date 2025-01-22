@@ -7,12 +7,9 @@
     <meta name="author" content="NeoWatch">
     <meta name="keywords" content="veille, tableau de bord, recherche, innovation, législation">
     <title>NeoWatch - Tableau de Bord</title>
-
+    
     <!-- Lien vers le fichier CSS -->
     <link rel="stylesheet" href="./styles.css">
-
-    <!-- Animation Library -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
     <!-- Bibliothèque externe pour export en XLS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" crossorigin="anonymous"></script>
@@ -25,32 +22,47 @@
         <!-- Barre latérale -->
         <aside class="sidebar">
             <h1 class="sidebar-title">NeoWatch</h1>
-            <div class="user-greeting">
-                <button class="theme-toggle-btn" id="theme-toggle">🌗 Mode clair/sombre</button>
-            </div>
             <nav>
                 <a href="overview.html" class="nav-item" id="overview">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="#ffffff" viewBox="0 0 24 24" width="16" height="16">
+                        <path d="M5 3h14v2H5zM3 9h18v2H3zM3 15h18v2H3zM5 21h14v2H5z"/>
+                    </svg>
                     Vision d'ensemble
                 </a>
                 <a href="dashboard.html" class="nav-item active" id="dashboard">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="#ffffff" viewBox="0 0 24 24" width="16" height="16">
+                        <path d="M3 3h8v8H3zM13 3h8v8h-8zM3 13h8v8H3zM13 13h8v8h-8z"/>
+                    </svg>
                     Tableau de bord
                 </a>
                 <a href="search.html" class="nav-item" id="search">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="#ffffff" viewBox="0 0 24 24" width="16" height="16">
+                        <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 17 9.5 6.5 6.5 0 1 0 9.5 17a6.471 6.471 0 0 0 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C8.01 14 7 12.99 7 11.5S8.01 9 9.5 9s2.5 1.01 2.5 2.5S10.99 14 9.5 14z"/>
+                    </svg>
                     Recherche
                 </a>
-                <a href="link-tp.html" class="nav-item" id="link-tp">
-                    Lien TP
-                </a>
                 <a href="settings.html" class="nav-item" id="settings">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="#ffffff" viewBox="0 0 24 24" width="16" height="16">
+                        <path d="M12 7.25c1.273 0 2.312 1.038 2.312 2.312S13.273 11.875 12 11.875c-1.273 0-2.312-1.038-2.312-2.312S10.727 7.25 12 7.25zm0-1.875A4.188 4.188 0 0 0 7.812 9.562c0 .497.088.978.245 1.438l-2.09 2.09A6.974 6.974 0 0 0 3 15c0 .477.036.944.105 1.397L.668 19.834a1.5 1.5 0 0 0 2.121 2.121l3.438-3.437c.454.068.92.105 1.397.105a6.974 6.974 0 0 0 2.91-.668l2.09 2.09a4.188 4.188 0 0 0 2.438-.668 4.188 4.188 0 0 0 0-7.875c-.46.157-.941.245-1.438.245a4.188 4.188 0 0 0-2.312-.245L9.562 9.562A4.188 4.188 0 0 0 10.125 12z"/>
+                    </svg>
                     Paramètres
                 </a>
                 <a href="faq.html" class="nav-item" id="faq">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="#ffffff" viewBox="0 0 24 24" width="16" height="16">
+                        <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                    </svg>
                     FAQ
                 </a>
                 <a href="cgv.html" class="nav-item" id="cgv">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="#ffffff" viewBox="0 0 24 24" width="16" height="16">
+                        <path d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24zM9 6h6v12H9zm8 2h2v8h-2V8z"/>
+                    </svg>
                     CGV
                 </a>
                 <a href="index.html" class="nav-item logout" id="logout">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="#ffffff" viewBox="0 0 24 24" width="16" height="16">
+                        <path d="M10 2h4v8h-4zm-6 8h2v8H4zm14-8h2v8h-2z"/>
+                    </svg>
                     Déconnexion
                 </a>
             </nav>
@@ -58,9 +70,15 @@
 
         <!-- Zone principale -->
         <main class="main">
-            <!-- En-tête -->
+            <!-- Zone flottante pour le titre -->
+            <div class="floating-header">
+                <h2>Tableau de bord</h2>
+            </div>
+
+            <!-- En-tête utilisateur -->
             <header class="dashboard-header">
-                <h2>Bienvenue, <span class="header-highlight">[Nom de l'utilisateur]</span></h2>
+                <h2>Bienvenue, [Nom de l'utilisateur]</h2>
+                <p>Voici les dernières informations sur votre veille.</p>
             </header>
 
             <!-- Filtres de recherche -->
@@ -73,11 +91,11 @@
                     </label>
                     <label>
                         <input type="checkbox" id="filter-competence" name="filter-category" value="competence">
-                        🎯 Compétence et emploi
+                        🎯 Compétence, métier et emploi
                     </label>
                     <label>
                         <input type="checkbox" id="filter-innovation" name="filter-category" value="innovation">
-                        💡 Innovation
+                        💡 Innovation pédagogique et technologique
                     </label>
                     <label>
                         <input type="checkbox" id="filter-handicap" name="filter-category" value="handicap">
@@ -93,7 +111,7 @@
                 <button class="refresh-button" id="search-btn">Rechercher</button>
             </section>
 
-            <!-- Tableau des entrées récentes -->
+            <!-- Table des entrées récentes -->
             <section class="dashboard-table">
                 <h3>Entrées récentes</h3>
                 <table>
@@ -109,13 +127,17 @@
                         </tr>
                     </thead>
                     <tbody id="entries-tbody">
-                        <!-- Contenu dynamique généré par JavaScript -->
+                        <!-- Contenu dynamique inséré par JavaScript -->
                     </tbody>
                 </table>
+                <div class="export-buttons">
+                    <button id="export-xls-btn" class="refresh-button">Exporter en XLS</button>
+                </div>
             </section>
         </main>
     </div>
 
+    <!-- Intégration des scripts JavaScript -->
     <script>
         const themeToggle = document.getElementById("theme-toggle");
         themeToggle.addEventListener("click", () => {
