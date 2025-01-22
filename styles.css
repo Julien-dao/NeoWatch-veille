@@ -76,10 +76,13 @@ body {
 .dashboard-header {
     margin-bottom: 1.5rem;
     text-align: center;
+    padding-top: 1rem; /* Ajout d'un espacement supérieur */
 }
 
 .dashboard-header h2 {
     font-size: 2rem;
+    margin: 0;
+    padding: 0.5rem 0;
     background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107); /* Dégradé holographique */
     background-clip: text;
     -webkit-background-clip: text;
@@ -87,7 +90,7 @@ body {
     -o-background-clip: text;
     -ms-background-clip: text;
     color: transparent;
-    -webkit-text-fill-color: transparent; /* Remplit uniquement le texte */
+    -webkit-text-fill-color: transparent;
 }
 
 .dashboard-header p {
