@@ -47,10 +47,10 @@ async function performGoogleSearch() {
             return;
         }
 
-        const results = parseGoogleSearchResults(data, selectedFilters);
+        const results = parseGoogleSearchResults(data);
         updateTable(results);
     } catch (error) {
-        alert("Une erreur s'est produite. Veuillez réessayer.");
+        alert("Une erreur s'est produite lors de la recherche. Veuillez réessayer.");
         console.error("Erreur lors de la recherche :", error);
     }
 }
