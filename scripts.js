@@ -20,7 +20,7 @@ async function performGoogleSearch() {
     const startDate = startDateInput.value;
     const endDate = endDateInput.value;
 
-    let query = generateQuery(selectedFilters);
+    const query = generateQuery(selectedFilters);
 
     if (!query.trim()) {
         alert("Veuillez sélectionner au moins un filtre ou fournir des critères valides.");
@@ -30,6 +30,8 @@ async function performGoogleSearch() {
     const apiUrl = `https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(
         query
     )}&key=${googleApiKey}&cx=${googleSearchEngineId}`;
+
+    console.log("Requête générée :", apiUrl);
 
     try {
         const response = await fetch(apiUrl);
@@ -78,7 +80,6 @@ function parseGoogleSearchResults(data, filters) {
         action: generateActionList(),
         deadline: '<input type="date" class="deadline-input">',
         category: filters.join(", ") || "Non catégorisé",
-        link: item.link
     }));
 }
 
