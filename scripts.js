@@ -1,5 +1,16 @@
-// Importation des clés API depuis le fichier config.js
-import { googleApiKey, googleSearchEngineId } from "./config.js";
+// Configuration intégrée (anciennement dans config.js)
+const GOOGLE_API_KEY = "AIzaSyDbcwk2XlpO_IET7xi8_3rksFNdfNKh9iM";
+const GOOGLE_SEARCH_ENGINE_ID = "076048ef2f0074904";
+const DEFAULT_SEARCH_LIMIT = 10;
+
+const MESSAGES = {
+    noResults: "Aucun résultat trouvé pour votre recherche.",
+    errorFetching: "Une erreur s'est produite lors de la récupération des données.",
+    emptyFilters: "Veuillez sélectionner au moins un filtre ou fournir des critères valides.",
+    exportNoSelection: "Veuillez sélectionner au moins une entrée pour l'exportation.",
+};
+
+const GOOGLE_SEARCH_API_URL = `https://www.googleapis.com/customsearch/v1`;
 
 // Ciblage des éléments du DOM
 const filters = document.querySelectorAll(".filters input[type='checkbox']");
@@ -31,16 +42,14 @@ async function performGoogleSearch() {
     const query = generateQuery(selectedFilters);
 
     if (!query.trim()) {
-        alert("Veuillez sélectionner au moins un filtre ou fournir des critères valides.");
+        alert(MESSAGES.emptyFilters);
         return;
     }
 
     const startDate = startDateInput.value ? ` after:${startDateInput.value}` : "";
     const endDate = endDateInput.value ? ` before:${endDateInput.value}` : "";
 
-    const apiUrl = `https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(
-        query + startDate + endDate
-    )}&key=${googleApiKey}&cx=${googleSearchEngineId}`;
+    const apiUrl = `${GOOGLE_SEARCH_API_URL}?q=${encodeURIComponent(query + startDate + endDate)}&key=${GOOGLE_API_KEY}&cx=${GOOGLE_SEARCH_ENGINE_ID}`;
 
     try {
         const response = await fetch(apiUrl);
@@ -49,7 +58,7 @@ async function performGoogleSearch() {
         const data = await response.json();
 
         if (!data.items || data.items.length === 0) {
-            alert("Aucun résultat trouvé pour votre recherche.");
+            alert(MESSAGES.noResults);
             clearTable();
             return;
         }
@@ -57,7 +66,7 @@ async function performGoogleSearch() {
         const results = parseGoogleSearchResults(data);
         appendToTable(results);
     } catch (error) {
-        alert("Une erreur s'est produite lors de la recherche. Veuillez réessayer.");
+        alert(MESSAGES.errorFetching);
         console.error("Erreur lors de la recherche :", error);
     }
 }
@@ -101,7 +110,7 @@ function generateActionList() {
 
 // Fonction pour ajouter des entrées au tableau sans écraser les données existantes
 function appendToTable(results) {
-    clearTable(); // On vide d'abord la table
+    clearTable();
 
     results.forEach((result, index) => {
         const row = `
@@ -122,7 +131,6 @@ function appendToTable(results) {
         button.addEventListener("click", handleAddAction);
     });
 
-    // Mise à jour des statistiques des cartes
     updateCards();
 }
 
@@ -148,7 +156,7 @@ function exportToXLS() {
     );
 
     if (selectedRows.length === 0) {
-        alert("Veuillez sélectionner au moins une entrée pour l'exportation.");
+        alert(MESSAGES.exportNoSelection);
         return;
     }
 

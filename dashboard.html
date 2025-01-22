@@ -16,9 +16,6 @@
 
     <!-- Script pour Programmable Search Engine -->
     <script async src="https://cse.google.com/cse.js?cx=076048ef2f0074904"></script>
-
-    <!-- Lien vers le fichier JavaScript avec module -->
-    <script src="./scripts.js" type="module" defer></script>
 </head>
 <body>
     <div class="dashboard">
@@ -114,14 +111,25 @@
         </main>
     </div>
 
+    <!-- Intégration des scripts JavaScript -->
     <script>
-        // Gestionnaire de clic pour le bouton "Rechercher"
-        document.getElementById('search-btn').addEventListener('click', function() {
-            const searchEngineContainer = document.querySelector('.gcse-search');
-            if (searchEngineContainer) {
-                searchEngineContainer.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
+        // Constantes du projet
+        const GOOGLE_API_KEY = "AIzaSyDbcwk2XlpO_IET7xi8_3rksFNdfNKh9iM";
+        const SEARCH_ENGINE_ID = "076048ef2f0074904";
+        const DEFAULT_SEARCH_LIMIT = 10;
+        const DEFAULT_DATE_FORMAT = "YYYY-MM-DD";
+
+        const MESSAGES = {
+            noResults: "Aucun résultat trouvé pour votre recherche.",
+            errorFetching: "Une erreur s'est produite lors de la récupération des données.",
+            emptyFilters: "Veuillez sélectionner au moins un filtre ou fournir des critères valides.",
+            exportNoSelection: "Veuillez sélectionner au moins une entrée pour l'exportation.",
+        };
+
+        const GOOGLE_SEARCH_API_URL = `https://www.googleapis.com/customsearch/v1`;
+
+        console.log("Configuration du projet chargée avec succès !");
     </script>
+    <script src="./scripts.js" type="module" defer></script>
 </body>
 </html>
