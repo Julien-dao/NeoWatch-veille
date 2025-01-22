@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NeoWatch - Tableau de Bord</title>
-    <link href="./styles.css" rel="stylesheet"> <!-- Chemin vérifié -->
-    <script src="./scripts.js" defer></script> <!-- Chemin vérifié -->
+    <link href="./styles.css" rel="stylesheet"> <!-- Chemin CSS vérifié -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="./scripts.js" defer></script> <!-- Chemin JS vérifié -->
 </head>
 <body>
     <div class="dashboard">
@@ -13,14 +16,30 @@
         <aside class="sidebar">
             <h2>NeoWatch</h2>
             <nav>
-                <a href="javascript:void(0);" class="nav-item active" id="overview"><span>📊</span> Vision d'ensemble</a>
-                <a href="javascript:void(0);" class="nav-item" id="dashboard"><span>🏠</span> Tableau de bord</a>
-                <a href="javascript:void(0);" class="nav-item" id="search"><span>🔍</span> Recherche</a>
-                <a href="javascript:void(0);" class="nav-item" id="settings"><span>⚙️</span> Paramètres</a>
-                <a href="javascript:void(0);" class="nav-item" id="link-tp"><span>🔗</span> Lien TP</a>
-                <a href="javascript:void(0);" class="nav-item" id="faq"><span>❓</span> FAQ</a>
-                <a href="javascript:void(0);" class="nav-item" id="cgv"><span>📄</span> CGV</a>
-                <a href="javascript:void(0);" class="nav-item logout" id="logout"><span>🚪</span> Déconnexion</a>
+                <a href="#" class="nav-item active" id="overview">
+                    📊 Vision d'ensemble
+                </a>
+                <a href="#" class="nav-item" id="dashboard">
+                    🏠 Tableau de bord
+                </a>
+                <a href="#" class="nav-item" id="search">
+                    🔍 Recherche
+                </a>
+                <a href="#" class="nav-item" id="settings">
+                    ⚙️ Paramètres
+                </a>
+                <a href="#" class="nav-item" id="link-tp">
+                    🔗 Lien TP
+                </a>
+                <a href="#" class="nav-item" id="faq">
+                    ❓ FAQ
+                </a>
+                <a href="#" class="nav-item" id="cgv">
+                    📄 CGV
+                </a>
+                <a href="#" class="nav-item logout" id="logout">
+                    🚪 Déconnexion
+                </a>
             </nav>
         </aside>
 
@@ -31,23 +50,23 @@
                 <p>Voici les dernières informations sur votre veille.</p>
             </header>
 
-            <!-- Filtres au-dessus des entrées récentes -->
+            <!-- Filtres -->
             <section class="filters">
                 <h3>Filtrer les entrées</h3>
                 <div class="filter-group">
-                    <label for="filter-legale">
+                    <label>
                         <input type="checkbox" id="filter-legale" name="filter-category" value="legale">
                         ⚖️ Légale et réglementaire
                     </label>
-                    <label for="filter-competence">
+                    <label>
                         <input type="checkbox" id="filter-competence" name="filter-category" value="competence">
                         🎯 Compétence, métier et emploi
                     </label>
-                    <label for="filter-innovation">
+                    <label>
                         <input type="checkbox" id="filter-innovation" name="filter-category" value="innovation">
                         💡 Innovation pédagogique et technologique
                     </label>
-                    <label for="filter-handicap">
+                    <label>
                         <input type="checkbox" id="filter-handicap" name="filter-category" value="handicap">
                         ♿ Handicap
                     </label>
@@ -74,7 +93,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Sélection</th> <!-- Nouvelle colonne -->
+                            <th>Sélection</th>
                             <th>Date d'article</th>
                             <th>Source web</th>
                             <th>Contenu de l'article</th>
@@ -84,7 +103,7 @@
                         </tr>
                     </thead>
                     <tbody id="entries-tbody">
-                        <!-- Les entrées générées dynamiquement apparaîtront ici -->
+                        <!-- Contenu dynamique inséré par JavaScript -->
                     </tbody>
                 </table>
                 <div class="export-buttons">

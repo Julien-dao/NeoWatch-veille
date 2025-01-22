@@ -11,6 +11,13 @@ const exportXlsButton = document.getElementById("export-xls-btn");
 const googleApiKey = "AIzaSyDbcwk2XlpO_IET7xi8_3rksFNdfNKh9iM";
 const googleSearchEngineId = "076048ef2f0074904";
 
+// Fonction utilitaire pour nettoyer le texte HTML
+function cleanText(text) {
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = text;
+    return tempDiv.textContent || tempDiv.innerText || "";
+}
+
 // Fonction pour effectuer une recherche via l'API Google Custom Search
 async function performGoogleSearch() {
     const selectedFilters = Array.from(filters)
@@ -30,8 +37,6 @@ async function performGoogleSearch() {
     const apiUrl = `https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(
         query
     )}&key=${googleApiKey}&cx=${googleSearchEngineId}`;
-
-    console.log("Requête générée :", apiUrl);
 
     try {
         const response = await fetch(apiUrl);
@@ -152,7 +157,7 @@ function exportToPDF() {
     let y = 30;
     selectedRows.forEach(row => {
         const cells = row.querySelectorAll("td");
-        const rowData = Array.from(cells).map(cell => cell.textContent.trim());
+        const rowData = Array.from(cells).map(cell => cleanText(cell.innerHTML));
         doc.text(rowData.join(" | "), 10, y);
         y += 10;
     });
@@ -172,7 +177,7 @@ function exportToXLS() {
     }
 
     const rows = selectedRows.map(row => {
-        return Array.from(row.querySelectorAll("td")).map(cell => cell.textContent.trim());
+        return Array.from(row.querySelectorAll("td")).map(cell => cleanText(cell.innerHTML));
     });
 
     const worksheet = XLSX.utils.aoa_to_sheet([
