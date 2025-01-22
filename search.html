@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NeoWatch - Recherche">
+    <meta name="author" content="NeoWatch">
+    <title>NeoWatch - Recherche</title>
+
+    <!-- Lien vers le fichier CSS -->
+    <link rel="stylesheet" href="./styles.css">
+
+    <!-- Lien vers le fichier JavaScript avec module -->
+    <script src="./scripts.js" type="module" defer></script>
+</head>
+<body>
+    <div class="search-page">
+        <header class="search-header">
+            <h1>Tableau de Recherche</h1>
+            <p>Consultez et personnalisez vos entrées enregistrées depuis le tableau de bord.</p>
+        </header>
+
+        <!-- Zone pour ajouter des colonnes personnalisables -->
+        <section class="custom-columns">
+            <h3>Ajouter une colonne personnalisée</h3>
+            <input type="text" id="new-column-name" placeholder="Nom de la colonne">
+            <button id="add-column-btn">Ajouter une colonne</button>
+        </section>
+
+        <!-- Tableau de recherche -->
+        <section class="search-table">
+            <h3>Entrées Enregistrées</h3>
+            <table>
+                <thead>
+                    <tr id="table-headers">
+                        <th>Source web</th>
+                        <th>Contenu de l'article</th>
+                        <th>Action requise</th>
+                        <th>Date d'échéance</th>
+                        <th>Catégorie</th>
+                    </tr>
+                </thead>
+                <tbody id="saved-entries-tbody">
+                    <!-- Contenu dynamique inséré par JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const tableBody = document.getElementById("saved-entries-tbody");
+            const tableHeaders = document.getElementById("table-headers");
+            const addColumnBtn = document.getElementById("add-column-btn");
+            const newColumnNameInput = document.getElementById("new-column-name");
+
+            // Charger les entrées enregistrées depuis localStorage
+            const savedEntries = JSON.parse(localStorage.getItem("savedEntries")) || [];
+
+            // Fonction pour afficher les entrées dans le tableau
+            function loadEntries() {
+                tableBody.innerHTML = ""; // Nettoyer le tableau
+                savedEntries.forEach((entry, index) => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${entry.source}</td>
+                        <td>${entry.content}</td>
+                        <td>${entry.action}</td>
+                        <td>${entry.deadline}</td>
+                        <td>${entry.category}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+
+            // Charger les données au chargement de la page
+            loadEntries();
+
+            // Ajouter une nouvelle colonne personnalisée
+            addColumnBtn.addEventListener("click", () => {
+                const columnName = newColumnNameInput.value.trim();
+                if (columnName) {
+                    // Ajouter une nouvelle colonne dans l'en-tête
+                    const newHeader = document.createElement("th");
+                    newHeader.textContent = columnName;
+                    tableHeaders.appendChild(newHeader);
+
+                    // Ajouter une cellule vide à chaque ligne existante
+                    Array.from(tableBody.rows).forEach(row => {
+                        const newCell = document.createElement("td");
+                        newCell.textContent = "-"; // Contenu par défaut
+                        row.appendChild(newCell);
+                    });
+
+                    // Effacer le champ de saisie
+                    newColumnNameInput.value = "";
+                } else {
+                    alert("Veuillez entrer un nom de colonne valide.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
