@@ -79,22 +79,69 @@
 
         <!-- Zone principale -->
         <main class="main">
+            <!-- En-tête -->
             <header class="dashboard-header animate__animated animate__fadeInDown">
                 <h2>Bienvenue, <span class="header-highlight">[Nom de l'utilisateur]</span></h2>
                 <button class="theme-toggle-btn" id="theme-toggle">🌗 Mode clair/sombre</button>
             </header>
 
-            <!-- Sections supplémentaires -->
+            <!-- Filtres de recherche -->
             <section class="filters animate__animated animate__fadeInUp">
                 <h3>Filtres de recherche</h3>
-                <!-- Contenu dynamique -->
+                <div class="filter-group">
+                    <label>
+                        <input type="checkbox" id="filter-legale" name="filter-category" value="legale">
+                        ⚖️ Légale et réglementaire
+                    </label>
+                    <label>
+                        <input type="checkbox" id="filter-competence" name="filter-category" value="competence">
+                        🎯 Compétence et emploi
+                    </label>
+                    <label>
+                        <input type="checkbox" id="filter-innovation" name="filter-category" value="innovation">
+                        💡 Innovation
+                    </label>
+                    <label>
+                        <input type="checkbox" id="filter-handicap" name="filter-category" value="handicap">
+                        ♿ Handicap
+                    </label>
+                </div>
+                <div class="date-filters">
+                    <label for="start-date">Date de début :</label>
+                    <input type="date" id="start-date" name="start-date">
+                    <label for="end-date">Date de fin :</label>
+                    <input type="date" id="end-date" name="end-date">
+                </div>
+                <button class="refresh-button" id="search-btn">Rechercher</button>
+            </section>
+
+            <!-- Tableau -->
+            <section class="dashboard-table animate__animated animate__fadeInUp">
+                <h3>Entrées récentes</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sélection</th>
+                            <th>Date d'article</th>
+                            <th>Source web</th>
+                            <th>Contenu de l'article</th>
+                            <th>Action requise</th>
+                            <th>Date d'échéance</th>
+                            <th>Catégorie</th>
+                        </tr>
+                    </thead>
+                    <tbody id="entries-tbody">
+                        <!-- Contenu dynamique inséré par JavaScript -->
+                    </tbody>
+                </table>
             </section>
         </main>
     </div>
 
+    <!-- Mode clair/sombre -->
     <script>
-        const themeButton = document.getElementById("theme-toggle");
-        themeButton.addEventListener("click", () => {
+        const themeToggle = document.getElementById("theme-toggle");
+        themeToggle.addEventListener("click", () => {
             document.body.classList.toggle("light-theme");
         });
     </script>
