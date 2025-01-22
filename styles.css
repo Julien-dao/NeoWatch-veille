@@ -28,8 +28,13 @@ body {
     text-align: center;
     font-weight: bold;
     background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107); /* Dégradé holographique */
+    background-clip: text;
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    -moz-background-clip: text;
+    -o-background-clip: text;
+    -ms-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent; /* Remplit uniquement le texte */
     margin-bottom: 1rem;
 }
 
@@ -75,9 +80,14 @@ body {
 
 .dashboard-header h2 {
     font-size: 2rem;
-    background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107);
+    background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107); /* Dégradé holographique */
+    background-clip: text;
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    -moz-background-clip: text;
+    -o-background-clip: text;
+    -ms-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent; /* Remplit uniquement le texte */
 }
 
 .dashboard-header p {
