@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NeoWatch - FAQ">
+    <meta name="author" content="NeoWatch">
+    <meta name="keywords" content="FAQ, veille, questions, support">
+    <title>NeoWatch - FAQ</title>
+
+    <!-- Lien vers le fichier CSS -->
+    <link rel="stylesheet" href="./styles.css">
+
+    <!-- Lien vers le fichier JavaScript avec module -->
+    <script src="./scripts.js" type="module" defer></script>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Barre latérale -->
+        <aside class="sidebar">
+            <h1>NeoWatch</h1>
+            <nav>
+                <a href="overview.html" class="nav-item" id="overview">📊 Vision d'ensemble</a>
+                <a href="dashboard.html" class="nav-item" id="dashboard">🏠 Tableau de bord</a>
+                <a href="search.html" class="nav-item" id="search">🔍 Recherche</a>
+                <a href="settings.html" class="nav-item" id="settings">⚙️ Paramètres</a>
+                <a href="link-tp.html" class="nav-item" id="link-tp">🔗 Lien TP</a>
+                <a href="faq.html" class="nav-item active" id="faq">❓ FAQ</a>
+                <a href="cgv.html" class="nav-item" id="cgv">📄 CGV</a>
+                <a href="index.html" class="nav-item logout" id="logout">🚪 Déconnexion</a>
+            </nav>
+        </aside>
+
+        <!-- Zone principale -->
+        <main class="main">
+            <!-- Titre principal -->
+            <header class="dashboard-header">
+                <h2>FAQ - Questions Fréquentes</h2>
+                <p>Retrouvez ici les réponses aux questions les plus posées sur NeoWatch.</p>
+            </header>
+
+            <!-- Système d'accordéon -->
+            <section class="faq-section">
+                <h3>Catégories</h3>
+                <div class="accordion">
+                    <!-- Catégorie : Utilisation du site -->
+                    <div class="accordion-item">
+                        <button class="accordion-button">🖥️ Utilisation du site</button>
+                        <div class="accordion-content">
+                            <p><strong>Comment personnaliser mes thèmes de veille ?</strong><br>
+                            Vous pouvez personnaliser vos thèmes de veille depuis la section "Paramètres". Sélectionnez les thèmes souhaités et enregistrez vos modifications.</p>
+                        </div>
+                    </div>
+
+                    <!-- Catégorie : Forfaits -->
+                    <div class="accordion-item">
+                        <button class="accordion-button">💳 Forfaits et abonnements</button>
+                        <div class="accordion-content">
+                            <p><strong>Quels sont les avantages du forfait Freemium ?</strong><br>
+                            Le Freemium inclut 5 requêtes par jour (10 articles par requête), une to-do liste, et une section de commentaires personnalisable.</p>
+                            <p><strong>Quels sont les avantages du forfait Premium ?</strong><br>
+                            Le Premium (29,99 €/mois) propose des recherches illimitées, l'ajout de membres, la personnalisation de tableaux, et bien plus encore.</p>
+                        </div>
+                    </div>
+
+                    <!-- Catégorie : Veille réglementaire -->
+                    <div class="accordion-item">
+                        <button class="accordion-button">📜 Veille réglementaire</button>
+                        <div class="accordion-content">
+                            <p><strong>Comment fonctionne la veille sur le handicap ?</strong><br>
+                            NeoWatch inclut une catégorie dédiée au handicap pour surveiller les obligations spécifiques et les évolutions législatives.</p>
+                        </div>
+                    </div>
+
+                    <!-- Catégorie : Support -->
+                    <div class="accordion-item">
+                        <button class="accordion-button">🛠️ Support et assistance</button>
+                        <div class="accordion-content">
+                            <p><strong>Que faire si je rencontre un problème technique ?</strong><br>
+                            Contactez notre support via la section "Paramètres" ou envoyez un email à support@neowatch.com.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Formulaire pour poser une question -->
+            <section class="faq-form">
+                <h3>Vous avez une autre question ?</h3>
+                <form id="faq-question-form">
+                    <label for="user-question">Posez votre question :</label>
+                    <textarea id="user-question" name="user-question" rows="4" placeholder="Écrivez votre question ici..." required></textarea>
+                    <button type="submit" class="refresh-button">Envoyer ma question</button>
+                </form>
+            </section>
+
+            <!-- Bouton Retour en haut -->
+            <button id="back-to-top" class="refresh-button">⬆️ Retour en haut</button>
+        </main>
+    </div>
+
+    <script>
+        // Script pour l'accordéon
+        document.querySelectorAll('.accordion-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                content.style.maxHeight = content.style.maxHeight ? null : content.scrollHeight + 'px';
+            });
+        });
+
+        // Script pour le bouton Retour en haut
+        const backToTopButton = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            backToTopButton.style.display = window.scrollY > 300 ? 'block' : 'none';
+        });
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
