@@ -24,9 +24,6 @@ async function performGoogleSearch() {
         .filter(filter => filter.checked)
         .map(filter => filter.value);
 
-    const startDate = startDateInput.value;
-    const endDate = endDateInput.value;
-
     const query = generateQuery(selectedFilters);
 
     if (!query.trim()) {
@@ -65,26 +62,26 @@ function generateQuery(filters) {
         query += "Lois sur la formation professionnelle OR droit du travail OR subventions ";
     }
     if (filters.includes("competence")) {
-        query += '"reconversion professionnelle" OR "évolution des métiers" OR "formations certifiantes" site:francetravail.fr OR site:opco.fr OR site:travail.gouv.fr ';
+        query += '"reconversion professionnelle" OR "évolution des métiers" OR "formations certifiantes" ';
     }
     if (filters.includes("innovation")) {
-        query += '"intelligence artificielle" OR "e-learning" OR "microlearning" OR "nouveaux outils en formation" ';
+        query += '"intelligence artificielle" OR "e-learning" OR "microlearning" ';
     }
     if (filters.includes("handicap")) {
-        query += '"Accessibilité numérique" OR "troubles apprentissage" OR "aides financières" site:agefiph.fr OR site:fiphfp.fr OR site:francetravail.fr ';
+        query += '"Accessibilité numérique" OR "troubles apprentissage" OR "aides financières" ';
     }
     return query.trim();
 }
 
 // Fonction pour parser les résultats de Google Custom Search
-function parseGoogleSearchResults(data, filters) {
+function parseGoogleSearchResults(data) {
     return data.items.map(item => ({
         date: item.pagemap?.metatags?.[0]["article:published_time"] || "Non disponible",
         source: `<a href="${item.link}" target="_blank">${item.displayLink}</a>`,
         content: item.snippet || "Résumé non disponible",
         action: generateActionList(),
         deadline: '<input type="date" class="deadline-input">',
-        category: filters.join(", ") || "Non catégorisé",
+        category: "Non catégorisé",
     }));
 }
 
@@ -154,12 +151,15 @@ function exportToPDF() {
     doc.setFontSize(16);
     doc.text("NEOWATCH - VEILLE : Votre veille professionnelle en 3 clics", 10, 10);
 
-    let y = 30;
-    selectedRows.forEach(row => {
-        const cells = row.querySelectorAll("td");
-        const rowData = Array.from(cells).map(cell => cleanText(cell.innerHTML));
-        doc.text(rowData.join(" | "), 10, y);
-        y += 10;
+    const headers = ["Sélection", "Date", "Source", "Contenu", "Action", "Échéance", "Catégorie"];
+    const rows = selectedRows.map(row =>
+        Array.from(row.querySelectorAll("td")).map(cell => cleanText(cell.innerHTML))
+    );
+
+    doc.autoTable({
+        startY: 20,
+        head: [headers],
+        body: rows,
     });
 
     doc.save("export.pdf");
@@ -176,15 +176,15 @@ function exportToXLS() {
         return;
     }
 
-    const rows = selectedRows.map(row => {
-        return Array.from(row.querySelectorAll("td")).map(cell => cleanText(cell.innerHTML));
-    });
+    const rows = selectedRows.map(row =>
+        Array.from(row.querySelectorAll("td")).map(cell => cleanText(cell.innerHTML))
+    );
 
     const worksheet = XLSX.utils.aoa_to_sheet([
         ["NEOWATCH - VEILLE : Votre veille professionnelle en 3 clics"],
         [],
         ["Sélection", "Date", "Source", "Contenu", "Action", "Échéance", "Catégorie"],
-        ...rows
+        ...rows,
     ]);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Veille");
