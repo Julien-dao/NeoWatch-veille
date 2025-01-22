@@ -148,7 +148,7 @@ function exportToPDF() {
     doc.setFontSize(16);
     doc.text("NEOWATCH - VEILLE : Votre veille professionnelle en 3 clics", 10, 10);
 
-    let y = 20;
+    let y = 30;
     selectedRows.forEach(row => {
         const cells = row.querySelectorAll("td");
         const rowData = Array.from(cells).map(cell => cell.textContent.trim());
