@@ -25,6 +25,10 @@
         <!-- Barre latérale -->
         <aside class="sidebar">
             <h1 class="sidebar-title">NeoWatch</h1>
+            <div class="user-greeting">
+                <h2>Bienvenue, <span class="header-highlight">[Nom de l'utilisateur]</span></h2>
+                <button class="theme-toggle-btn" id="theme-toggle">🌗 Mode clair/sombre</button>
+            </div>
             <nav>
                 <a href="overview.html" class="nav-item" id="overview">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="#ffffff" viewBox="0 0 24 24" width="16" height="16">
@@ -79,13 +83,6 @@
 
         <!-- Zone principale -->
         <main class="main">
-            <!-- En-tête -->
-            <header class="dashboard-header animate__animated animate__fadeInDown">
-                <h2>Bienvenue, <span class="header-highlight">[Nom de l'utilisateur]</span></h2>
-                <button class="theme-toggle-btn" id="theme-toggle">🌗 Mode clair/sombre</button>
-            </header>
-
-            <!-- Filtres de recherche -->
             <section class="filters animate__animated animate__fadeInUp">
                 <h3>Filtres de recherche</h3>
                 <div class="filter-group">
@@ -115,7 +112,6 @@
                 <button class="refresh-button" id="search-btn">Rechercher</button>
             </section>
 
-            <!-- Tableau -->
             <section class="dashboard-table animate__animated animate__fadeInUp">
                 <h3>Entrées récentes</h3>
                 <table>
@@ -130,15 +126,12 @@
                             <th>Catégorie</th>
                         </tr>
                     </thead>
-                    <tbody id="entries-tbody">
-                        <!-- Contenu dynamique inséré par JavaScript -->
-                    </tbody>
+                    <tbody id="entries-tbody"></tbody>
                 </table>
             </section>
         </main>
     </div>
 
-    <!-- Mode clair/sombre -->
     <script>
         const themeToggle = document.getElementById("theme-toggle");
         themeToggle.addEventListener("click", () => {

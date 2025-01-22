@@ -3,8 +3,8 @@ body {
     font-family: 'Roboto', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #121212;
-    color: #D3D3D3;
+    background-color: #121212; /* Fond sombre */
+    color: #D3D3D3; /* Texte gris clair */
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -29,13 +29,48 @@ body {
     font-weight: bold;
     background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107); /* Dégradé holographique */
     background-clip: text;
+    -webkit-background-clip: text; /* Compatibilité pour Chrome et Safari */
+    -moz-background-clip: text; /* Préfixe pour Firefox */
+    -o-background-clip: text; /* Préfixe pour Opera */
+    color: transparent; /* Texte transparent avec dégradé */
+    margin-bottom: 1rem;
+}
+
+/* Zone utilisateur (Bienvenue) */
+.user-greeting {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.user-greeting h2 {
+    font-size: 1.2rem;
+    color: #D3D3D3;
+    margin: 0;
+    padding: 0.5rem 0;
+    background: linear-gradient(90deg, #F45B69, #FFC107); /* Dégradé holographique */
+    background-clip: text;
     -webkit-background-clip: text;
     -moz-background-clip: text;
     -o-background-clip: text;
-    -ms-background-clip: text;
     color: transparent;
-    -webkit-text-fill-color: transparent; /* Remplit uniquement le texte */
-    margin-bottom: 1rem;
+}
+
+/* Bouton mode clair/sombre */
+.theme-toggle-btn {
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    background: #FFC107;
+    color: #1A1A1A;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.theme-toggle-btn:hover {
+    background: #F45B69;
+    color: white;
 }
 
 /* Navigation */
@@ -60,8 +95,8 @@ body {
 }
 
 .nav-item svg.icon {
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
 }
 
 /* Zone principale */
@@ -76,21 +111,19 @@ body {
 .dashboard-header {
     margin-bottom: 1.5rem;
     text-align: center;
-    padding-top: 1rem; /* Ajout d'un espacement supérieur */
+    padding-top: 1rem;
 }
 
 .dashboard-header h2 {
     font-size: 2rem;
     margin: 0;
     padding: 0.5rem 0;
-    background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107); /* Dégradé holographique */
+    background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107);
     background-clip: text;
     -webkit-background-clip: text;
     -moz-background-clip: text;
     -o-background-clip: text;
-    -ms-background-clip: text;
     color: transparent;
-    -webkit-text-fill-color: transparent;
 }
 
 .dashboard-header p {
@@ -103,7 +136,7 @@ body {
     flex-wrap: wrap;
     gap: 1rem;
     padding: 1.5rem;
-    background-color: rgba(255, 255, 255, 0.1); /* Translucide */
+    background-color: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -128,13 +161,13 @@ body {
 .filters label svg.icon {
     width: 16px;
     height: 16px;
-    fill: #5BC0EB; /* Cyan par défaut */
+    fill: #5BC0EB;
     transition: transform 0.3s ease-in-out, fill 0.3s ease-in-out;
 }
 
 .filters label:hover svg.icon {
     transform: scale(1.2);
-    fill: #F45B69; /* Magenta au survol */
+    fill: #F45B69;
 }
 
 /* Boutons */
@@ -165,7 +198,7 @@ button.refresh-button:hover {
 .card {
     flex: 1;
     padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.1); /* Translucide */
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     text-align: center;
@@ -184,14 +217,14 @@ button.refresh-button:hover {
 table {
     width: 100%;
     border-collapse: collapse;
-    background: rgba(255, 255, 255, 0.1); /* Translucide */
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     margin-top: 1rem;
 }
 
 thead {
-    background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107); /* Dégradé */
+    background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107);
     color: white;
     font-size: 1rem;
 }
