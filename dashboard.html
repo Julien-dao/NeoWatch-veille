@@ -72,7 +72,7 @@
                     <label for="end-date">Date de fin :</label>
                     <input type="date" id="end-date" name="end-date">
                 </div>
-                <a href="search.html"><button class="refresh-button" id="search-btn">Rechercher</button></a>
+                <button class="refresh-button" id="search-btn">Rechercher</button>
             </section>
 
             <!-- Moteur de recherche intégré -->
@@ -113,5 +113,15 @@
             </section>
         </main>
     </div>
+
+    <script>
+        // Gestionnaire de clic pour le bouton "Rechercher"
+        document.getElementById('search-btn').addEventListener('click', function() {
+            const searchEngineContainer = document.querySelector('.gcse-search');
+            if (searchEngineContainer) {
+                searchEngineContainer.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    </script>
 </body>
 </html>
