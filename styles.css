@@ -4,7 +4,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #121212;
-    color: #E0E0E0;
+    color: #D3D3D3;
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -13,30 +13,30 @@ body {
 /* Barre latérale */
 .sidebar {
     width: 250px;
-    background-color: rgba(26, 26, 26, 0.95);
-    color: white;
+    background-color: rgba(26, 26, 26, 0.95); /* Noir translucide */
     padding: 1rem;
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Ombre */
     border-right: 3px solid transparent;
-    border-image: linear-gradient(90deg, #5BC0EB, #F45B69) 1;
+    border-image: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107) 1; /* Bordure holographique */
 }
 
 .sidebar h1 {
     font-size: 1.8rem;
-    margin-bottom: 1rem;
     text-align: center;
     font-weight: bold;
-    background: linear-gradient(90deg, #5BC0EB, #F45B69);
+    background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107); /* Dégradé holographique */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
 }
 
 /* Navigation */
 .nav-item {
     text-decoration: none;
-    color: #E0E0E0;
+    color: #D3D3D3;
     padding: 0.8rem 1rem;
     border-radius: 8px;
     display: flex;
@@ -48,7 +48,7 @@ body {
 
 .nav-item:hover,
 .nav-item.active {
-    background: linear-gradient(90deg, #5BC0EB, #F45B69);
+    background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107); /* Dégradé holographique */
     color: white;
     transform: scale(1.05);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -75,8 +75,7 @@ body {
 
 .dashboard-header h2 {
     font-size: 2rem;
-    margin: 0;
-    background: linear-gradient(90deg, #5BC0EB, #F45B69);
+    background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -91,7 +90,7 @@ body {
     flex-wrap: wrap;
     gap: 1rem;
     padding: 1.5rem;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.1); /* Translucide */
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -100,7 +99,7 @@ body {
 .filters h3 {
     width: 100%;
     font-size: 1.2rem;
-    color: #E0E0E0;
+    color: #D3D3D3;
     margin-bottom: 1rem;
 }
 
@@ -110,19 +109,19 @@ body {
     gap: 0.5rem;
     cursor: pointer;
     font-size: 1rem;
-    color: #E0E0E0;
+    color: #D3D3D3;
 }
 
 .filters label svg.icon {
     width: 16px;
     height: 16px;
-    fill: #5BC0EB;
+    fill: #5BC0EB; /* Cyan par défaut */
     transition: transform 0.3s ease-in-out, fill 0.3s ease-in-out;
 }
 
 .filters label:hover svg.icon {
     transform: scale(1.2);
-    fill: #F45B69;
+    fill: #F45B69; /* Magenta au survol */
 }
 
 /* Boutons */
@@ -130,15 +129,15 @@ button.refresh-button {
     padding: 0.7rem 1.5rem;
     font-size: 1rem;
     color: white;
-    background: linear-gradient(90deg, #5BC0EB, #F45B69);
+    background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107);
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s ease-in-out, transform 0.2s ease;
+    transition: all 0.3s ease-in-out;
 }
 
 button.refresh-button:hover {
-    background: linear-gradient(90deg, #F45B69, #5BC0EB);
+    filter: brightness(1.2);
     transform: translateY(-2px);
 }
 
@@ -153,15 +152,13 @@ button.refresh-button:hover {
 .card {
     flex: 1;
     padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.1); /* Translucide */
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     text-align: center;
     font-size: 1.2rem;
     font-weight: bold;
-    color: #E0E0E0;
-    position: relative;
-    overflow: hidden;
+    color: #D3D3D3;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
@@ -174,15 +171,14 @@ button.refresh-button:hover {
 table {
     width: 100%;
     border-collapse: collapse;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.1); /* Translucide */
     border-radius: 8px;
-    overflow: hidden;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     margin-top: 1rem;
 }
 
 thead {
-    background: linear-gradient(90deg, #5BC0EB, #F45B69);
+    background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107); /* Dégradé */
     color: white;
     font-size: 1rem;
 }
