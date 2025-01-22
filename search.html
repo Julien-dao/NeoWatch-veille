@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="NeoWatch - Recherche">
-    <meta name="author" content="NeoWatch">
     <title>NeoWatch - Recherche</title>
 
     <!-- Lien vers le fichier CSS -->
@@ -14,37 +13,58 @@
     <script src="./scripts.js" type="module" defer></script>
 </head>
 <body>
-    <div class="search-page">
-        <header class="search-header">
-            <h1>Tableau de Recherche</h1>
-            <p>Consultez et personnalisez vos entrées enregistrées depuis le tableau de bord.</p>
-        </header>
+    <div class="dashboard">
+        <!-- Barre latérale -->
+        <aside class="sidebar">
+            <h1>NeoWatch</h1>
+            <nav>
+                <a href="overview.html" class="nav-item" id="overview">📊 Vision d'ensemble</a>
+                <a href="dashboard.html" class="nav-item" id="dashboard">🏠 Tableau de bord</a>
+                <a href="search.html" class="nav-item active" id="search">🔍 Recherche</a>
+                <a href="settings.html" class="nav-item" id="settings">⚙️ Paramètres</a>
+                <a href="link-tp.html" class="nav-item" id="link-tp">🔗 Lien TP</a>
+                <a href="faq.html" class="nav-item" id="faq">❓ FAQ</a>
+                <a href="cgv.html" class="nav-item" id="cgv">📄 CGV</a>
+                <a href="index.html" class="nav-item logout" id="logout">🚪 Déconnexion</a>
+            </nav>
+        </aside>
 
-        <!-- Zone pour ajouter des colonnes personnalisables -->
-        <section class="custom-columns">
-            <h3>Ajouter une colonne personnalisée</h3>
-            <input type="text" id="new-column-name" placeholder="Nom de la colonne">
-            <button id="add-column-btn">Ajouter une colonne</button>
-        </section>
+        <!-- Zone principale -->
+        <main class="main">
+            <!-- En-tête -->
+            <header class="dashboard-header">
+                <h2>Recherche</h2>
+                <p>Consultez et personnalisez vos entrées enregistrées depuis le tableau de bord.</p>
+            </header>
 
-        <!-- Tableau de recherche -->
-        <section class="search-table">
-            <h3>Entrées Enregistrées</h3>
-            <table>
-                <thead>
-                    <tr id="table-headers">
-                        <th>Source web</th>
-                        <th>Contenu de l'article</th>
-                        <th>Action requise</th>
-                        <th>Date d'échéance</th>
-                        <th>Catégorie</th>
-                    </tr>
-                </thead>
-                <tbody id="saved-entries-tbody">
-                    <!-- Contenu dynamique inséré par JavaScript -->
-                </tbody>
-            </table>
-        </section>
+            <!-- Zone pour ajouter des colonnes personnalisables -->
+            <section class="filters">
+                <h3>Ajouter une colonne personnalisée</h3>
+                <div class="filter-group">
+                    <input type="text" id="new-column-name" placeholder="Nom de la colonne">
+                    <button id="add-column-btn" class="refresh-button">Ajouter une colonne</button>
+                </div>
+            </section>
+
+            <!-- Tableau de recherche -->
+            <section class="dashboard-table">
+                <h3>Entrées enregistrées</h3>
+                <table>
+                    <thead>
+                        <tr id="table-headers">
+                            <th>Source web</th>
+                            <th>Contenu de l'article</th>
+                            <th>Action requise</th>
+                            <th>Date d'échéance</th>
+                            <th>Catégorie</th>
+                        </tr>
+                    </thead>
+                    <tbody id="saved-entries-tbody">
+                        <!-- Contenu dynamique inséré par JavaScript -->
+                    </tbody>
+                </table>
+            </section>
+        </main>
     </div>
 
     <script>
