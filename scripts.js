@@ -4,6 +4,8 @@ const startDateInput = document.getElementById("start-date");
 const endDateInput = document.getElementById("end-date");
 const searchButton = document.getElementById("search-btn");
 const entriesTable = document.getElementById("entries-tbody");
+const exportPdfButton = document.getElementById("export-pdf-btn");
+const exportXlsButton = document.getElementById("export-xls-btn");
 
 // Configuration de l'API Google Custom Search
 const googleApiKey = "AIzaSyDbcwk2XlpO_IET7xi8_3rksFNdfNKh9iM";
@@ -80,7 +82,8 @@ function parseGoogleSearchResults(data, filters) {
         content: item.snippet || "Résumé non disponible",
         action: generateActionList(),
         deadline: "Non définie",
-        category: filters.join(", ") || "Non catégorisé"
+        category: filters.join(", ") || "Non catégorisé",
+        link: item.link
     }));
 }
 
@@ -101,13 +104,14 @@ function updateTable(results) {
     entriesTable.innerHTML = "";
 
     if (results.length === 0) {
-        entriesTable.innerHTML = `<tr><td colspan="6">Aucun résultat disponible.</td></tr>`;
+        entriesTable.innerHTML = `<tr><td colspan="7">Aucun résultat disponible.</td></tr>`;
         return;
     }
 
-    results.forEach(result => {
+    results.forEach((result, index) => {
         const row = `
             <tr>
+                <td><input type="checkbox" class="select-row" data-index="${index}"></td>
                 <td>${result.date}</td>
                 <td>${result.source}</td>
                 <td>${result.content}</td>
@@ -135,5 +139,58 @@ function handleAddAction(event) {
     }
 }
 
-// Ajout d'un événement au bouton "Rechercher"
+// Fonction pour exporter en PDF
+function exportToPDF() {
+    const selectedRows = Array.from(document.querySelectorAll(".select-row:checked")).map(row =>
+        row.closest("tr")
+    );
+
+    if (selectedRows.length === 0) {
+        alert("Veuillez sélectionner au moins une entrée pour l'exportation.");
+        return;
+    }
+
+    const doc = new jsPDF();
+    let y = 10;
+
+    selectedRows.forEach(row => {
+        const cells = row.querySelectorAll("td");
+        const rowData = Array.from(cells).map(cell => cell.textContent.trim());
+        doc.text(rowData.join(" | "), 10, y);
+        y += 10;
+    });
+
+    doc.save("export.pdf");
+}
+
+// Fonction pour exporter en XLS
+function exportToXLS() {
+    const selectedRows = Array.from(document.querySelectorAll(".select-row:checked")).map(row =>
+        row.closest("tr")
+    );
+
+    if (selectedRows.length === 0) {
+        alert("Veuillez sélectionner au moins une entrée pour l'exportation.");
+        return;
+    }
+
+    const rows = selectedRows.map(row => {
+        return Array.from(row.querySelectorAll("td")).map(cell => cell.textContent.trim());
+    });
+
+    let csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.join(",")).join("\n");
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "export.csv");
+    document.body.appendChild(link);
+
+    link.click();
+    document.body.removeChild(link);
+}
+
+// Ajout des gestionnaires d'événements
 searchButton.addEventListener("click", performGoogleSearch);
+document.getElementById("export-pdf-btn").addEventListener("click", exportToPDF);
+document.getElementById("export-xls-btn").addEventListener("click", exportToXLS);
