@@ -27,6 +27,7 @@ header {
 h1 {
     margin: 0;
     font-size: 1.5rem;
+    text-align: center;
 }
 
 /* Notification */
@@ -175,12 +176,13 @@ table {
 thead {
     background-color: #4f46e5;
     color: white;
+    font-size: 1rem;
 }
 
 th, td {
     padding: 1rem;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border: 1px solid #ddd; /* Bordures visibles pour le tableau */
 }
 
 tr:hover {
@@ -238,4 +240,27 @@ table button {
 
 table button:hover {
     background-color: #4f46e5;
+}
+
+/* Boutons d'exportation */
+.export-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+    gap: 1rem;
+}
+
+.export-buttons button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.export-buttons button:hover {
+    background-color: #6366f1;
 }

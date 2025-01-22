@@ -20,7 +20,6 @@ async function performGoogleSearch() {
     const startDate = startDateInput.value;
     const endDate = endDateInput.value;
 
-    // Génération de mots-clés spécifiques pour chaque filtre
     let query = generateQuery(selectedFilters);
 
     if (!query.trim()) {
@@ -33,12 +32,10 @@ async function performGoogleSearch() {
     )}&key=${googleApiKey}&cx=${googleSearchEngineId}`;
 
     try {
-        console.log("Requête générée : ", query);
         const response = await fetch(apiUrl);
         if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
 
         const data = await response.json();
-        console.log("Données reçues : ", JSON.stringify(data, null, 2));
 
         if (!data.items || data.items.length === 0) {
             alert("Aucun résultat trouvé pour votre recherche.");
@@ -49,15 +46,14 @@ async function performGoogleSearch() {
         const results = parseGoogleSearchResults(data, selectedFilters);
         updateTable(results);
     } catch (error) {
-        console.error("Erreur lors de la recherche : ", error);
         alert("Une erreur s'est produite. Veuillez réessayer.");
+        console.error(error);
     }
 }
 
 // Fonction pour générer la requête en fonction des filtres sélectionnés
 function generateQuery(filters) {
     let query = "";
-
     if (filters.includes("legale")) {
         query += "Lois sur la formation professionnelle OR droit du travail OR subventions ";
     }
@@ -70,7 +66,6 @@ function generateQuery(filters) {
     if (filters.includes("handicap")) {
         query += '"Accessibilité numérique" OR "troubles apprentissage" OR "aides financières" site:agefiph.fr OR site:fiphfp.fr OR site:francetravail.fr ';
     }
-
     return query.trim();
 }
 
@@ -123,7 +118,6 @@ function updateTable(results) {
         entriesTable.insertAdjacentHTML("beforeend", row);
     });
 
-    // Ajouter les gestionnaires d'événements pour les tâches
     document.querySelectorAll(".add-action").forEach(button => {
         button.addEventListener("click", handleAddAction);
     });
@@ -151,8 +145,10 @@ function exportToPDF() {
     }
 
     const doc = new jsPDF();
-    let y = 10;
+    doc.setFontSize(16);
+    doc.text("NEOWATCH - VEILLE : Votre veille professionnelle en 3 clics", 10, 10);
 
+    let y = 20;
     selectedRows.forEach(row => {
         const cells = row.querySelectorAll("td");
         const rowData = Array.from(cells).map(cell => cell.textContent.trim());
@@ -178,19 +174,18 @@ function exportToXLS() {
         return Array.from(row.querySelectorAll("td")).map(cell => cell.textContent.trim());
     });
 
-    let csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.join(",")).join("\n");
-
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "export.csv");
-    document.body.appendChild(link);
-
-    link.click();
-    document.body.removeChild(link);
+    const worksheet = XLSX.utils.aoa_to_sheet([
+        ["NEOWATCH - VEILLE : Votre veille professionnelle en 3 clics"],
+        [],
+        ["Sélection", "Date", "Source", "Contenu", "Action", "Échéance", "Catégorie"],
+        ...rows
+    ]);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Veille");
+    XLSX.writeFile(workbook, "export.xlsx");
 }
 
 // Ajout des gestionnaires d'événements
 searchButton.addEventListener("click", performGoogleSearch);
-document.getElementById("export-pdf-btn").addEventListener("click", exportToPDF);
-document.getElementById("export-xls-btn").addEventListener("click", exportToXLS);
+exportPdfButton.addEventListener("click", exportToPDF);
+exportXlsButton.addEventListener("click", exportToXLS);
