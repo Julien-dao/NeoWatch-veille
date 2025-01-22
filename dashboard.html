@@ -11,6 +11,9 @@
     <!-- Bibliothèques externes -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" integrity="sha384-GwzOrkV4Z4+4/f7C11LfE7yz/fHufzIpGz67gNDMMEj6vXEuKPdkHcIKQoGPK0X7" crossorigin="anonymous"></script>
 
+    <!-- Moteur de recherche Programmable Search Engine -->
+    <script async src="https://cse.google.com/cse.js?cx=076048ef2f0074904"></script>
+
     <!-- Lien vers le fichier JS -->
     <script src="./scripts.js" defer></script>
 </head>
@@ -67,6 +70,12 @@
                     <input type="date" id="end-date" name="end-date">
                 </div>
                 <button class="refresh-button" id="search-btn">Rechercher</button>
+            </section>
+
+            <!-- Moteur de recherche intégré -->
+            <section class="search-engine">
+                <h3>Recherche sur Programmable Search Engine</h3>
+                <div class="gcse-search"></div>
             </section>
 
             <!-- Cartes de statistiques -->

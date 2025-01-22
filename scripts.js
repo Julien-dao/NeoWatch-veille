@@ -30,8 +30,11 @@ async function performGoogleSearch() {
         return;
     }
 
+    const startDate = startDateInput.value ? ` after:${startDateInput.value}` : "";
+    const endDate = endDateInput.value ? ` before:${endDateInput.value}` : "";
+
     const apiUrl = `https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(
-        query
+        query + startDate + endDate
     )}&key=${googleApiKey}&cx=${googleSearchEngineId}`;
 
     try {
@@ -42,12 +45,11 @@ async function performGoogleSearch() {
 
         if (!data.items || data.items.length === 0) {
             alert("Aucun résultat trouvé pour votre recherche.");
-            updateTable([]);
             return;
         }
 
         const results = parseGoogleSearchResults(data);
-        updateTable(results);
+        appendToTable(results);
     } catch (error) {
         alert("Une erreur s'est produite lors de la recherche. Veuillez réessayer.");
         console.error("Erreur lors de la recherche :", error);
@@ -91,15 +93,8 @@ function generateActionList() {
     `;
 }
 
-// Fonction pour mettre à jour la table avec les résultats
-function updateTable(results) {
-    entriesTable.innerHTML = "";
-
-    if (results.length === 0) {
-        entriesTable.innerHTML = `<tr><td colspan="7">Aucun résultat disponible.</td></tr>`;
-        return;
-    }
-
+// Fonction pour ajouter des entrées au tableau sans écraser les données existantes
+function appendToTable(results) {
     results.forEach((result, index) => {
         const row = `
             <tr>
