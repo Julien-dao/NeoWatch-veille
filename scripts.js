@@ -4,7 +4,6 @@ const startDateInput = document.getElementById("start-date");
 const endDateInput = document.getElementById("end-date");
 const searchButton = document.getElementById("search-btn");
 const entriesTable = document.getElementById("entries-tbody");
-const exportPdfButton = document.getElementById("export-pdf-btn");
 const exportXlsButton = document.getElementById("export-xls-btn");
 
 // Configuration de l'API Google Custom Search
@@ -131,35 +130,6 @@ function handleAddAction(event) {
     }
 }
 
-// Fonction pour exporter en PDF
-function exportToPDF() {
-    const selectedRows = Array.from(document.querySelectorAll(".select-row:checked")).map(row =>
-        row.closest("tr")
-    );
-
-    if (selectedRows.length === 0) {
-        alert("Veuillez sélectionner au moins une entrée pour l'exportation.");
-        return;
-    }
-
-    const doc = new jsPDF();
-    doc.setFontSize(16);
-    doc.text("NEOWATCH - VEILLE : Votre veille professionnelle en 3 clics", 10, 10);
-
-    const headers = ["Sélection", "Date", "Source", "Contenu", "Action", "Échéance", "Catégorie"];
-    const rows = selectedRows.map(row =>
-        Array.from(row.querySelectorAll("td")).map(cell => cleanText(cell.innerHTML))
-    );
-
-    doc.autoTable({
-        startY: 20,
-        head: [headers],
-        body: rows,
-    });
-
-    doc.save("export.pdf");
-}
-
 // Fonction pour exporter en XLS
 function exportToXLS() {
     const selectedRows = Array.from(document.querySelectorAll(".select-row:checked")).map(row =>
@@ -188,5 +158,4 @@ function exportToXLS() {
 
 // Ajout des gestionnaires d'événements
 searchButton.addEventListener("click", performGoogleSearch);
-exportPdfButton.addEventListener("click", exportToPDF);
 exportXlsButton.addEventListener("click", exportToXLS);
