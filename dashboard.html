@@ -83,10 +83,10 @@
 
         <!-- Zone principale -->
         <main class="main">
-            <header class="dashboard-header">
-                <h2 class="page-title">Bienvenue, [Nom de l'utilisateur]</h2>
+            <header class="dashboard-header animate__animated animate__fadeInDown">
+                <h2>Bienvenue, <span class="header-highlight">[Nom de l'utilisateur]</span></h2>
             </header>
-            <section class="filters">
+            <section class="filters animate__animated animate__fadeInUp">
                 <h3>Filtres de recherche</h3>
                 <div class="filter-group">
                     <label>
@@ -113,23 +113,6 @@
                     <input type="date" id="end-date" name="end-date">
                 </div>
                 <button class="refresh-button" id="search-btn">Rechercher</button>
-            </section>
-            <section class="dashboard-table">
-                <h3>Entrées récentes</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Sélection</th>
-                            <th>Date d'article</th>
-                            <th>Source web</th>
-                            <th>Contenu de l'article</th>
-                            <th>Action requise</th>
-                            <th>Date d'échéance</th>
-                            <th>Catégorie</th>
-                        </tr>
-                    </thead>
-                    <tbody id="entries-tbody"></tbody>
-                </table>
             </section>
         </main>
     </div>
