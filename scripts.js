@@ -8,8 +8,8 @@ const exportPdfButton = document.getElementById("export-pdf-btn");
 const exportXlsButton = document.getElementById("export-xls-btn");
 
 // Configuration de l'API Google Custom Search
-const googleApiKey = "AIzaSyDbcwk2XlpO_IET7xi8_3rksFNdfNKh9iM";
-const googleSearchEngineId = "076048ef2f0074904";
+const googleApiKey = "Votre_API_Key";
+const googleSearchEngineId = "Votre_Search_Engine_ID";
 
 // Fonction pour effectuer une recherche via l'API Google Custom Search
 async function performGoogleSearch() {
@@ -81,7 +81,7 @@ function parseGoogleSearchResults(data, filters) {
         source: `<a href="${item.link}" target="_blank">${item.displayLink}</a>`,
         content: item.snippet || "Résumé non disponible",
         action: generateActionList(),
-        deadline: "Non définie",
+        deadline: '<input type="date" class="deadline-input">',
         category: filters.join(", ") || "Non catégorisé",
         link: item.link
     }));
