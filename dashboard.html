@@ -3,25 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NeoWatch - Tableau de bord de veille professionnelle">
+    <meta name="author" content="NeoWatch">
+    <meta name="keywords" content="veille, tableau de bord, recherche, innovation, législation">
     <title>NeoWatch - Tableau de Bord</title>
     
     <!-- Lien vers le fichier CSS -->
-    <link href="./styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
 
-    <!-- Bibliothèques externes -->
+    <!-- Bibliothèque externe pour export en XLS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" integrity="sha384-GwzOrkV4Z4+4/f7C11LfE7yz/fHufzIpGz67gNDMMEj6vXEuKPdkHcIKQoGPK0X7" crossorigin="anonymous"></script>
 
-    <!-- Moteur de recherche Programmable Search Engine -->
+    <!-- Script pour Programmable Search Engine -->
     <script async src="https://cse.google.com/cse.js?cx=076048ef2f0074904"></script>
 
-    <!-- Lien vers le fichier JS -->
+    <!-- Lien vers le fichier JavaScript -->
     <script src="./scripts.js" defer></script>
 </head>
 <body>
     <div class="dashboard">
         <!-- Barre latérale -->
         <aside class="sidebar">
-            <h2>NeoWatch</h2>
+            <h1>NeoWatch</h1>
             <nav>
                 <a href="#" class="nav-item active" id="overview">📊 Vision d'ensemble</a>
                 <a href="#" class="nav-item" id="dashboard">🏠 Tableau de bord</a>
@@ -36,15 +39,15 @@
 
         <!-- Zone principale -->
         <main class="main">
-            <!-- En-tête du tableau de bord -->
+            <!-- En-tête -->
             <header class="dashboard-header">
-                <h1>Bienvenue, [Nom de l'utilisateur]</h1>
+                <h2>Bienvenue, [Nom de l'utilisateur]</h2>
                 <p>Voici les dernières informations sur votre veille.</p>
             </header>
 
             <!-- Filtres de recherche -->
             <section class="filters">
-                <h3>Filtrer les entrées</h3>
+                <h3>Filtres de recherche</h3>
                 <div class="filter-group">
                     <label>
                         <input type="checkbox" id="filter-legale" name="filter-category" value="legale">
@@ -75,7 +78,7 @@
             <!-- Moteur de recherche intégré -->
             <section class="search-engine">
                 <h3>Recherche sur Programmable Search Engine</h3>
-                <div class="gcse-search"></div>
+                <div class="gcse-search" aria-label="Recherche"></div>
             </section>
 
             <!-- Cartes de statistiques -->
@@ -87,7 +90,7 @@
 
             <!-- Table des entrées récentes -->
             <section class="dashboard-table">
-                <h2>Entrées récentes</h2>
+                <h3>Entrées récentes</h3>
                 <table>
                     <thead>
                         <tr>
@@ -104,7 +107,6 @@
                         <!-- Contenu dynamique inséré par JavaScript -->
                     </tbody>
                 </table>
-                <!-- Boutons d'exportation -->
                 <div class="export-buttons">
                     <button id="export-xls-btn" class="refresh-button">Exporter en XLS</button>
                 </div>

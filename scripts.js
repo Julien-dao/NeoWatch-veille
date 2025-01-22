@@ -1,3 +1,6 @@
+// Importation des clés API depuis le fichier config.js
+import { googleApiKey, googleSearchEngineId } from "./config.js";
+
 // Ciblage des éléments du DOM
 const filters = document.querySelectorAll(".filters input[type='checkbox']");
 const startDateInput = document.getElementById("start-date");
@@ -5,10 +8,6 @@ const endDateInput = document.getElementById("end-date");
 const searchButton = document.getElementById("search-btn");
 const entriesTable = document.getElementById("entries-tbody");
 const exportXlsButton = document.getElementById("export-xls-btn");
-
-// Configuration de l'API Google Custom Search
-const googleApiKey = "AIzaSyDbcwk2XlpO_IET7xi8_3rksFNdfNKh9iM";
-const googleSearchEngineId = "076048ef2f0074904";
 
 // Fonction utilitaire pour nettoyer le texte HTML
 function cleanText(text) {
@@ -45,6 +44,7 @@ async function performGoogleSearch() {
 
         if (!data.items || data.items.length === 0) {
             alert("Aucun résultat trouvé pour votre recherche.");
+            clearTable();
             return;
         }
 
@@ -95,6 +95,8 @@ function generateActionList() {
 
 // Fonction pour ajouter des entrées au tableau sans écraser les données existantes
 function appendToTable(results) {
+    clearTable(); // On vide d'abord la table
+
     results.forEach((result, index) => {
         const row = `
             <tr>
@@ -113,6 +115,11 @@ function appendToTable(results) {
     document.querySelectorAll(".add-action").forEach(button => {
         button.addEventListener("click", handleAddAction);
     });
+}
+
+// Fonction pour vider la table
+function clearTable() {
+    entriesTable.innerHTML = `<tr><td colspan="7">Aucune donnée disponible</td></tr>`;
 }
 
 // Gestionnaire pour ajouter une nouvelle tâche
