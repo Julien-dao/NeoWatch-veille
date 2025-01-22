@@ -47,7 +47,7 @@ async function performGoogleSearch() {
         updateTable(results);
     } catch (error) {
         alert("Une erreur s'est produite. Veuillez réessayer.");
-        console.error(error);
+        console.error("Erreur lors de la recherche :", error);
     }
 }
 
