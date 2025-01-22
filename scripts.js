@@ -8,8 +8,8 @@ const exportPdfButton = document.getElementById("export-pdf-btn");
 const exportXlsButton = document.getElementById("export-xls-btn");
 
 // Configuration de l'API Google Custom Search
-const googleApiKey = "Votre_API_Key";
-const googleSearchEngineId = "Votre_Search_Engine_ID";
+const googleApiKey = "AIzaSyDbcwk2XlpO_IET7xi8_3rksFNdfNKh9iM";
+const googleSearchEngineId = "076048ef2f0074904";
 
 // Fonction pour effectuer une recherche via l'API Google Custom Search
 async function performGoogleSearch() {
