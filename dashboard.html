@@ -6,10 +6,12 @@
     <title>NeoWatch - Tableau de Bord</title>
     <!-- Lien vers le fichier CSS -->
     <link href="./styles.css" rel="stylesheet">
+
     <!-- Bibliothèques externes -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
     <!-- Lien vers le fichier JS -->
     <script src="./scripts.js" defer></script>
 </head>
@@ -19,41 +21,26 @@
         <aside class="sidebar">
             <h2>NeoWatch</h2>
             <nav>
-                <a href="#" class="nav-item active" id="overview">
-                    📊 Vision d'ensemble
-                </a>
-                <a href="#" class="nav-item" id="dashboard">
-                    🏠 Tableau de bord
-                </a>
-                <a href="#" class="nav-item" id="search">
-                    🔍 Recherche
-                </a>
-                <a href="#" class="nav-item" id="settings">
-                    ⚙️ Paramètres
-                </a>
-                <a href="#" class="nav-item" id="link-tp">
-                    🔗 Lien TP
-                </a>
-                <a href="#" class="nav-item" id="faq">
-                    ❓ FAQ
-                </a>
-                <a href="#" class="nav-item" id="cgv">
-                    📄 CGV
-                </a>
-                <a href="#" class="nav-item logout" id="logout">
-                    🚪 Déconnexion
-                </a>
+                <a href="#" class="nav-item active" id="overview">📊 Vision d'ensemble</a>
+                <a href="#" class="nav-item" id="dashboard">🏠 Tableau de bord</a>
+                <a href="#" class="nav-item" id="search">🔍 Recherche</a>
+                <a href="#" class="nav-item" id="settings">⚙️ Paramètres</a>
+                <a href="#" class="nav-item" id="link-tp">🔗 Lien TP</a>
+                <a href="#" class="nav-item" id="faq">❓ FAQ</a>
+                <a href="#" class="nav-item" id="cgv">📄 CGV</a>
+                <a href="#" class="nav-item logout" id="logout">🚪 Déconnexion</a>
             </nav>
         </aside>
 
         <!-- Zone principale -->
         <main class="main">
+            <!-- En-tête du tableau de bord -->
             <header class="dashboard-header">
                 <h1>Bienvenue, [Nom de l'utilisateur]</h1>
                 <p>Voici les dernières informations sur votre veille.</p>
             </header>
 
-            <!-- Filtres -->
+            <!-- Filtres de recherche -->
             <section class="filters">
                 <h3>Filtrer les entrées</h3>
                 <div class="filter-group">
@@ -83,7 +70,7 @@
                 <button class="refresh-button" id="search-btn">Rechercher</button>
             </section>
 
-            <!-- Cartes -->
+            <!-- Cartes de statistiques -->
             <section class="dashboard-cards">
                 <div class="card">Recherches restantes : <strong>85</strong></div>
                 <div class="card">Entrées sous le seuil : <strong>3</strong></div>
@@ -109,6 +96,7 @@
                         <!-- Contenu dynamique inséré par JavaScript -->
                     </tbody>
                 </table>
+                <!-- Boutons d'exportation -->
                 <div class="export-buttons">
                     <button id="export-pdf-btn" class="refresh-button">Exporter en PDF</button>
                     <button id="export-xls-btn" class="refresh-button">Exporter en XLS</button>

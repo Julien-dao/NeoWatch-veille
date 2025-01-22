@@ -57,20 +57,15 @@ async function performGoogleSearch() {
 
 // Fonction pour générer la requête en fonction des filtres sélectionnés
 function generateQuery(filters) {
-    let query = "";
-    if (filters.includes("legale")) {
-        query += "Lois sur la formation professionnelle OR droit du travail OR subventions ";
-    }
-    if (filters.includes("competence")) {
-        query += '"reconversion professionnelle" OR "évolution des métiers" OR "formations certifiantes" ';
-    }
-    if (filters.includes("innovation")) {
-        query += '"intelligence artificielle" OR "e-learning" OR "microlearning" ';
-    }
-    if (filters.includes("handicap")) {
-        query += '"Accessibilité numérique" OR "troubles apprentissage" OR "aides financières" ';
-    }
-    return query.trim();
+    const queries = {
+        legale: "Lois sur la formation professionnelle OR droit du travail OR subventions",
+        competence:
+            '"reconversion professionnelle" OR "évolution des métiers" OR "formations certifiantes"',
+        innovation: '"intelligence artificielle" OR "e-learning" OR "microlearning"',
+        handicap: '"Accessibilité numérique" OR "troubles apprentissage" OR "aides financières"',
+    };
+
+    return filters.map(filter => queries[filter] || "").join(" ");
 }
 
 // Fonction pour parser les résultats de Google Custom Search
