@@ -19,12 +19,7 @@ const endDateInput = document.getElementById("end-date");
 const searchButton = document.getElementById("search-btn");
 const entriesTable = document.getElementById("entries-tbody");
 const exportXlsButton = document.getElementById("export-xls-btn");
-const cards = {
-    legale: document.getElementById("card-legale"),
-    competence: document.getElementById("card-competence"),
-    innovation: document.getElementById("card-innovation"),
-    handicap: document.getElementById("card-handicap")
-};
+const themeToggleButton = document.getElementById("theme-toggle");
 
 // Fonction utilitaire pour nettoyer le texte HTML
 function cleanText(text) {
@@ -130,8 +125,6 @@ function appendToTable(results) {
     document.querySelectorAll(".add-action").forEach(button => {
         button.addEventListener("click", handleAddAction);
     });
-
-    updateCards();
 }
 
 // Fonction pour vider la table
@@ -175,27 +168,14 @@ function exportToXLS() {
     XLSX.writeFile(workbook, "export.xlsx");
 }
 
-// Mise à jour des cartes statistiques
-function updateCards() {
-    const categoryCounts = { legale: 0, competence: 0, innovation: 0, handicap: 0 };
-
-    Array.from(entriesTable.rows).forEach(row => {
-        const categoryCell = row.querySelector("td:nth-child(7)");
-        if (categoryCell) {
-            const category = categoryCell.textContent.trim();
-            if (categoryCounts[category] !== undefined) {
-                categoryCounts[category]++;
-            }
-        }
-    });
-
-    Object.keys(categoryCounts).forEach(category => {
-        if (cards[category]) {
-            cards[category].querySelector("strong").textContent = categoryCounts[category];
-        }
-    });
+// Fonction pour basculer entre les thèmes clair et sombre
+function toggleTheme() {
+    const isLightTheme = document.body.classList.toggle("light-theme");
+    themeToggleButton.textContent = isLightTheme
+        ? "🌑 Mode sombre"
+        : "🌕 Mode clair";
 }
 
 // Ajout des gestionnaires d'événements
 searchButton.addEventListener("click", performGoogleSearch);
-exportXlsButton.addEventListener("click", exportToXLS);
+themeToggleButton.addEventListener("click", toggleTheme);
