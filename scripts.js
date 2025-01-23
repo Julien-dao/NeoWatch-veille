@@ -35,10 +35,10 @@ function cleanText(text) {
 // Générer une requête en fonction des filtres
 function generateQuery(filters) {
     const queries = {
-        legale: "Lois sur la formation professionnelle en france OR Lois apprentissage en france OR droit du travail en france OR subventions dans la formation en france",
-        competence: "Reconversion professionnelle en france OR évolution des métiers en france OR formations certifiantes en france OR formation qualifiante en france",
-        innovation: "Intelligence artificielle en formation pour adultes en france OR e-learning en france OR microlearning en france",
-        handicap: "Accessibilité numérique en formation pour adulte OR troubles apprentissage en formation pour adultes en france OR amelioration des contenus en france pour le handicap",
+        legale: "Lois sur la formation professionnelle OR droit du travail OR subventions",
+        competence: "Reconversion professionnelle OR évolution des métiers OR formations certifiantes",
+        innovation: "Intelligence artificielle OR e-learning OR microlearning",
+        handicap: "Accessibilité numérique OR troubles apprentissage OR aides financières",
     };
 
     return filters.map(filter => queries[filter] || "").join(" ");
