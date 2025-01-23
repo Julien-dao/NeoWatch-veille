@@ -13,9 +13,6 @@
 
     <!-- Bibliothèque externe pour export en XLS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" crossorigin="anonymous"></script>
-
-    <!-- Script pour Programmable Search Engine -->
-    <script async src="https://cse.google.com/cse.js?cx=076048ef2f0074904"></script>
 </head>
 <body>
     <div class="dashboard">
@@ -24,7 +21,6 @@
             <h1 class="sidebar-title">NeoWatch</h1>
             <nav>
                 <a href="overview.html" class="nav-item" id="overview">
-                    <!-- SVGs et contenu -->
                     Vision d'ensemble
                 </a>
                 <a href="dashboard.html" class="nav-item active" id="dashboard">
@@ -119,14 +115,67 @@
 
     <!-- Intégration des scripts JavaScript -->
     <script>
-        // Vérifie si l'élément existe avant d'ajouter un listener pour éviter les erreurs
-        const themeToggle = document.getElementById("theme-toggle");
-        if (themeToggle) {
-            themeToggle.addEventListener("click", () => {
-                document.body.classList.toggle("light-theme");
-            });
-        } else {
-            console.warn("Element 'theme-toggle' introuvable.");
+        // Sélection des éléments du DOM
+        const searchButton = document.getElementById("search-btn");
+        const filters = document.querySelectorAll(".filters input[type='checkbox']");
+        const startDateInput = document.getElementById("start-date");
+        const endDateInput = document.getElementById("end-date");
+        const entriesTable = document.getElementById("entries-tbody");
+
+        // Gestionnaire pour le bouton Rechercher
+        searchButton.addEventListener("click", () => {
+            const selectedFilters = Array.from(filters)
+                .filter(filter => filter.checked)
+                .map(filter => filter.value);
+
+            const startDate = startDateInput.value;
+            const endDate = endDateInput.value;
+
+            if (selectedFilters.length === 0 && !startDate && !endDate) {
+                alert("Veuillez sélectionner au moins un filtre ou entrer une plage de dates.");
+                return;
+            }
+
+            performSearch(selectedFilters, startDate, endDate);
+        });
+
+        // Fonction de recherche simulée
+        function performSearch(filters, startDate, endDate) {
+            console.log("Filtres sélectionnés :", filters);
+            console.log("Plage de dates :", { startDate, endDate });
+
+            // Simuler des résultats
+            const results = [
+                {
+                    date: "2025-01-23",
+                    source: '<a href="https://example.com" target="_blank">example.com</a>',
+                    content: "Exemple de contenu généré par recherche.",
+                    action: "Lire",
+                    deadline: "2025-02-01",
+                    category: filters.join(", "),
+                },
+            ];
+
+            updateTable(results);
+        }
+
+        // Mise à jour du tableau
+        function updateTable(results) {
+            entriesTable.innerHTML = results
+                .map(
+                    result => `
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>${result.date}</td>
+                        <td>${result.source}</td>
+                        <td>${result.content}</td>
+                        <td>${result.action}</td>
+                        <td>${result.deadline}</td>
+                        <td>${result.category}</td>
+                    </tr>
+                `
+                )
+                .join("");
         }
     </script>
 </body>

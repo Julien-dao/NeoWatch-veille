@@ -12,7 +12,7 @@ const MESSAGES = {
 
 const GOOGLE_SEARCH_API_URL = `https://www.googleapis.com/customsearch/v1`;
 
-// Sélection des éléments DOM avec vérification
+// Sélection des éléments DOM
 const filters = document.querySelectorAll(".filters input[type='checkbox']");
 const startDateInput = document.getElementById("start-date");
 const endDateInput = document.getElementById("end-date");
@@ -21,7 +21,7 @@ const entriesTable = document.getElementById("entries-tbody");
 const exportXlsButton = document.getElementById("export-xls-btn");
 const themeToggleButton = document.getElementById("theme-toggle");
 
-// Vérifications sur les éléments essentiels pour éviter les erreurs
+// Vérifications sur les éléments essentiels
 if (!entriesTable) console.warn("Élément 'entries-tbody' introuvable.");
 if (!searchButton) console.warn("Bouton 'search-btn' introuvable.");
 if (!exportXlsButton) console.warn("Bouton 'export-xls-btn' introuvable.");
@@ -37,15 +37,15 @@ function cleanText(text) {
 // Générer la requête de recherche en fonction des filtres
 function generateQuery(filters) {
     const queries = {
-        legale: "Lois sur la formation professionnelle en france OR droit du travail en france OR subventions en france sur la formation professionnelle",
-        competence: "reconversion professionnelle en france OR évolution des métiers en france OR formations certifiantes en france OR formation qualifiante en france",
-        innovation: "intelligence artificielle et formation professionnelle en france OR e-learning en france OR microlearning en france OR formation par projet OR thecnologie de la formation en france OR didactique",
-        handicap: "Accessibilité numérique en formation en france OR troubles apprentissage en formation professionnelle OR aides financières formation professionelle en france",
+        legale: "Lois sur la formation professionnelle OR droit du travail OR subventions",
+        competence: "reconversion professionnelle OR évolution des métiers OR formations certifiantes",
+        innovation: "intelligence artificielle OR e-learning OR microlearning",
+        handicap: "Accessibilité numérique OR troubles apprentissage OR aides financières",
     };
     return filters.map(filter => queries[filter] || "").join(" ");
 }
 
-// Parser les résultats de l'API Google Custom Search
+// Parser les résultats de Google Custom Search
 function parseGoogleSearchResults(data) {
     return data.items.map(item => ({
         date: item.pagemap?.metatags?.[0]?.["article:published_time"] || "Non disponible",

@@ -36,60 +36,10 @@ body.light-theme {
     font-weight: bold;
     background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107); /* Dégradé holographique */
     background-clip: text;
-    -webkit-background-clip: text; /* Compatibilité pour Chrome et Safari */
-    -moz-background-clip: text; /* Préfixe pour Firefox */
-    color: transparent; /* Texte transparent avec dégradé */
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    color: transparent;
     margin-bottom: 1rem;
-}
-
-/* Zone utilisateur (Bienvenue) */
-.user-greeting {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.user-greeting h2 {
-    font-size: 1.2rem;
-    color: inherit;
-    margin: 0;
-    padding: 0.5rem 0;
-}
-
-/* Zone flottante pour le titre */
-.floating-title {
-    position: absolute;
-    top: 10px;
-    left: 300px; /* Décalage après la barre latérale */
-    background: rgba(0, 0, 0, 0.7); /* Fond semi-transparent */
-    color: #FFFFFF;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    font-size: 1.2rem;
-    z-index: 1000;
-}
-
-body.light-theme .floating-title {
-    background: rgba(255, 255, 255, 0.9);
-    color: #121212;
-}
-
-/* Bouton mode clair/sombre */
-.theme-toggle-btn {
-    margin-top: 0.5rem;
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-    background: #FFC107;
-    color: #1A1A1A;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-}
-
-.theme-toggle-btn:hover {
-    background: #F45B69;
-    color: white;
 }
 
 /* Navigation */
@@ -107,7 +57,7 @@ body.light-theme .floating-title {
 
 .nav-item:hover,
 .nav-item.active {
-    background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107); /* Dégradé holographique */
+    background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107);
     color: white;
     transform: scale(1.05);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -116,6 +66,11 @@ body.light-theme .floating-title {
 .nav-item svg.icon {
     width: 20px;
     height: 20px;
+}
+
+body.light-theme .sidebar {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #121212;
 }
 
 /* Zone principale */
@@ -131,6 +86,26 @@ body.light-theme .main {
     background-color: #FAFAFA;
 }
 
+/* Zone flottante pour le titre */
+.floating-title {
+    position: absolute;
+    top: 10px;
+    left: 300px; /* Décalage après la barre latérale */
+    background: rgba(0, 0, 0, 0.7); /* Fond semi-transparent */
+    color: #FFFFFF;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    font-size: 1.2rem;
+    z-index: 1000;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+body.light-theme .floating-title {
+    background: rgba(255, 255, 255, 0.9);
+    color: #121212;
+}
+
 /* Filtres */
 .filters {
     display: flex;
@@ -141,11 +116,7 @@ body.light-theme .main {
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-body.light-theme .filters {
-    background-color: rgba(0, 0, 0, 0.05);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
 }
 
 .filters h3 {
@@ -164,6 +135,28 @@ body.light-theme .filters {
     color: inherit;
 }
 
+body.light-theme .filters {
+    background-color: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Bouton de recherche */
+button.refresh-button {
+    padding: 0.7rem 1.5rem;
+    font-size: 1rem;
+    color: white;
+    background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+button.refresh-button:hover {
+    filter: brightness(1.2);
+    transform: translateY(-2px);
+}
+
 /* Tableau */
 table {
     width: 100%;
@@ -172,6 +165,7 @@ table {
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     margin-top: 1rem;
+    transition: background 0.3s ease-in-out;
 }
 
 thead {
@@ -184,12 +178,17 @@ th, td {
     padding: 1rem;
     text-align: left;
     border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: background-color 0.3s ease-in-out;
 }
 
 tr:hover {
     background-color: rgba(255, 255, 255, 0.05);
 }
 
+body.light-theme table {
+    background: rgba(0, 0, 0, 0.05);
+}
+
 body.light-theme tr:hover {
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: rgba(0, 0, 0, 0.1);
 }
