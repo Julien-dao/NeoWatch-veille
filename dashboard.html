@@ -13,9 +13,6 @@
 
     <!-- Bibliothèque externe pour export en XLS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" crossorigin="anonymous"></script>
-
-    <!-- Script pour Programmable Search Engine -->
-    <script async src="https://cse.google.com/cse.js?cx=076048ef2f0074904"></script>
 </head>
 <body>
     <div class="dashboard">
@@ -23,13 +20,27 @@
         <aside class="sidebar">
             <h1 class="sidebar-title">NeoWatch</h1>
             <nav>
-                <a href="overview.html" class="nav-item" id="overview">Vision d'ensemble</a>
-                <a href="dashboard.html" class="nav-item active" id="dashboard">Tableau de bord</a>
-                <a href="search.html" class="nav-item" id="search">Recherche</a>
-                <a href="settings.html" class="nav-item" id="settings">Paramètres</a>
-                <a href="faq.html" class="nav-item" id="faq">FAQ</a>
-                <a href="cgv.html" class="nav-item" id="cgv">CGV</a>
-                <a href="index.html" class="nav-item logout" id="logout">Déconnexion</a>
+                <a href="overview.html" class="nav-item" id="overview">
+                    Vision d'ensemble
+                </a>
+                <a href="dashboard.html" class="nav-item active" id="dashboard">
+                    Tableau de bord
+                </a>
+                <a href="search.html" class="nav-item" id="search">
+                    Recherche
+                </a>
+                <a href="settings.html" class="nav-item" id="settings">
+                    Paramètres
+                </a>
+                <a href="faq.html" class="nav-item" id="faq">
+                    FAQ
+                </a>
+                <a href="cgv.html" class="nav-item" id="cgv">
+                    CGV
+                </a>
+                <a href="index.html" class="nav-item logout" id="logout">
+                    Déconnexion
+                </a>
             </nav>
         </aside>
 
@@ -104,10 +115,6 @@
 
     <!-- Intégration des scripts JavaScript -->
     <script>
-        // Constantes pour l'API Google Search
-        const GOOGLE_API_KEY = "AIzaSyDbcwk2XlpO_IET7xi8_3rksFNdfNKh9iM";
-        const GOOGLE_SEARCH_ENGINE_ID = "076048ef2f0074904";
-
         // Sélection des éléments du DOM
         const searchButton = document.getElementById("search-btn");
         const filters = document.querySelectorAll(".filters input[type='checkbox']");
@@ -129,42 +136,34 @@
                 return;
             }
 
-            performGoogleSearch(selectedFilters, startDate, endDate);
+            performSearch(selectedFilters, startDate, endDate);
         });
 
-        // Fonction pour effectuer une recherche Google
-        async function performGoogleSearch(filters, startDate, endDate) {
-            const query = filters.join(" OR ");
-            const apiUrl = `https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(query)}&key=${GOOGLE_API_KEY}&cx=${GOOGLE_SEARCH_ENGINE_ID}`;
+        // Fonction de recherche simulée
+        function performSearch(filters, startDate, endDate) {
+            console.log("Filtres sélectionnés :", filters);
+            console.log("Plage de dates :", { startDate, endDate });
 
-            try {
-                const response = await fetch(apiUrl);
-                if (!response.ok) throw new Error(`Erreur : ${response.status}`);
-                const data = await response.json();
+            // Simuler des résultats
+            const results = [
+                {
+                    date: "2025-01-23",
+                    source: '<a href="https://example.com" target="_blank">example.com</a>',
+                    content: "Exemple de contenu généré par recherche.",
+                    action: "Lire",
+                    deadline: "2025-02-01",
+                    category: filters.join(", "),
+                },
+            ];
 
-                if (data.items) {
-                    updateTable(data.items.map(item => ({
-                        date: item.pagemap?.metatags?.[0]?.["article:published_time"] || "Non disponible",
-                        source: `<a href="${item.link}" target="_blank">${item.displayLink}</a>`,
-                        content: item.snippet || "Résumé non disponible",
-                        action: "Lire",
-                        deadline: "À définir",
-                        category: filters.join(", "),
-                    })));
-                } else {
-                    alert("Aucun résultat trouvé.");
-                    entriesTable.innerHTML = "<tr><td colspan='7'>Aucun résultat</td></tr>";
-                }
-            } catch (error) {
-                console.error("Erreur lors de la recherche :", error);
-                alert("Une erreur est survenue lors de la recherche.");
-            }
+            updateTable(results);
         }
 
         // Mise à jour du tableau
         function updateTable(results) {
             entriesTable.innerHTML = results
-                .map(result => `
+                .map(
+                    result => `
                     <tr>
                         <td><input type="checkbox"></td>
                         <td>${result.date}</td>
@@ -174,9 +173,11 @@
                         <td>${result.deadline}</td>
                         <td>${result.category}</td>
                     </tr>
-                `)
+                `
+                )
                 .join("");
         }
     </script>
 </body>
 </html>
+

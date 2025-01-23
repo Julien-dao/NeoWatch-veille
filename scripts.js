@@ -1,7 +1,7 @@
-// Configuration du projet
+// Configuration du projet  
 const GOOGLE_API_KEY = "AIzaSyDbcwk2XlpO_IET7xi8_3rksFNdfNKh9iM";
 const GOOGLE_SEARCH_ENGINE_ID = "076048ef2f0074904";
-const GOOGLE_SEARCH_API_URL = `https://www.googleapis.com/customsearch/v1`;
+const GOOGLE_SEARCH_API_URL = "https://www.googleapis.com/customsearch/v1";
 
 const MESSAGES = {
     noResults: "Aucun résultat trouvé pour votre recherche.",
@@ -10,7 +10,7 @@ const MESSAGES = {
     exportNoSelection: "Veuillez sélectionner au moins une entrée pour l'exportation.",
 };
 
-// Sélection des éléments DOM
+// Sélection des éléments DOM  
 const filters = document.querySelectorAll(".filters input[type='checkbox']");
 const startDateInput = document.getElementById("start-date");
 const endDateInput = document.getElementById("end-date");
@@ -19,21 +19,25 @@ const entriesTable = document.getElementById("entries-tbody");
 const exportXlsButton = document.getElementById("export-xls-btn");
 const themeToggleButton = document.getElementById("theme-toggle");
 
-// Vérifications initiales
-if (!entriesTable) console.warn("Élément 'entries-tbody' introuvable.");
-if (!searchButton) console.warn("Bouton 'search-btn' introuvable.");
-if (!exportXlsButton) console.warn("Bouton 'export-xls-btn' introuvable.");
-if (!themeToggleButton) console.warn("Bouton 'theme-toggle' introuvable.");
+// Vérifications initiales  
+const checkElement = (element, name) => {
+    if (!element) console.warn(`${name} introuvable.`);
+};
 
-// Nettoyer le texte HTML
+checkElement(entriesTable, "Élément 'entries-tbody'");
+checkElement(searchButton, "Bouton 'search-btn'");
+checkElement(exportXlsButton, "Bouton 'export-xls-btn'");
+checkElement(themeToggleButton, "Bouton 'theme-toggle'");
+
+// Nettoyer le texte HTML  
 function cleanText(text) {
     const tempDiv = document.createElement("div");
     tempDiv.innerHTML = text;
     return tempDiv.textContent || tempDiv.innerText || "";
 }
 
-// Générer une requête en fonction des filtres
-function generateQuery(filters) {
+// Générer une requête en fonction des filtres  
+function generateQuery(selectedFilters) {
     const queries = {
         legale: "Lois sur la formation professionnelle OR droit du travail OR subventions",
         competence: "Reconversion professionnelle OR évolution des métiers OR formations certifiantes",
@@ -41,10 +45,10 @@ function generateQuery(filters) {
         handicap: "Accessibilité numérique OR troubles apprentissage OR aides financières",
     };
 
-    return filters.map(filter => queries[filter] || "").join(" ");
+    return selectedFilters.map(filter => queries[filter] || "").join(" ");
 }
 
-// Parser les résultats Google Custom Search
+// Parser les résultats Google Custom Search  
 function parseGoogleSearchResults(data) {
     return data.items.map(item => ({
         date: item.pagemap?.metatags?.[0]?.["article:published_time"] || "Non disponible",
@@ -56,7 +60,7 @@ function parseGoogleSearchResults(data) {
     }));
 }
 
-// Générer une liste d'actions par défaut
+// Générer une liste d'actions par défaut  
 function generateActionList() {
     return `
         <ul class="todo-list">
@@ -68,7 +72,7 @@ function generateActionList() {
     `;
 }
 
-// Ajouter les résultats au tableau
+// Ajouter les résultats au tableau  
 function appendToTable(results) {
     clearTable();
 
@@ -84,7 +88,7 @@ function appendToTable(results) {
                 <td>${result.category}</td>
             </tr>
         `;
-        entriesTable?.insertAdjacentHTML("beforeend", row);
+        entriesTable.insertAdjacentHTML("beforeend", row);
     });
 
     document.querySelectorAll(".add-action").forEach(button => {
@@ -92,24 +96,24 @@ function appendToTable(results) {
     });
 }
 
-// Effacer les entrées du tableau
+// Effacer les entrées du tableau  
 function clearTable() {
     if (entriesTable) {
         entriesTable.innerHTML = `<tr><td colspan="7">Aucune donnée disponible</td></tr>`;
     }
 }
 
-// Gérer une nouvelle action utilisateur
+// Gérer une nouvelle action utilisateur  
 function handleAddAction(event) {
     const newAction = prompt("Ajoutez une nouvelle action :");
     if (newAction) {
         const todoList = event.target.closest(".todo-list");
-        const newItem = `<li><input type="checkbox"> ${newAction}</li>`;
+        const newItem = `<li><input type="checkbox"> ${cleanText(newAction)}</li>`;
         todoList.insertAdjacentHTML("beforeend", newItem);
     }
 }
 
-// Exporter en XLS
+// Exporter en XLS  
 function exportToXLS() {
     if (!entriesTable) return;
 
@@ -137,7 +141,7 @@ function exportToXLS() {
     XLSX.writeFile(workbook, "export.xlsx");
 }
 
-// Basculer entre les thèmes clair et sombre
+// Basculer entre les thèmes clair et sombre  
 function toggleTheme() {
     if (themeToggleButton) {
         const isLightTheme = document.body.classList.toggle("light-theme");
@@ -145,7 +149,7 @@ function toggleTheme() {
     }
 }
 
-// Effectuer une recherche avec l'API Google
+// Effectuer une recherche avec l'API Google  
 async function performGoogleSearch() {
     const selectedFilters = Array.from(filters)
         .filter(filter => filter.checked)
@@ -181,7 +185,7 @@ async function performGoogleSearch() {
     }
 }
 
-// Gestionnaires d'événements
-if (searchButton) searchButton.addEventListener("click", performGoogleSearch);
-if (themeToggleButton) themeToggleButton.addEventListener("click", toggleTheme);
-if (exportXlsButton) exportXlsButton.addEventListener("click", exportToXLS);
+// Gestionnaires d'événements  
+searchButton?.addEventListener("click", performGoogleSearch);
+themeToggleButton?.addEventListener("click", toggleTheme);
+exportXlsButton?.addEventListener("click", exportToXLS);
