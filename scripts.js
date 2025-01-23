@@ -19,7 +19,7 @@ const entriesTable = document.getElementById("entries-tbody");
 const exportXlsButton = document.getElementById("export-xls-btn");
 const themeToggleButton = document.getElementById("theme-toggle");
 
-// Vérifications initiales  
+// Vérification des éléments DOM  
 const checkElement = (element, name) => {
     if (!element) console.warn(`${name} introuvable.`);
 };
@@ -30,14 +30,14 @@ checkElement(exportXlsButton, "Bouton 'export-xls-btn'");
 checkElement(themeToggleButton, "Bouton 'theme-toggle'");
 
 // Nettoyer le texte HTML  
-function cleanText(text) {
+const cleanText = text => {
     const tempDiv = document.createElement("div");
     tempDiv.innerHTML = text;
     return tempDiv.textContent || tempDiv.innerText || "";
-}
+};
 
 // Générer une requête en fonction des filtres  
-function generateQuery(selectedFilters) {
+const generateQuery = selectedFilters => {
     const queries = {
         legale: "Lois sur la formation professionnelle OR droit du travail OR subventions",
         competence: "Reconversion professionnelle OR évolution des métiers OR formations certifiantes",
@@ -46,10 +46,10 @@ function generateQuery(selectedFilters) {
     };
 
     return selectedFilters.map(filter => queries[filter] || "").join(" ");
-}
+};
 
 // Parser les résultats Google Custom Search  
-function parseGoogleSearchResults(data) {
+const parseGoogleSearchResults = data => {
     return data.items.map(item => ({
         date: item.pagemap?.metatags?.[0]?.["article:published_time"] || "Non disponible",
         source: `<a href="${item.link}" target="_blank">${item.displayLink}</a>`,
@@ -58,22 +58,20 @@ function parseGoogleSearchResults(data) {
         deadline: '<input type="date" class="deadline-input">',
         category: "Non catégorisé",
     }));
-}
+};
 
 // Générer une liste d'actions par défaut  
-function generateActionList() {
-    return `
-        <ul class="todo-list">
-            <li><input type="checkbox"> Lire</li>
-            <li><input type="checkbox"> Partager</li>
-            <li><input type="checkbox"> Enregistrer</li>
-            <li><button class="add-action">Ajouter</button></li>
-        </ul>
-    `;
-}
+const generateActionList = () => `
+    <ul class="todo-list">
+        <li><input type="checkbox"> Lire</li>
+        <li><input type="checkbox"> Partager</li>
+        <li><input type="checkbox"> Enregistrer</li>
+        <li><button class="add-action">Ajouter</button></li>
+    </ul>
+`;
 
 // Ajouter les résultats au tableau  
-function appendToTable(results) {
+const appendToTable = results => {
     clearTable();
 
     results.forEach((result, index) => {
@@ -94,29 +92,25 @@ function appendToTable(results) {
     document.querySelectorAll(".add-action").forEach(button => {
         button.addEventListener("click", handleAddAction);
     });
-}
+};
 
 // Effacer les entrées du tableau  
-function clearTable() {
-    if (entriesTable) {
-        entriesTable.innerHTML = `<tr><td colspan="7">Aucune donnée disponible</td></tr>`;
-    }
-}
+const clearTable = () => {
+    entriesTable.innerHTML = `<tr><td colspan="7">Aucune donnée disponible</td></tr>`;
+};
 
 // Gérer une nouvelle action utilisateur  
-function handleAddAction(event) {
+const handleAddAction = event => {
     const newAction = prompt("Ajoutez une nouvelle action :");
     if (newAction) {
         const todoList = event.target.closest(".todo-list");
         const newItem = `<li><input type="checkbox"> ${cleanText(newAction)}</li>`;
         todoList.insertAdjacentHTML("beforeend", newItem);
     }
-}
+};
 
 // Exporter en XLS  
-function exportToXLS() {
-    if (!entriesTable) return;
-
+const exportToXLS = () => {
     const selectedRows = Array.from(document.querySelectorAll(".select-row:checked")).map(row =>
         row.closest("tr")
     );
@@ -139,24 +133,21 @@ function exportToXLS() {
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Veille");
     XLSX.writeFile(workbook, "export.xlsx");
-}
+};
 
 // Basculer entre les thèmes clair et sombre  
-function toggleTheme() {
-    if (themeToggleButton) {
-        const isLightTheme = document.body.classList.toggle("light-theme");
-        themeToggleButton.textContent = isLightTheme ? "🌑 Mode sombre" : "🌕 Mode clair";
-    }
-}
+const toggleTheme = () => {
+    const isLightTheme = document.body.classList.toggle("light-theme");
+    themeToggleButton.textContent = isLightTheme ? "🌑 Mode sombre" : "🌕 Mode clair";
+};
 
 // Effectuer une recherche avec l'API Google  
-async function performGoogleSearch() {
+const performGoogleSearch = async () => {
     const selectedFilters = Array.from(filters)
         .filter(filter => filter.checked)
         .map(filter => filter.value);
 
     const query = generateQuery(selectedFilters);
-
     if (!query.trim()) {
         alert(MESSAGES.emptyFilters);
         return;
@@ -164,7 +155,9 @@ async function performGoogleSearch() {
 
     const startDate = startDateInput?.value ? ` after:${startDateInput.value}` : "";
     const endDate = endDateInput?.value ? ` before:${endDateInput.value}` : "";
-    const apiUrl = `${GOOGLE_SEARCH_API_URL}?q=${encodeURIComponent(query + startDate + endDate)}&key=${GOOGLE_API_KEY}&cx=${GOOGLE_SEARCH_ENGINE_ID}`;
+    
+    // Ajout du paramètre lr pour spécifier la langue  
+    const apiUrl = `${GOOGLE_SEARCH_API_URL}?q=${encodeURIComponent(query + startDate + endDate)}&key=${GOOGLE_API_KEY}&cx=${GOOGLE_SEARCH_ENGINE_ID}&lr=lang_fr`;
 
     try {
         const response = await fetch(apiUrl);
@@ -183,7 +176,7 @@ async function performGoogleSearch() {
         alert(MESSAGES.errorFetching);
         console.error("Erreur lors de la recherche :", error);
     }
-}
+};
 
 // Gestionnaires d'événements  
 searchButton?.addEventListener("click", performGoogleSearch);
