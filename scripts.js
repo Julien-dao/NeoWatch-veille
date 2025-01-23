@@ -12,7 +12,7 @@ const MESSAGES = {
 
 const GOOGLE_SEARCH_API_URL = `https://www.googleapis.com/customsearch/v1`;
 
-// Sélection des éléments DOM
+// Sélection des éléments DOM avec vérification
 const filters = document.querySelectorAll(".filters input[type='checkbox']");
 const startDateInput = document.getElementById("start-date");
 const endDateInput = document.getElementById("end-date");
@@ -20,6 +20,12 @@ const searchButton = document.getElementById("search-btn");
 const entriesTable = document.getElementById("entries-tbody");
 const exportXlsButton = document.getElementById("export-xls-btn");
 const themeToggleButton = document.getElementById("theme-toggle");
+
+// Vérifications sur les éléments essentiels pour éviter les erreurs
+if (!entriesTable) console.warn("Élément 'entries-tbody' introuvable.");
+if (!searchButton) console.warn("Bouton 'search-btn' introuvable.");
+if (!exportXlsButton) console.warn("Bouton 'export-xls-btn' introuvable.");
+if (!themeToggleButton) console.warn("Bouton 'theme-toggle' introuvable.");
 
 // Nettoyer le texte HTML
 function cleanText(text) {
@@ -78,7 +84,7 @@ function appendToTable(results) {
                 <td>${result.category}</td>
             </tr>
         `;
-        entriesTable.insertAdjacentHTML("beforeend", row);
+        entriesTable?.insertAdjacentHTML("beforeend", row);
     });
 
     document.querySelectorAll(".add-action").forEach(button => {
@@ -88,7 +94,9 @@ function appendToTable(results) {
 
 // Effacer les entrées du tableau
 function clearTable() {
-    entriesTable.innerHTML = `<tr><td colspan="7">Aucune donnée disponible</td></tr>`;
+    if (entriesTable) {
+        entriesTable.innerHTML = `<tr><td colspan="7">Aucune donnée disponible</td></tr>`;
+    }
 }
 
 // Ajouter une nouvelle action
@@ -103,6 +111,8 @@ function handleAddAction(event) {
 
 // Exporter en fichier XLS
 function exportToXLS() {
+    if (!entriesTable) return;
+
     const selectedRows = Array.from(document.querySelectorAll(".select-row:checked")).map(row =>
         row.closest("tr")
     );
@@ -129,8 +139,10 @@ function exportToXLS() {
 
 // Basculer entre les thèmes clair et sombre
 function toggleTheme() {
-    const isLightTheme = document.body.classList.toggle("light-theme");
-    themeToggleButton.textContent = isLightTheme ? "🌑 Mode sombre" : "🌕 Mode clair";
+    if (themeToggleButton) {
+        const isLightTheme = document.body.classList.toggle("light-theme");
+        themeToggleButton.textContent = isLightTheme ? "🌑 Mode sombre" : "🌕 Mode clair";
+    }
 }
 
 // Effectuer une recherche avec l'API Google
@@ -146,8 +158,8 @@ async function performGoogleSearch() {
         return;
     }
 
-    const startDate = startDateInput.value ? ` after:${startDateInput.value}` : "";
-    const endDate = endDateInput.value ? ` before:${endDateInput.value}` : "";
+    const startDate = startDateInput?.value ? ` after:${startDateInput.value}` : "";
+    const endDate = endDateInput?.value ? ` before:${endDateInput.value}` : "";
 
     const apiUrl = `${GOOGLE_SEARCH_API_URL}?q=${encodeURIComponent(query + startDate + endDate)}&key=${GOOGLE_API_KEY}&cx=${GOOGLE_SEARCH_ENGINE_ID}`;
 
@@ -171,7 +183,7 @@ async function performGoogleSearch() {
     }
 }
 
-// Gestionnaires d'événements
-searchButton.addEventListener("click", performGoogleSearch);
-themeToggleButton.addEventListener("click", toggleTheme);
-exportXlsButton.addEventListener("click", exportToXLS);
+// Gestionnaires d'événements avec vérifications
+if (searchButton) searchButton.addEventListener("click", performGoogleSearch);
+if (themeToggleButton) themeToggleButton.addEventListener("click", toggleTheme);
+if (exportXlsButton) exportXlsButton.addEventListener("click", exportToXLS);
