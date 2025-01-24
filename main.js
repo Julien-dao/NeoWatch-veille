@@ -81,50 +81,23 @@ const generateQuery = selectedFilters => {
             Accessibilité numérique en formation en France OR 
             Formation adaptée aux handicaps moteurs en France OR 
             Dispositifs d’accompagnement des apprenants handicapés en France
-        `,
-        financement: `
-            CPF (Compte Personnel de Formation) en France OR 
-            Aides financières pour les apprentis en France OR 
-            Plan de développement des compétences en France OR 
-            Subventions pour la formation des adultes en France OR 
-            OPCO et financement de la formation en France
-        `,
-        evaluation: `
-            Certification Qualiopi en France OR 
-            Évaluation des compétences professionnelles en France OR 
-            Reconnaissance des acquis de l'expérience (VAE) en France OR 
-            Dispositifs de certification en formation en France OR 
-            Réforme des diplômes professionnels en France
-        `,
-        reformes: `
-            Réforme de la formation professionnelle en France OR 
-            Politiques publiques pour la formation des adultes en France OR 
-            Pacte national pour la formation en France OR 
-            Formation et emploi dans le plan de relance en France
-        `,
-        developpement_durable: `
-            Formation aux métiers de la transition écologique en France OR 
-            Développement durable et pédagogie en France OR 
-            Écoconception dans la formation professionnelle en France OR 
-            Formation sur les enjeux climatiques en France
         `
     };
 
-    // Retourne la requête basée sur les filtres sélectionnés
-    return selectedFilters
-        .map(filter => queries[filter]?.trim() || "")
-        .join(" ");
+    return selectedFilters.map(filter => queries[filter]?.trim() || "").join(" ");
 };
 
 // Parse les résultats Google Custom Search
-const parseGoogleSearchResults = data => {
+const parseGoogleSearchResults = (data, selectedFilters) => {
+    // Détermine la catégorie active
+    const category = selectedFilters.join(", ");
+
     return data.items.map(item => ({
-        date: item.pagemap?.metatags?.[0]?.["article:published_time"] || "Non disponible",
         source: `<a href="${item.link}" target="_blank">${item.displayLink}</a>`,
         content: item.snippet || "Résumé non disponible",
         action: generateActionList(),
         deadline: '<input type="date" class="deadline-input">',
-        category: "Non catégorisé",
+        category: category || "Non catégorisé",
     }));
 };
 
@@ -136,7 +109,7 @@ const generateActionList = () => `
 `;
 
 // Met à jour le tableau avec les résultats
-const appendToTable = results => {
+const appendToTable = (results, selectedFilters) => {
     if (!results || results.length === 0) {
         clearTable();
         alert(MESSAGES.noResults);
@@ -144,10 +117,9 @@ const appendToTable = results => {
     }
 
     entriesTable.innerHTML = results
-        .map((result, index) => `
+        .map(result => `
             <tr>
                 <td><input type="checkbox" class="select-row"></td>
-                <td>${result.date}</td>
                 <td>${result.source}</td>
                 <td>${result.content}</td>
                 <td>${result.action}</td>
@@ -178,7 +150,7 @@ const saveEntry = entry => {
 
 // Efface le contenu du tableau
 const clearTable = () => {
-    entriesTable.innerHTML = `<tr><td colspan="7">Aucune donnée disponible</td></tr>`;
+    entriesTable.innerHTML = `<tr><td colspan="6">Aucune donnée disponible</td></tr>`;
 };
 
 // Effectue une recherche via Google Custom Search API
@@ -186,6 +158,7 @@ const performGoogleSearch = async () => {
     const selectedFilters = Array.from(filters)
         .filter(filter => filter.checked)
         .map(filter => filter.value);
+
     const query = generateQuery(selectedFilters);
 
     if (!query.trim()) {
@@ -211,8 +184,8 @@ const performGoogleSearch = async () => {
             return;
         }
 
-        const results = parseGoogleSearchResults(data);
-        appendToTable(results);
+        const results = parseGoogleSearchResults(data, selectedFilters);
+        appendToTable(results, selectedFilters);
     } catch (error) {
         console.error("Erreur dans performGoogleSearch :", error);
         alert(MESSAGES.errorFetching);
@@ -221,4 +194,4 @@ const performGoogleSearch = async () => {
 
 // Gère les événements
 searchButton.addEventListener("click", performGoogleSearch);
-exportXlsButton.addEventListener("click", exportToXLS);
+exportXlsButton.addEventListener("click", () => alert("Fonction Export à implémenter."));
