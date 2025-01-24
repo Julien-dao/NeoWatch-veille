@@ -23,7 +23,7 @@ body.light-theme {
     background-color: rgba(26, 26, 26, 0.95); /* Noir translucide */
     display: flex;
     align-items: center;
-    justify-content: center; /* Centre horizontalement les éléments */
+    justify-content: center; /* Centre tous les éléments horizontalement */
     padding: 0 2rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Ombre */
     border-bottom: 3px solid transparent;
@@ -42,7 +42,8 @@ body.light-theme {
     -webkit-background-clip: text;
     -moz-background-clip: text;
     color: transparent;
-    margin-right: auto; /* Garde le titre à gauche */
+    margin: 0 auto; /* Centre le titre horizontalement */
+    text-align: center;
 }
 
 .navbar nav {
@@ -54,7 +55,7 @@ body.light-theme {
 
 .nav-item {
     text-decoration: none;
-    color: #E0E0E0; /* Légère amélioration du contraste */
+    color: #E0E0E0; /* Contraste amélioré */
     padding: 0.6rem 1.2rem;
     border-radius: 12px; /* Coins arrondis pour un style moderne */
     font-size: 1rem;
