@@ -38,6 +38,7 @@ const cleanText = text => {
 const generateQuery = selectedFilters => {
     const queries = {
         legale: `
+            site:.gouv.fr OR 
             Lois sur les organismes de formation en France OR 
             Réglementation Qualiopi en France OR 
             Lois apprentissage en France OR 
@@ -47,6 +48,8 @@ const generateQuery = selectedFilters => {
             Obligation légale des formateurs en France
         `,
         competence: `
+            site:.fr OR 
+            site:opco.fr OR 
             Évolution des métiers de la formation en France OR 
             Métier de formateur en France OR 
             Réforme des certifications professionnelles en France OR 
@@ -69,6 +72,7 @@ const generateQuery = selectedFilters => {
             Plateformes de e-learning en France
         `,
         handicap: `
+            site:.gouv.fr OR 
             Accessibilité pédagogique en France OR 
             Inclusion des personnes en situation de handicap en formation en France OR 
             Adaptation des formations pour les troubles d’apprentissage en France OR 
@@ -106,6 +110,7 @@ const generateQuery = selectedFilters => {
         `
     };
 
+    // Retourne la requête basée sur les filtres sélectionnés
     return selectedFilters
         .map(filter => queries[filter]?.trim() || "")
         .join(" ");
