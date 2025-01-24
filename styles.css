@@ -27,7 +27,7 @@ body.light-theme {
     padding: 0 2rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Ombre */
     border-bottom: 3px solid transparent;
-    border-image: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107) 1; /* Bordure holographique */
+    border-image: linear-gradient(90deg, #5BC0EB, #00FF87) 1; /* Bordure holographique */
     transition: background-color 0.3s ease-in-out;
     position: fixed;
     top: 0;
@@ -37,7 +37,7 @@ body.light-theme {
 .navbar h1 {
     font-size: 1.8rem;
     font-weight: bold;
-    background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107); /* Dégradé holographique */
+    background: linear-gradient(90deg, #5BC0EB, #00FF87); /* Dégradé holographique */
     background-clip: text;
     -webkit-background-clip: text;
     -moz-background-clip: text;
@@ -65,7 +65,7 @@ body.light-theme {
 
 .nav-item:hover,
 .nav-item.active {
-    background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107);
+    background: linear-gradient(90deg, #5BC0EB, #00FF87);
     color: white;
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
@@ -122,7 +122,7 @@ body.light-theme .main {
 .filter-card:hover {
     transform: translateY(-6px) scale(1.08);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-    background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107);
+    background: linear-gradient(90deg, #5BC0EB, #00FF87);
     color: white;
 }
 
@@ -163,7 +163,7 @@ table {
 }
 
 thead {
-    background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107);
+    background: linear-gradient(90deg, #5BC0EB, #00FF87);
     color: white;
     font-size: 1.1rem;
     text-transform: uppercase; /* Titres en majuscules pour moderniser */
@@ -222,6 +222,7 @@ body.light-theme tr:hover {
     justify-content: center;
     align-items: center;
     min-height: 300px; /* Hauteur minimale pour centrer verticalement */
+    gap: 2rem; /* Espace entre le logo et les lettres */
 }
 
 .logo {
@@ -229,6 +230,7 @@ body.light-theme tr:hover {
     height: auto;
     display: block;
 }
+
 /* Boutons */
 .btn {
     padding: 10px 20px;
@@ -243,96 +245,18 @@ body.light-theme tr:hover {
     font-weight: bold;
 }
 
-/* Bouton primaire */
 .btn.primary {
-    background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107); /* Dégradé holographique */
+    background: linear-gradient(90deg, #5BC0EB, #00FF87); /* Dégradé holographique */
     color: white;
 }
 
 .btn.primary:hover {
-    background: linear-gradient(90deg, #FFC107, #F45B69, #5BC0EB); /* Dégradé inversé au survol */
+    background: linear-gradient(90deg, #00FF87, #5BC0EB); /* Dégradé inversé au survol */
     box-shadow: 0 4px 12px rgba(255, 255, 255, 0.5); /* Ombre au survol */
     transform: translateY(-2px); /* Effet de soulèvement */
 }
 
-/* Bouton secondaire */
-.btn.secondary {
-    background: rgba(255, 255, 255, 0.1); /* Fond translucide */
-    color: #E0E0E0;
-}
-
-.btn.secondary:hover {
-    background: rgba(255, 255, 255, 0.2); /* Fond légèrement plus clair au survol */
-    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.5); /* Ombre au survol */
-    transform: translateY(-2px); /* Effet de soulèvement */
-}
-/* En-tête */
-.header {
-    display: flex;
-    justify-content: space-between; /* Aligne le contenu à gauche et à droite */
-    align-items: center;
-    padding: 0 2rem;
-    background-color: rgba(26, 26, 26, 0.95); /* Fond sombre */
-    height: 70px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Ombre */
-    border-bottom: 3px solid transparent;
-    border-image: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107) 1;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-}
-
-/* Titre dans l'en-tête */
-.site-title {
-    font-size: 1.8rem;
-    font-weight: bold;
-    background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    margin: 0;
-}
-
-/* Boutons dans l'en-tête */
-.nav-buttons {
-    display: flex;
-    gap: 1rem; /* Espace entre les boutons */
-}
-
-/* Titre au-dessus du logo */
-.logo-title {
-    font-size: 3rem;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 1rem;
-    background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-}
-
-/* Alignement de la zone principale */
-main {
-    padding-top: 100px; /* Espace pour éviter que le contenu soit caché par la barre fixe */
-}
-/* Conteneur principal pour le logo et les lettres */
-.logo-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem; /* Espace entre le logo et les lettres */
-    min-height: 300px;
-}
-
-/* Style du logo */
-.logo {
-    max-width: 300px;
-    height: auto;
-    display: block;
-}
-
-/* Conteneur pour l'animation des lettres */
+/* Typewriter Animation */
 .typewriter {
     font-size: 6rem; /* Taille doublée */
     font-weight: bold;
@@ -343,7 +267,6 @@ main {
     animation: typing 1.5s steps(6, end), blink 0.5s step-end infinite; /* Animation plus rapide */
 }
 
-/* Animation de type machine à écrire */
 @keyframes typing {
     from {
         width: 0;
@@ -353,7 +276,6 @@ main {
     }
 }
 
-/* Animation du curseur clignotant */
 @keyframes blink {
     from {
         border-color: transparent;
