@@ -193,7 +193,9 @@ const performGoogleSearch = async () => {
         return;
     }
 
-    const startDate = startDateInput?.value ? ` after:${startDateInput.value}` : "";
+    // Ajout automatique du filtre de date pour l'année en cours
+    const currentYear = new Date().getFullYear();
+    const startDate = startDateInput?.value ? ` after:${startDateInput.value}` : ` after:${currentYear}-01-01`;
     const endDate = endDateInput?.value ? ` before:${endDateInput.value}` : "";
 
     const apiUrl = `${GOOGLE_SEARCH_API_URL}?q=${encodeURIComponent(query + startDate + endDate)}&key=${GOOGLE_API_KEY}&cx=${GOOGLE_SEARCH_ENGINE_ID}&lr=lang_fr`;
