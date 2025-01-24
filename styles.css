@@ -37,6 +37,7 @@ body.light-theme {
     background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107); /* Dégradé holographique */
     background-clip: text;
     -webkit-background-clip: text;
+    -moz-background-clip: text;
     color: transparent;
     margin-bottom: 1rem;
 }
@@ -62,6 +63,11 @@ body.light-theme {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
+body.light-theme .sidebar {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #121212;
+}
+
 /* Zone principale */
 .main {
     flex-grow: 1;
@@ -75,13 +81,33 @@ body.light-theme .main {
     background-color: #FAFAFA;
 }
 
-/* Cartes de filtres */
+/* Zone flottante pour le titre */
+.floating-title {
+    position: absolute;
+    top: 10px;
+    left: 300px; /* Décalage après la barre latérale */
+    background: rgba(0, 0, 0, 0.7); /* Fond semi-transparent */
+    color: #FFFFFF;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    font-size: 1.2rem;
+    z-index: 1000;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+body.light-theme .floating-title {
+    background: rgba(255, 255, 255, 0.9);
+    color: #121212;
+}
+
+/* Cartes filtres */
 .filters {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-    justify-content: center; /* Aligne les cartes au centre */
-    padding: 2rem;
+    justify-content: center; /* Centre les cartes */
+    padding: 1.5rem;
     background-color: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
@@ -124,7 +150,6 @@ body.light-theme .main {
     font-weight: bold;
 }
 
-/* Transition thème clair/sombre */
 body.light-theme .filters {
     background-color: rgba(0, 0, 0, 0.05);
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -164,4 +189,23 @@ body.light-theme table {
 
 body.light-theme tr:hover {
     background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .filters {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .filter-card {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+        padding: 1rem;
+    }
+
+    .sidebar {
+        width: 200px;
+    }
 }
