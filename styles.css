@@ -349,7 +349,7 @@ main {
         width: 0;
     }
     to {
-        width: 7.5ch; /* Taille correspondant à "O N I T O" */
+        width: 20ch; /* Taille correspondant à "O N I T O" */
     }
 }
 
