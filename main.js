@@ -87,10 +87,22 @@ const generateQuery = selectedFilters => {
     return selectedFilters.map(filter => queries[filter]?.trim() || "").join(" ");
 };
 
+// Calcule la plage de dates pour les 24 derniers mois
+const calculateDateRange = () => {
+    const today = new Date();
+    const endDate = today.toISOString().split("T")[0];
+
+    // Calcul de la date 24 mois avant aujourd'hui
+    const startDate = new Date();
+    startDate.setMonth(today.getMonth() - 24);
+    const startDateISO = startDate.toISOString().split("T")[0];
+
+    return { startDate: startDateISO, endDate };
+};
+
 // Parse les résultats Google Custom Search
 const parseGoogleSearchResults = (data, selectedFilters) => {
-    // Détermine la catégorie active
-    const category = selectedFilters.join(", ");
+    const category = selectedFilters.map(filter => filter.charAt(0).toUpperCase() + filter.slice(1)).join(", ");
 
     return data.items.map(item => ({
         source: `<a href="${item.link}" target="_blank">${item.displayLink}</a>`,
@@ -109,7 +121,7 @@ const generateActionList = () => `
 `;
 
 // Met à jour le tableau avec les résultats
-const appendToTable = (results, selectedFilters) => {
+const appendToTable = (results) => {
     if (!results || results.length === 0) {
         clearTable();
         alert(MESSAGES.noResults);
@@ -150,7 +162,7 @@ const saveEntry = entry => {
 
 // Efface le contenu du tableau
 const clearTable = () => {
-    entriesTable.innerHTML = `<tr><td colspan="6">Aucune donnée disponible</td></tr>`;
+    entriesTable.innerHTML = `<tr><td colspan="5">Aucune donnée disponible</td></tr>`;
 };
 
 // Effectue une recherche via Google Custom Search API
@@ -166,12 +178,9 @@ const performGoogleSearch = async () => {
         return;
     }
 
-    // Ajout automatique du filtre de date pour l'année en cours
-    const currentYear = new Date().getFullYear();
-    const startDate = startDateInput?.value ? ` after:${startDateInput.value}` : ` after:${currentYear}-01-01`;
-    const endDate = endDateInput?.value ? ` before:${endDateInput.value}` : "";
+    const { startDate, endDate } = calculateDateRange();
 
-    const apiUrl = `${GOOGLE_SEARCH_API_URL}?q=${encodeURIComponent(query + startDate + endDate)}&key=${GOOGLE_API_KEY}&cx=${GOOGLE_SEARCH_ENGINE_ID}&lr=lang_fr`;
+    const apiUrl = `${GOOGLE_SEARCH_API_URL}?q=${encodeURIComponent(query + ` after:${startDate} before:${endDate}`)}&key=${GOOGLE_API_KEY}&cx=${GOOGLE_SEARCH_ENGINE_ID}&lr=lang_fr`;
 
     try {
         const response = await fetch(apiUrl);
@@ -185,7 +194,7 @@ const performGoogleSearch = async () => {
         }
 
         const results = parseGoogleSearchResults(data, selectedFilters);
-        appendToTable(results, selectedFilters);
+        appendToTable(results);
     } catch (error) {
         console.error("Erreur dans performGoogleSearch :", error);
         alert(MESSAGES.errorFetching);
