@@ -229,3 +229,40 @@ body.light-theme tr:hover {
     height: auto;
     display: block;
 }
+/* Boutons */
+.btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 8px; /* Coins arrondis */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Bordure translucide */
+    background: rgba(255, 255, 255, 0.1); /* Fond translucide */
+    color: #E0E0E0; /* Texte gris clair */
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    text-transform: uppercase; /* Texte en majuscules */
+    font-weight: bold;
+}
+
+/* Bouton primaire */
+.btn.primary {
+    background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107); /* Dégradé holographique */
+    color: white;
+}
+
+.btn.primary:hover {
+    background: linear-gradient(90deg, #FFC107, #F45B69, #5BC0EB); /* Dégradé inversé au survol */
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.5); /* Ombre au survol */
+    transform: translateY(-2px); /* Effet de soulèvement */
+}
+
+/* Bouton secondaire */
+.btn.secondary {
+    background: rgba(255, 255, 255, 0.1); /* Fond translucide */
+    color: #E0E0E0;
+}
+
+.btn.secondary:hover {
+    background: rgba(255, 255, 255, 0.2); /* Fond légèrement plus clair au survol */
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.5); /* Ombre au survol */
+    transform: translateY(-2px); /* Effet de soulèvement */
+}
