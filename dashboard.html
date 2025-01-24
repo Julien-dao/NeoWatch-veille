@@ -20,28 +20,28 @@
 <body>
     <div class="dashboard">
         <!-- Barre latérale -->
-        <aside class="sidebar">
+        <aside class="sidebar" aria-label="Barre latérale">
             <h1 class="sidebar-title">NeoWatch</h1>
             <nav>
-                <a href="overview.html" class="nav-item" id="overview">
+                <a href="overview.html" class="nav-item" id="overview" aria-label="Vision d'ensemble">
                     Vision d'ensemble
                 </a>
-                <a href="dashboard.html" class="nav-item active" id="dashboard">
+                <a href="dashboard.html" class="nav-item active" id="dashboard" aria-label="Tableau de bord">
                     Tableau de bord
                 </a>
-                <a href="search.html" class="nav-item" id="search">
+                <a href="search.html" class="nav-item" id="search" aria-label="Recherche">
                     Recherche
                 </a>
-                <a href="settings.html" class="nav-item" id="settings">
+                <a href="settings.html" class="nav-item" id="settings" aria-label="Paramètres">
                     Paramètres
                 </a>
-                <a href="faq.html" class="nav-item" id="faq">
+                <a href="faq.html" class="nav-item" id="faq" aria-label="FAQ">
                     FAQ
                 </a>
-                <a href="cgv.html" class="nav-item" id="cgv">
+                <a href="cgv.html" class="nav-item" id="cgv" aria-label="CGV">
                     CGV
                 </a>
-                <a href="index.html" class="nav-item logout" id="logout">
+                <a href="index.html" class="nav-item logout" id="logout" aria-label="Déconnexion">
                     Déconnexion
                 </a>
             </nav>
@@ -64,19 +64,19 @@
             <section class="filters">
                 <h3>Filtres de recherche</h3>
                 <div class="filter-group">
-                    <label>
+                    <label for="filter-legale">
                         <input type="checkbox" id="filter-legale" name="filter-category" value="legale">
                         ⚖️ Légale et réglementaire
                     </label>
-                    <label>
+                    <label for="filter-competence">
                         <input type="checkbox" id="filter-competence" name="filter-category" value="competence">
                         🎯 Compétence, métier et emploi
                     </label>
-                    <label>
+                    <label for="filter-innovation">
                         <input type="checkbox" id="filter-innovation" name="filter-category" value="innovation">
                         💡 Innovation pédagogique et technologique
                     </label>
-                    <label>
+                    <label for="filter-handicap">
                         <input type="checkbox" id="filter-handicap" name="filter-category" value="handicap">
                         ♿ Handicap
                     </label>
@@ -87,7 +87,7 @@
                     <label for="end-date">Date de fin :</label>
                     <input type="date" id="end-date" name="end-date">
                 </div>
-                <button class="refresh-button" id="search-btn">Rechercher</button>
+                <button class="refresh-button" id="search-btn" aria-label="Rechercher">Rechercher</button>
             </section>
 
             <!-- Table des entrées récentes -->
@@ -110,7 +110,7 @@
                     </tbody>
                 </table>
                 <div class="export-buttons">
-                    <button id="export-xls-btn" class="refresh-button">Exporter en XLS</button>
+                    <button id="export-xls-btn" class="refresh-button" aria-label="Exporter en XLS">Exporter en XLS</button>
                 </div>
             </section>
         </main>
