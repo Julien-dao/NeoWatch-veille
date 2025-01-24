@@ -266,3 +266,53 @@ body.light-theme tr:hover {
     box-shadow: 0 4px 12px rgba(255, 255, 255, 0.5); /* Ombre au survol */
     transform: translateY(-2px); /* Effet de soulèvement */
 }
+/* En-tête */
+.header {
+    display: flex;
+    justify-content: space-between; /* Aligne le contenu à gauche et à droite */
+    align-items: center;
+    padding: 0 2rem;
+    background-color: rgba(26, 26, 26, 0.95); /* Fond sombre */
+    height: 70px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Ombre */
+    border-bottom: 3px solid transparent;
+    border-image: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107) 1;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Titre dans l'en-tête */
+.site-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    margin: 0;
+}
+
+/* Boutons dans l'en-tête */
+.nav-buttons {
+    display: flex;
+    gap: 1rem; /* Espace entre les boutons */
+}
+
+/* Titre au-dessus du logo */
+.logo-title {
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1rem;
+    background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+/* Alignement de la zone principale */
+main {
+    padding-top: 100px; /* Espace pour éviter que le contenu soit caché par la barre fixe */
+}
