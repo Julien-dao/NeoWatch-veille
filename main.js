@@ -7,15 +7,10 @@ const GOOGLE_SEARCH_API_URL = "https://www.googleapis.com/customsearch/v1";
 const MESSAGES = {
     noResults: "Aucun résultat trouvé pour votre recherche.",
     errorFetching: "Une erreur s'est produite lors de la récupération des données.",
-    emptyFilters: "Veuillez sélectionner au moins un filtre ou fournir des critères valides.",
-    exportNoSelection: "Veuillez sélectionner au moins une entrée pour l'exportation.",
+    emptyFilters: "Veuillez sélectionner un filtre valide.",
 };
 
 // DOM Elements
-const filters = document.querySelectorAll(".filters input[type='checkbox']");
-const startDateInput = document.getElementById("start-date");
-const endDateInput = document.getElementById("end-date");
-const searchButton = document.getElementById("search-btn");
 const entriesTable = document.getElementById("entries-tbody");
 const exportXlsButton = document.getElementById("export-xls-btn");
 
@@ -24,7 +19,6 @@ const checkElement = (element, name) => {
     if (!element) console.warn(`${name} introuvable.`);
 };
 checkElement(entriesTable, "Élément 'entries-tbody'");
-checkElement(searchButton, "Bouton 'search-btn'");
 checkElement(exportXlsButton, "Bouton 'export-xls-btn'");
 
 // Nettoie un texte HTML
@@ -34,57 +28,19 @@ const cleanText = text => {
     return tempDiv.textContent || tempDiv.innerText || "";
 };
 
-// Génère une requête Google Search en fonction des filtres sélectionnés
-const generateQuery = selectedFilters => {
+// Génère une requête Google Search en fonction du filtre sélectionné
+const generateQuery = selectedFilter => {
     const queries = {
-        legale: `
-            site:.gouv.fr OR 
-            Lois sur les organismes de formation en France OR 
-            Réglementation Qualiopi en France OR 
-            Lois apprentissage en France OR 
-            Réforme de la formation professionnelle en France OR 
-            Financements publics de la formation en France OR 
-            Contrôle des organismes de formation en France OR 
-            Obligation légale des formateurs en France
-        `,
-        competence: `
-            site:.fr OR 
-            site:opco.fr OR 
-            Évolution des métiers de la formation en France OR 
-            Métier de formateur en France OR 
-            Réforme des certifications professionnelles en France OR 
-            Formation des demandeurs d'emploi en France OR 
-            Métiers émergents en formation professionnelle en France OR 
-            Reconversion professionnelle en France OR 
-            Formateur indépendant en France OR 
-            Rôle des OPCO en France OR 
-            Emploi dans le secteur de la formation en France
-        `,
-        innovation: `
-            Innovation en formation professionnelle en France OR 
-            Didactique et numérique en France OR 
-            Intelligence artificielle et formation en France OR 
-            Utilisation de la réalité virtuelle en formation en France OR 
-            Technologie immersive en formation professionnelle en France OR 
-            Formation hybride en France OR 
-            Microlearning pour adultes en France OR 
-            Méthodes d’apprentissage adaptatif en France OR 
-            Plateformes de e-learning en France
-        `,
-        handicap: `
-            site:.gouv.fr OR 
-            Accessibilité pédagogique en France OR 
-            Inclusion des personnes en situation de handicap en formation en France OR 
-            Adaptation des formations pour les troubles d’apprentissage en France OR 
-            Aides financières pour la formation des personnes handicapées en France OR 
-            Formation inclusive pour adultes en France OR 
-            Accessibilité numérique en formation en France OR 
-            Formation adaptée aux handicaps moteurs en France OR 
-            Dispositifs d’accompagnement des apprenants handicapés en France
-        `
+        legale: "Lois sur les organismes de formation en France OR Réglementation Qualiopi en France",
+        competence: "Évolution des métiers de la formation en France OR Métier de formateur en France",
+        innovation: "Innovation pédagogique et technologique en France OR Intelligence artificielle en formation",
+        handicap: "Accessibilité pédagogique en France OR Inclusion des personnes handicapées en formation",
+        financement: "CPF en France OR Aides financières pour la formation en France",
+        evaluation: "Évaluation des compétences professionnelles en France OR Certification Qualiopi en France",
+        reformes: "Réforme de la formation professionnelle en France OR Politiques publiques pour la formation",
+        developpement_durable: "Formation aux métiers de la transition écologique en France OR Développement durable et formation",
     };
-
-    return selectedFilters.map(filter => queries[filter]?.trim() || "").join(" ");
+    return queries[selectedFilter] || "";
 };
 
 // Calcule la plage de dates pour les 24 derniers mois
@@ -92,7 +48,6 @@ const calculateDateRange = () => {
     const today = new Date();
     const endDate = today.toISOString().split("T")[0];
 
-    // Calcul de la date 24 mois avant aujourd'hui
     const startDate = new Date();
     startDate.setMonth(today.getMonth() - 24);
     const startDateISO = startDate.toISOString().split("T")[0];
@@ -101,9 +56,7 @@ const calculateDateRange = () => {
 };
 
 // Parse les résultats Google Custom Search
-const parseGoogleSearchResults = (data, selectedFilters) => {
-    const category = selectedFilters.map(filter => filter.charAt(0).toUpperCase() + filter.slice(1)).join(", ");
-
+const parseGoogleSearchResults = (data, category) => {
     return data.items.map(item => ({
         source: `<a href="${item.link}" target="_blank">${item.displayLink}</a>`,
         content: item.snippet || "Résumé non disponible",
@@ -166,18 +119,13 @@ const clearTable = () => {
 };
 
 // Effectue une recherche via Google Custom Search API
-const performGoogleSearch = async () => {
-    const selectedFilters = Array.from(filters)
-        .filter(filter => filter.checked)
-        .map(filter => filter.value);
-
-    const query = generateQuery(selectedFilters);
-
-    if (!query.trim()) {
+const performGoogleSearch = async (selectedFilter) => {
+    if (!selectedFilter) {
         alert(MESSAGES.emptyFilters);
         return;
     }
 
+    const query = generateQuery(selectedFilter);
     const { startDate, endDate } = calculateDateRange();
 
     const apiUrl = `${GOOGLE_SEARCH_API_URL}?q=${encodeURIComponent(query + ` after:${startDate} before:${endDate}`)}&key=${GOOGLE_API_KEY}&cx=${GOOGLE_SEARCH_ENGINE_ID}&lr=lang_fr`;
@@ -193,7 +141,7 @@ const performGoogleSearch = async () => {
             return;
         }
 
-        const results = parseGoogleSearchResults(data, selectedFilters);
+        const results = parseGoogleSearchResults(data, selectedFilter.charAt(0).toUpperCase() + selectedFilter.slice(1));
         appendToTable(results);
     } catch (error) {
         console.error("Erreur dans performGoogleSearch :", error);
@@ -201,6 +149,13 @@ const performGoogleSearch = async () => {
     }
 };
 
-// Gère les événements
-searchButton.addEventListener("click", performGoogleSearch);
+// Gestion des clics sur les cartes
+document.querySelectorAll(".filter-card").forEach(card => {
+    card.addEventListener("click", event => {
+        const selectedFilter = event.target.getAttribute("data-filter");
+        performGoogleSearch(selectedFilter);
+    });
+});
+
+// Exporter les résultats en XLS
 exportXlsButton.addEventListener("click", () => alert("Fonction Export à implémenter."));

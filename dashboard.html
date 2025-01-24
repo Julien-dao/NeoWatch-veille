@@ -60,51 +60,35 @@
                 <p>Voici les dernières informations sur votre veille.</p>
             </header>
 
-            <!-- Filtres de recherche -->
+            <!-- Cartes de filtres -->
             <section class="filters">
                 <h3>Filtres de recherche</h3>
-                <div class="filter-group">
-                    <!-- Filtres disponibles -->
-                    <label for="filter-legale">
-                        <input type="checkbox" id="filter-legale" name="filter-category" value="legale">
+                <div class="filter-cards">
+                    <div class="filter-card" data-filter="legale" aria-label="Légale et réglementaire">
                         ⚖️ Légale et réglementaire
-                    </label>
-                    <label for="filter-competence">
-                        <input type="checkbox" id="filter-competence" name="filter-category" value="competence">
+                    </div>
+                    <div class="filter-card" data-filter="competence" aria-label="Compétence, métier et emploi">
                         🎯 Compétence, métier et emploi
-                    </label>
-                    <label for="filter-innovation">
-                        <input type="checkbox" id="filter-innovation" name="filter-category" value="innovation">
+                    </div>
+                    <div class="filter-card" data-filter="innovation" aria-label="Innovation pédagogique et technologique">
                         💡 Innovation pédagogique et technologique
-                    </label>
-                    <label for="filter-handicap">
-                        <input type="checkbox" id="filter-handicap" name="filter-category" value="handicap">
+                    </div>
+                    <div class="filter-card" data-filter="handicap" aria-label="Handicap">
                         ♿ Handicap
-                    </label>
-                    <label for="filter-financement">
-                        <input type="checkbox" id="filter-financement" name="filter-category" value="financement">
+                    </div>
+                    <div class="filter-card" data-filter="financement" aria-label="Financement">
                         💰 Financement
-                    </label>
-                    <label for="filter-evaluation">
-                        <input type="checkbox" id="filter-evaluation" name="filter-category" value="evaluation">
+                    </div>
+                    <div class="filter-card" data-filter="evaluation" aria-label="Évaluation et certification">
                         📝 Évaluation et certification
-                    </label>
-                    <label for="filter-reformes">
-                        <input type="checkbox" id="filter-reformes" name="filter-category" value="reformes">
+                    </div>
+                    <div class="filter-card" data-filter="reformes" aria-label="Réformes">
                         📜 Réformes
-                    </label>
-                    <label for="filter-developpement_durable">
-                        <input type="checkbox" id="filter-developpement_durable" name="filter-category" value="developpement_durable">
+                    </div>
+                    <div class="filter-card" data-filter="developpement_durable" aria-label="Développement durable">
                         🌱 Développement durable
-                    </label>
+                    </div>
                 </div>
-                <div class="date-filters">
-                    <label for="start-date">Date de début :</label>
-                    <input type="date" id="start-date" name="start-date">
-                    <label for="end-date">Date de fin :</label>
-                    <input type="date" id="end-date" name="end-date">
-                </div>
-                <button class="refresh-button" id="search-btn" aria-label="Rechercher">Rechercher</button>
             </section>
 
             <!-- Table des entrées récentes -->
