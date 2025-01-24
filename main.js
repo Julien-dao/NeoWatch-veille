@@ -19,7 +19,7 @@ const searchButton = document.getElementById("search-btn");
 const entriesTable = document.getElementById("entries-tbody");
 const exportXlsButton = document.getElementById("export-xls-btn");
 
-// Check Elements
+// Vérifie l'existence d'un élément
 const checkElement = (element, name) => {
     if (!element) console.warn(`${name} introuvable.`);
 };
@@ -27,25 +27,91 @@ checkElement(entriesTable, "Élément 'entries-tbody'");
 checkElement(searchButton, "Bouton 'search-btn'");
 checkElement(exportXlsButton, "Bouton 'export-xls-btn'");
 
-// Clean Text
+// Nettoie un texte HTML
 const cleanText = text => {
     const tempDiv = document.createElement("div");
     tempDiv.innerHTML = text;
     return tempDiv.textContent || tempDiv.innerText || "";
 };
 
-// Generate Query
+// Génère une requête Google Search en fonction des filtres sélectionnés
 const generateQuery = selectedFilters => {
     const queries = {
-        legale: "Lois OR réglementation",
-        competence: "Évolution des métiers",
-        innovation: "Technologie OR IA",
-        handicap: "Accessibilité",
+        legale: `
+            Lois sur les organismes de formation en France OR 
+            Réglementation Qualiopi en France OR 
+            Lois apprentissage en France OR 
+            Réforme de la formation professionnelle en France OR 
+            Financements publics de la formation en France OR 
+            Contrôle des organismes de formation en France OR 
+            Obligation légale des formateurs en France
+        `,
+        competence: `
+            Évolution des métiers de la formation en France OR 
+            Métier de formateur en France OR 
+            Réforme des certifications professionnelles en France OR 
+            Formation des demandeurs d'emploi en France OR 
+            Métiers émergents en formation professionnelle en France OR 
+            Reconversion professionnelle en France OR 
+            Formateur indépendant en France OR 
+            Rôle des OPCO en France OR 
+            Emploi dans le secteur de la formation en France
+        `,
+        innovation: `
+            Innovation en formation professionnelle en France OR 
+            Didactique et numérique en France OR 
+            Intelligence artificielle et formation en France OR 
+            Utilisation de la réalité virtuelle en formation en France OR 
+            Technologie immersive en formation professionnelle en France OR 
+            Formation hybride en France OR 
+            Microlearning pour adultes en France OR 
+            Méthodes d’apprentissage adaptatif en France OR 
+            Plateformes de e-learning en France
+        `,
+        handicap: `
+            Accessibilité pédagogique en France OR 
+            Inclusion des personnes en situation de handicap en formation en France OR 
+            Adaptation des formations pour les troubles d’apprentissage en France OR 
+            Aides financières pour la formation des personnes handicapées en France OR 
+            Formation inclusive pour adultes en France OR 
+            Accessibilité numérique en formation en France OR 
+            Formation adaptée aux handicaps moteurs en France OR 
+            Dispositifs d’accompagnement des apprenants handicapés en France
+        `,
+        financement: `
+            CPF (Compte Personnel de Formation) en France OR 
+            Aides financières pour les apprentis en France OR 
+            Plan de développement des compétences en France OR 
+            Subventions pour la formation des adultes en France OR 
+            OPCO et financement de la formation en France
+        `,
+        evaluation: `
+            Certification Qualiopi en France OR 
+            Évaluation des compétences professionnelles en France OR 
+            Reconnaissance des acquis de l'expérience (VAE) en France OR 
+            Dispositifs de certification en formation en France OR 
+            Réforme des diplômes professionnels en France
+        `,
+        reformes: `
+            Réforme de la formation professionnelle en France OR 
+            Politiques publiques pour la formation des adultes en France OR 
+            Pacte national pour la formation en France OR 
+            Formation et emploi dans le plan de relance en France
+        `,
+        developpement_durable: `
+            Formation aux métiers de la transition écologique en France OR 
+            Développement durable et pédagogie en France OR 
+            Écoconception dans la formation professionnelle en France OR 
+            Formation sur les enjeux climatiques en France
+        `
     };
-    return selectedFilters.map(filter => queries[filter] || "").join(" ");
+
+    return selectedFilters
+        .map(filter => queries[filter]?.trim() || "")
+        .join(" ");
 };
 
-// Parse Results
+// Parse les résultats Google Custom Search
 const parseGoogleSearchResults = data => {
     return data.items.map(item => ({
         date: item.pagemap?.metatags?.[0]?.["article:published_time"] || "Non disponible",
@@ -57,16 +123,14 @@ const parseGoogleSearchResults = data => {
     }));
 };
 
-// Generate Actions
+// Génère la liste des actions possibles
 const generateActionList = () => `
     <ul class="todo-list">
-        <li><input type="checkbox"> Lire</li>
-        <li><input type="checkbox"> Partager</li>
-        <li><input type="checkbox"> Enregistrer</li>
+        <li><button class="save-action">Enregistrer</button></li>
     </ul>
 `;
 
-// Update Table
+// Met à jour le tableau avec les résultats
 const appendToTable = results => {
     if (!results || results.length === 0) {
         clearTable();
@@ -75,7 +139,7 @@ const appendToTable = results => {
     }
 
     entriesTable.innerHTML = results
-        .map(result => `
+        .map((result, index) => `
             <tr>
                 <td><input type="checkbox" class="select-row"></td>
                 <td>${result.date}</td>
@@ -87,14 +151,32 @@ const appendToTable = results => {
             </tr>
         `)
         .join("");
+
+    document.querySelectorAll(".save-action").forEach((button, index) => {
+        button.addEventListener("click", () => saveEntry(results[index]));
+    });
 };
 
-// Clear Table
+// Sauvegarde une entrée dans le stockage local
+const saveEntry = entry => {
+    const savedEntries = JSON.parse(localStorage.getItem("savedEntries")) || [];
+    savedEntries.push({
+        source: entry.source,
+        content: entry.content,
+        action: "Enregistré",
+        deadline: "À définir",
+        category: entry.category,
+    });
+    localStorage.setItem("savedEntries", JSON.stringify(savedEntries));
+    alert("Article enregistré avec succès !");
+};
+
+// Efface le contenu du tableau
 const clearTable = () => {
     entriesTable.innerHTML = `<tr><td colspan="7">Aucune donnée disponible</td></tr>`;
 };
 
-// Perform Google Search
+// Effectue une recherche via Google Custom Search API
 const performGoogleSearch = async () => {
     const selectedFilters = Array.from(filters)
         .filter(filter => filter.checked)
@@ -111,15 +193,11 @@ const performGoogleSearch = async () => {
 
     const apiUrl = `${GOOGLE_SEARCH_API_URL}?q=${encodeURIComponent(query + startDate + endDate)}&key=${GOOGLE_API_KEY}&cx=${GOOGLE_SEARCH_ENGINE_ID}&lr=lang_fr`;
 
-    console.log("Requête générée :", apiUrl);
-
     try {
         const response = await fetch(apiUrl);
         if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
-        
-        const data = await response.json();
-        console.log("Données reçues :", data);
 
+        const data = await response.json();
         if (!data.items || data.items.length === 0) {
             alert(MESSAGES.noResults);
             clearTable();
@@ -134,31 +212,6 @@ const performGoogleSearch = async () => {
     }
 };
 
-// Export to XLS
-const exportToXLS = () => {
-    const selectedRows = Array.from(document.querySelectorAll(".select-row:checked")).map(row =>
-        row.closest("tr")
-    );
-
-    if (selectedRows.length === 0) {
-        alert(MESSAGES.exportNoSelection);
-        return;
-    }
-
-    const rows = selectedRows.map(row =>
-        Array.from(row.querySelectorAll("td")).map(cell => cleanText(cell.innerHTML))
-    );
-
-    const worksheet = XLSX.utils.aoa_to_sheet([
-        ["NEOWATCH - Veille : Résultats"],
-        ["Date", "Source", "Contenu", "Actions", "Échéance", "Catégorie"],
-        ...rows,
-    ]);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Veille");
-    XLSX.writeFile(workbook, "resultats_veille.xlsx");
-};
-
-// Event Listeners
+// Gère les événements
 searchButton.addEventListener("click", performGoogleSearch);
 exportXlsButton.addEventListener("click", exportToXLS);
