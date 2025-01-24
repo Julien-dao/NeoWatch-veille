@@ -13,6 +13,9 @@
 
     <!-- Bibliothèque externe pour export en XLS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" crossorigin="anonymous"></script>
+
+    <!-- Script principal -->
+    <script src="./main.js" defer></script>
 </head>
 <body>
     <div class="dashboard">
@@ -112,72 +115,5 @@
             </section>
         </main>
     </div>
-
-    <!-- Intégration des scripts JavaScript -->
-    <script>
-        // Sélection des éléments du DOM
-        const searchButton = document.getElementById("search-btn");
-        const filters = document.querySelectorAll(".filters input[type='checkbox']");
-        const startDateInput = document.getElementById("start-date");
-        const endDateInput = document.getElementById("end-date");
-        const entriesTable = document.getElementById("entries-tbody");
-
-        // Gestionnaire pour le bouton Rechercher
-        searchButton.addEventListener("click", () => {
-            const selectedFilters = Array.from(filters)
-                .filter(filter => filter.checked)
-                .map(filter => filter.value);
-
-            const startDate = startDateInput.value;
-            const endDate = endDateInput.value;
-
-            if (selectedFilters.length === 0 && !startDate && !endDate) {
-                alert("Veuillez sélectionner au moins un filtre ou entrer une plage de dates.");
-                return;
-            }
-
-            performSearch(selectedFilters, startDate, endDate);
-        });
-
-        // Fonction de recherche simulée
-        function performSearch(filters, startDate, endDate) {
-            console.log("Filtres sélectionnés :", filters);
-            console.log("Plage de dates :", { startDate, endDate });
-
-            // Simuler des résultats
-            const results = [
-                {
-                    date: "2025-01-23",
-                    source: '<a href="https://example.com" target="_blank">example.com</a>',
-                    content: "Exemple de contenu généré par recherche.",
-                    action: "Lire",
-                    deadline: "2025-02-01",
-                    category: filters.join(", "),
-                },
-            ];
-
-            updateTable(results);
-        }
-
-        // Mise à jour du tableau
-        function updateTable(results) {
-            entriesTable.innerHTML = results
-                .map(
-                    result => `
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>${result.date}</td>
-                        <td>${result.source}</td>
-                        <td>${result.content}</td>
-                        <td>${result.action}</td>
-                        <td>${result.deadline}</td>
-                        <td>${result.category}</td>
-                    </tr>
-                `
-                )
-                .join("");
-        }
-    </script>
 </body>
 </html>
-

@@ -18,7 +18,6 @@ const endDateInput = document.getElementById("end-date");
 const searchButton = document.getElementById("search-btn");
 const entriesTable = document.getElementById("entries-tbody");
 const exportXlsButton = document.getElementById("export-xls-btn");
-const themeToggleButton = document.getElementById("theme-toggle");
 
 // Check Elements
 const checkElement = (element, name) => {
@@ -69,6 +68,12 @@ const generateActionList = () => `
 
 // Update Table
 const appendToTable = results => {
+    if (!results || results.length === 0) {
+        clearTable();
+        alert(MESSAGES.noResults);
+        return;
+    }
+
     entriesTable.innerHTML = results
         .map(result => `
             <tr>
@@ -106,10 +111,14 @@ const performGoogleSearch = async () => {
 
     const apiUrl = `${GOOGLE_SEARCH_API_URL}?q=${encodeURIComponent(query + startDate + endDate)}&key=${GOOGLE_API_KEY}&cx=${GOOGLE_SEARCH_ENGINE_ID}&lr=lang_fr`;
 
+    console.log("Requête générée :", apiUrl);
+
     try {
         const response = await fetch(apiUrl);
         if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
+        
         const data = await response.json();
+        console.log("Réponse API :", data);
 
         if (!data.items || data.items.length === 0) {
             alert(MESSAGES.noResults);
