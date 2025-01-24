@@ -215,3 +215,17 @@ body.light-theme tr:hover {
         width: 100%;
     }
 }
+
+/* Logo au centre de la zone principale */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px; /* Hauteur minimale pour centrer verticalement */
+}
+
+.logo {
+    max-width: 200px; /* Limite la largeur maximale du logo */
+    height: auto;
+    display: block;
+}
