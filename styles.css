@@ -105,6 +105,7 @@ body.light-theme .floating-title {
 .filters {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* 4 colonnes fixes */
+    grid-template-rows: repeat(2, auto); /* 2 lignes dynamiques */
     gap: 1.5rem; /* Espacement entre les cartes */
     padding: 2rem;
     background-color: rgba(255, 255, 255, 0.1);
@@ -112,7 +113,6 @@ body.light-theme .floating-title {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
-    justify-items: center; /* Centre les éléments dans chaque cellule */
 }
 
 .filter-card {
