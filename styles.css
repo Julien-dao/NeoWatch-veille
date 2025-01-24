@@ -103,16 +103,16 @@ body.light-theme .floating-title {
 
 /* Cartes filtres */
 .filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center; /* Centre les cartes */
-    padding: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 colonnes */
+    gap: 1.5rem; /* Espacement entre les cartes */
+    padding: 2rem;
     background-color: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+    justify-items: center; /* Centre les éléments dans chaque cellule */
 }
 
 .filter-card {
@@ -192,20 +192,24 @@ body.light-theme tr:hover {
 }
 
 /* Responsiveness */
+@media (max-width: 1200px) {
+    .filters {
+        grid-template-columns: repeat(3, 1fr); /* 3 colonnes sur écran moyen */
+    }
+}
+
 @media (max-width: 768px) {
     .filters {
-        flex-direction: column;
-        align-items: center;
+        grid-template-columns: repeat(2, 1fr); /* 2 colonnes sur petit écran */
+    }
+}
+
+@media (max-width: 480px) {
+    .filters {
+        grid-template-columns: 1fr; /* 1 colonne sur très petit écran */
     }
 
     .filter-card {
         width: 100%;
-        max-width: 300px;
-        height: auto;
-        padding: 1rem;
-    }
-
-    .sidebar {
-        width: 200px;
     }
 }
