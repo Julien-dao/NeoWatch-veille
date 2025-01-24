@@ -16,42 +16,46 @@ body.light-theme {
     color: #121212; /* Texte noir */
 }
 
-/* Barre latérale */
-.sidebar {
-    width: 250px;
+/* Navbar */
+.navbar {
+    width: 100%;
+    height: 60px;
     background-color: rgba(26, 26, 26, 0.95); /* Noir translucide */
-    padding: 1rem;
     display: flex;
-    flex-direction: column;
-    gap: 2rem;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Ombre */
-    border-right: 3px solid transparent;
+    border-bottom: 3px solid transparent;
     border-image: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107) 1; /* Bordure holographique */
     transition: background-color 0.3s ease-in-out;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
 }
 
-.sidebar h1 {
-    font-size: 1.8rem;
-    text-align: center;
+.navbar h1 {
+    font-size: 1.5rem;
     font-weight: bold;
     background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107); /* Dégradé holographique */
     background-clip: text;
     -webkit-background-clip: text;
     -moz-background-clip: text;
     color: transparent;
-    margin-bottom: 1rem;
+    margin: 0;
 }
 
-/* Navigation */
-.nav-item {
-    text-decoration: none;
-    color: #D3D3D3;
-    padding: 0.8rem 1rem;
-    border-radius: 8px;
+.navbar nav {
     display: flex;
     align-items: center;
     gap: 1rem;
-    font-size: 1rem;
+}
+
+.nav-item {
+    text-decoration: none;
+    color: #D3D3D3;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
     transition: all 0.3s ease-in-out;
 }
 
@@ -63,7 +67,7 @@ body.light-theme {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-body.light-theme .sidebar {
+body.light-theme .navbar {
     background-color: rgba(255, 255, 255, 0.9);
     color: #121212;
 }
@@ -71,7 +75,7 @@ body.light-theme .sidebar {
 /* Zone principale */
 .main {
     flex-grow: 1;
-    padding: 2rem;
+    padding: 4rem 2rem 2rem; /* Ajout d'un padding supérieur pour éviter la navbar */
     background-color: #181818;
     overflow-y: auto;
     transition: background-color 0.3s ease-in-out;
@@ -79,26 +83,6 @@ body.light-theme .sidebar {
 
 body.light-theme .main {
     background-color: #FAFAFA;
-}
-
-/* Zone flottante pour le titre */
-.floating-title {
-    position: absolute;
-    top: 10px;
-    left: 300px; /* Décalage après la barre latérale */
-    background: rgba(0, 0, 0, 0.7); /* Fond semi-transparent */
-    color: #FFFFFF;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    font-size: 1.2rem;
-    z-index: 1000;
-    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
-}
-
-body.light-theme .floating-title {
-    background: rgba(255, 255, 255, 0.9);
-    color: #121212;
 }
 
 /* Cartes filtres */
