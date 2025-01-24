@@ -76,6 +76,19 @@ body.light-theme .main {
 }
 
 /* Cartes de filtres */
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center; /* Aligne les cartes au centre */
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
+
 .filter-card {
     display: flex;
     flex-direction: column;
@@ -109,6 +122,12 @@ body.light-theme .main {
 .filter-card span {
     font-size: 1rem;
     font-weight: bold;
+}
+
+/* Transition thème clair/sombre */
+body.light-theme .filters {
+    background-color: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* Tableau */
