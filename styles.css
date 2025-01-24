@@ -316,3 +316,49 @@ body.light-theme tr:hover {
 main {
     padding-top: 100px; /* Espace pour éviter que le contenu soit caché par la barre fixe */
 }
+/* Conteneur principal pour le logo et les lettres */
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem; /* Espace entre le logo et les lettres */
+    min-height: 300px;
+}
+
+/* Style du logo */
+.logo {
+    max-width: 300px;
+    height: auto;
+    display: block;
+}
+
+/* Conteneur pour l'animation des lettres */
+.typewriter {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #5BC0EB; /* Bleu ciel électrique */
+    overflow: hidden; /* Cache le texte hors animation */
+    border-right: 4px solid #5BC0EB; /* Curseur type machine à écrire */
+    white-space: nowrap;
+    animation: typing 3s steps(6, end), blink 0.5s step-end infinite;
+}
+
+/* Animation de type machine à écrire */
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 7.5ch; /* Taille correspondant à "O N I T O" */
+    }
+}
+
+/* Animation du curseur clignotant */
+@keyframes blink {
+    from {
+        border-color: transparent;
+    }
+    to {
+        border-color: #5BC0EB;
+    }
+}
