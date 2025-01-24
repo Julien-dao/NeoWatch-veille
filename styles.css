@@ -334,13 +334,13 @@ main {
 
 /* Conteneur pour l'animation des lettres */
 .typewriter {
-    font-size: 3rem;
+    font-size: 6rem; /* Taille doublée */
     font-weight: bold;
     color: #5BC0EB; /* Bleu ciel électrique */
     overflow: hidden; /* Cache le texte hors animation */
-    border-right: 4px solid #5BC0EB; /* Curseur type machine à écrire */
+    border-right: 6px solid #5BC0EB; /* Curseur type machine à écrire */
     white-space: nowrap;
-    animation: typing 3s steps(6, end), blink 0.5s step-end infinite;
+    animation: typing 1.5s steps(6, end), blink 0.5s step-end infinite; /* Animation plus rapide */
 }
 
 /* Animation de type machine à écrire */
@@ -349,7 +349,7 @@ main {
         width: 0;
     }
     to {
-        width: 20ch; /* Taille correspondant à "O N I T O" */
+        width: 7.5ch; /* Taille correspondant à "O N I T O" */
     }
 }
 
