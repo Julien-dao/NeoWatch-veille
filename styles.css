@@ -225,7 +225,7 @@ body.light-theme tr:hover {
 }
 
 .logo {
-    max-width: 200px; /* Limite la largeur maximale du logo */
+    max-width: 300px; /* Limite la largeur maximale du logo */
     height: auto;
     display: block;
 }
