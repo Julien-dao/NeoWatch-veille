@@ -105,7 +105,6 @@ body.light-theme .floating-title {
 .filters {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* 4 colonnes fixes */
-    grid-template-rows: repeat(2, auto); /* 2 lignes dynamiques */
     gap: 1.5rem; /* Espacement entre les cartes */
     padding: 2rem;
     background-color: rgba(255, 255, 255, 0.1);
@@ -121,7 +120,7 @@ body.light-theme .floating-title {
     align-items: center;
     justify-content: center;
     text-align: center;
-    width: 150px;
+    width: 100%;
     height: 150px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 12px;
@@ -153,6 +152,55 @@ body.light-theme .floating-title {
 body.light-theme .filters {
     background-color: rgba(0, 0, 0, 0.05);
     border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Tableau des entrées */
+.dashboard-table {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+thead {
+    background: linear-gradient(90deg, #5BC0EB, #F45B69, #FFC107);
+    color: white;
+    font-size: 1rem;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: background-color 0.3s ease-in-out;
+}
+
+tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+body.light-theme .dashboard-table {
+    background-color: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme table {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+body.light-theme tr:hover {
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 /* Responsiveness */
