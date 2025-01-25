@@ -284,3 +284,41 @@ body.light-theme tr:hover {
         border-color: #5BC0EB;
     }
 }
+/* Container des cartes */
+.cards-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Style de base des cartes */
+.card {
+    flex: 1;
+    padding: 20px;
+    border: 2px solid #4CAF50; /* Bordure colorée */
+    border-radius: 10px;
+    background-color: #fff;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animation fluide */
+    cursor: pointer;
+}
+
+/* Texte dans les cartes */
+.card h3 {
+    color: #4CAF50;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.card p, .card ul {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #333;
+}
+
+/* Effet de zoom au survol */
+.card:hover {
+    transform: scale(1.05); /* Zoom léger */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Ombre pour accentuer */
+}
