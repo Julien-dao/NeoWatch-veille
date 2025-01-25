@@ -144,29 +144,6 @@ body.light-theme .filters {
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-/* Texte dans les cartes */
-.card h3 {
-    background: linear-gradient(90deg, #5BC0EB, #00FF87); /* Dégradé pour le texte aussi */
-    background-clip: text;
-    -webkit-background-clip: text;
-    -moz-background-clip: text;
-    color: transparent;
-    margin-bottom: 10px;
-    font-size: 1.5rem;
-}
-
-.card p, .card ul {
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #1E1E1E; /* Texte plus foncé pour un meilleur contraste */
-}
-
-/* Effet de zoom au survol */
-.card:hover {
-    transform: scale(1.05); /* Zoom léger */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Ombre pour accentuer */
-}
-
 /* Tableau des entrées */
 .dashboard-table {
     margin-top: 2.5rem;
@@ -307,4 +284,48 @@ body.light-theme tr:hover {
     to {
         border-color: #5BC0EB;
     }
+}
+
+/* Container des cartes */
+.cards-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Cartes avec bordures dégradées */
+.card {
+    flex: 1;
+    padding: 20px;
+    border: 2px solid; /* Bordure pour encadrer la carte */
+    border-image: linear-gradient(90deg, #5BC0EB, #00FF87) 1; /* Dégradé holographique bleu → vert clair */
+    border-radius: 10px;
+    background-color: #fff;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animation fluide */
+    cursor: pointer;
+}
+
+/* Texte dans les cartes */
+.card h3 {
+    background: linear-gradient(90deg, #5BC0EB, #00FF87); /* Dégradé pour le texte aussi */
+    background-clip: text;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    color: transparent;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.card p, .card ul {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #1E1E1E; /* Texte plus foncé pour un meilleur contraste */
+}
+
+/* Effet de zoom au survol */
+.card:hover {
+    transform: scale(1.05); /* Zoom léger */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Ombre pour accentuer */
 }
