@@ -1,13 +1,14 @@
 /* Styles globaux */
 body {
     font-family: 'Roboto', 'Inter', Arial, sans-serif;
-    margin: 0;
+    margin: 2cm; /* Ajoute 2 cm de marge autour de tout le contenu */
     padding: 0;
     background-color: #121212; /* Fond sombre */
     color: #E0E0E0; /* Texte gris clair légèrement accentué */
     display: flex;
     flex-direction: column;
     height: 100vh;
+    box-sizing: border-box; /* Assure que les marges sont prises en compte dans la taille totale */
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -284,6 +285,7 @@ body.light-theme tr:hover {
         border-color: #5BC0EB;
     }
 }
+
 /* Container des cartes */
 .cards-container {
     display: flex;
@@ -292,11 +294,12 @@ body.light-theme tr:hover {
     margin-top: 20px;
 }
 
-/* Style de base des cartes */
+/* Cartes avec bordures dégradées */
 .card {
     flex: 1;
     padding: 20px;
-    border: 2px solid #4CAF50; /* Bordure colorée */
+    border: 2px solid; /* Bordure pour encadrer la carte */
+    border-image: linear-gradient(90deg, #5BC0EB, #00FF87) 1; /* Dégradé holographique bleu → vert clair */
     border-radius: 10px;
     background-color: #fff;
     text-align: center;
@@ -306,15 +309,13 @@ body.light-theme tr:hover {
 
 /* Texte dans les cartes */
 .card h3 {
-    color: #4CAF50;
+    background: linear-gradient(90deg, #5BC0EB, #00FF87); /* Dégradé pour le texte aussi */
+    background-clip: text;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    color: transparent;
     margin-bottom: 10px;
     font-size: 1.5rem;
-}
-
-.card p, .card ul {
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #333;
 }
 
 /* Effet de zoom au survol */
