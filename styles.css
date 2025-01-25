@@ -410,3 +410,51 @@ body.light-theme tr:hover {
         font-size: 0.9rem;
     }
 }
+/* Footer */
+.footer {
+    width: 100%;
+    background: linear-gradient(90deg, #5BC0EB, #00FF87); /* Dégradé bleu → vert */
+    color: white;
+    padding: 1.5rem 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.footer-logo {
+    width: 100px; /* Taille réduite du logo */
+    height: auto;
+}
+
+.footer-links {
+    display: flex;
+    gap: 1.5rem; /* Espacement entre les liens */
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #121212; /* Change la couleur au survol */
+}
+
+/* Footer responsive */
+@media (max-width: 768px) {
+    .footer-links {
+        flex-direction: column; /* Les liens passent en colonne */
+        gap: 0.5rem;
+    }
+}
