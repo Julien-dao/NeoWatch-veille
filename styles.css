@@ -329,3 +329,84 @@ body.light-theme tr:hover {
     transform: scale(1.05); /* Zoom léger */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Ombre pour accentuer */
 }
+/* Responsiveness */
+
+/* Petits ordinateurs portables et tablettes horizontales */
+@media (max-width: 1024px) {
+    body {
+        margin: 1.5cm; /* Réduit les marges */
+    }
+    .navbar h1 {
+        font-size: 1.5rem; /* Réduit la taille de la police */
+    }
+    .filters {
+        grid-template-columns: repeat(3, 1fr); /* 3 colonnes */
+    }
+    .filter-card {
+        height: 150px; /* Réduit légèrement la hauteur */
+    }
+    .dashboard-table {
+        padding: 1.5rem; /* Réduit le padding */
+    }
+    .card {
+        padding: 15px;
+    }
+    .card h3 {
+        font-size: 1.3rem; /* Ajuste la taille des titres */
+    }
+}
+
+/* Tablettes et téléphones en mode portrait */
+@media (max-width: 768px) {
+    body {
+        margin: 1cm; /* Marges encore plus réduites */
+    }
+    .filters {
+        grid-template-columns: repeat(2, 1fr); /* 2 colonnes */
+    }
+    .filter-card {
+        height: 130px; /* Réduction supplémentaire de la hauteur */
+    }
+    .navbar h1 {
+        font-size: 1.3rem;
+    }
+    .cards-container {
+        flex-direction: column; /* Empile les cartes */
+        gap: 10px;
+    }
+}
+
+/* Téléphones et écrans très petits */
+@media (max-width: 480px) {
+    body {
+        margin: 0.5cm; /* Marges minimales */
+        font-size: 0.9rem; /* Réduit la taille du texte global */
+    }
+    .navbar {
+        height: 60px; /* Navbar plus compacte */
+        padding: 0 1rem;
+    }
+    .navbar h1 {
+        font-size: 1rem; /* Titre plus petit */
+    }
+    .filters {
+        grid-template-columns: 1fr; /* Une seule colonne */
+        gap: 1rem; /* Espacement plus petit */
+    }
+    .filter-card {
+        height: 120px; /* Hauteur minimale */
+    }
+    .dashboard-table {
+        padding: 1rem; /* Réduction du padding */
+        font-size: 0.8rem; /* Texte plus petit */
+    }
+    .card {
+        padding: 10px; /* Réduction des marges internes */
+    }
+    .card h3 {
+        font-size: 1.1rem;
+    }
+    .card p, .card ul {
+        font-size: 0.9rem;
+    }
+}
