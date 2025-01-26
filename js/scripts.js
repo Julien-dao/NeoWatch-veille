@@ -9,6 +9,8 @@ const MESSAGES = {
     errorFetching: "Une erreur s'est produite lors de la récupération des données.",
     emptyFilters: "Veuillez sélectionner au moins un filtre ou fournir des critères valides.",
     exportNoSelection: "Veuillez sélectionner au moins une entrée pour l'exportation.",
+    successSave: "Vos informations ont été enregistrées avec succès.",
+    planSelection: "Vous avez sélectionné le forfait : ",
 };
 
 // DOM Elements
@@ -19,13 +21,53 @@ const searchButton = document.getElementById("search-btn");
 const entriesTable = document.getElementById("entries-tbody");
 const exportXlsButton = document.getElementById("export-xls-btn");
 
-// Nouveaux éléments pour l'authentification
-const loginButton = document.getElementById("login-btn"); // Bouton Se connecter
-const registerButton = document.getElementById("register-btn"); // Bouton Créer un compte
-const acceptCgvCheckbox = document.getElementById("accept-cgv"); // Case à cocher CGV
-const registerSubmitButton = document.getElementById("register-btn"); // Bouton "S'inscrire"
+// Nouveaux éléments pour la page utilisateur
+const userInfoForm = document.getElementById("user-info-form"); // Formulaire utilisateur
+const freemiumPlanButton = document.querySelector(".freemium-plan .btn"); // Bouton forfait Freemium
+const premiumPlanButton = document.querySelector(".premium-plan .btn"); // Bouton forfait Premium
+
+// Gestion du formulaire utilisateur
+if (userInfoForm) {
+    userInfoForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        // Récupération des données du formulaire
+        const formData = new FormData(userInfoForm);
+        const userData = {
+            firstname: formData.get("firstname"),
+            lastname: formData.get("lastname"),
+            email: formData.get("email"),
+            phone: formData.get("phone"),
+            profession: formData.get("profession"),
+            company: formData.get("company"),
+        };
+
+        console.log("Données utilisateur :", userData);
+
+        // Simule un enregistrement des données (API ou base de données plus tard)
+        alert(MESSAGES.successSave);
+    });
+}
+
+// Gestion des boutons des forfaits
+if (freemiumPlanButton) {
+    freemiumPlanButton.addEventListener("click", () => {
+        alert(`${MESSAGES.planSelection}Freemium`);
+        console.log("Forfait Freemium sélectionné");
+    });
+}
+
+if (premiumPlanButton) {
+    premiumPlanButton.addEventListener("click", () => {
+        alert(`${MESSAGES.planSelection}Premium`);
+        console.log("Forfait Premium sélectionné");
+    });
+}
 
 // Gestion des redirections pour les boutons "Se connecter" et "Créer un compte"
+const loginButton = document.getElementById("login-btn"); // Bouton Se connecter
+const registerButton = document.getElementById("register-btn"); // Bouton Créer un compte
+
 if (loginButton) {
     loginButton.addEventListener("click", () => {
         window.location.href = "authentification.html?section=login"; // Redirection vers la section connexion
@@ -51,6 +93,9 @@ if (section === "register" && document.getElementById("register-tab")) {
 }
 
 // Gestion de l'activation du bouton "S'inscrire" en fonction de la case CGV
+const acceptCgvCheckbox = document.getElementById("accept-cgv"); // Case à cocher CGV
+const registerSubmitButton = document.getElementById("register-btn"); // Bouton "S'inscrire"
+
 if (acceptCgvCheckbox && registerSubmitButton) {
     registerSubmitButton.disabled = true; // Désactiver par défaut
     acceptCgvCheckbox.addEventListener("change", () => {
@@ -199,5 +244,5 @@ const exportToXLS = () => {
 };
 
 // Event Listeners
-searchButton.addEventListener("click", performGoogleSearch);
-exportXlsButton.addEventListener("click", exportToXLS);
+if (searchButton) searchButton.addEventListener("click", performGoogleSearch);
+if (exportXlsButton) exportXlsButton.addEventListener("click", exportToXLS);
