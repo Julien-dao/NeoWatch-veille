@@ -738,7 +738,7 @@ body.light-theme tr:hover {
 /* Styles spécifiques pour la page newusers */
 body.newusers-theme {
     background-color: #121212; /* Conserve le fond sombre */
-    color: #E0E0E0; /* Texte par défaut */
+    color: #ffffff; /* Texte par défaut */
 }
 
 .newusers-theme .card {
@@ -764,4 +764,9 @@ body.newusers-theme {
 .newusers-theme .card button:hover {
     transform: scale(1.05); /* Zoom léger au survol */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); /* Ombre au survol */
+}
+.auth-logo {
+    width: 7cm;
+    height: 7cm;
+    object-fit: contain; /* Maintient les proportions */
 }
