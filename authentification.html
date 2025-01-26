@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Authentification | Création de compte</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Lien vers ton CSS existant -->
+    <title>Authentification - Monito</title>
+    <link href="styles.css" rel="stylesheet">
 </head>
 <body>
     <div class="auth-container">
         <div class="auth-card">
             <div class="tabs">
-                <button id="login-tab" class="tab active">Se connecter</button>
+                <button id="login-tab" class="tab">Se connecter</button>
                 <button id="register-tab" class="tab">Créer un compte</button>
             </div>
             <div class="form-container">
                 <!-- Formulaire de connexion -->
-                <form id="login-form" class="auth-form active">
+                <form id="login-form" class="auth-form">
                     <h2>Connexion</h2>
                     <input type="email" name="email" placeholder="Adresse e-mail" required>
                     <input type="password" name="password" placeholder="Mot de passe" required>
@@ -34,6 +34,42 @@
         </div>
     </div>
 
-    <script src="script.js"></script> <!-- Lien vers le JS -->
+    <script>
+        // Gérer les paramètres de l'URL pour afficher le bon formulaire
+        const params = new URLSearchParams(window.location.search);
+        const section = params.get("section");
+
+        const loginTab = document.getElementById("login-tab");
+        const registerTab = document.getElementById("register-tab");
+        const loginForm = document.getElementById("login-form");
+        const registerForm = document.getElementById("register-form");
+
+        if (section === "register") {
+            // Activer l'onglet et formulaire "Créer un compte"
+            registerTab.classList.add("active");
+            registerForm.style.display = "block";
+            loginForm.style.display = "none";
+        } else {
+            // Activer par défaut l'onglet et formulaire "Se connecter"
+            loginTab.classList.add("active");
+            loginForm.style.display = "block";
+            registerForm.style.display = "none";
+        }
+
+        // Gestion des clics sur les onglets
+        loginTab.addEventListener("click", () => {
+            loginTab.classList.add("active");
+            registerTab.classList.remove("active");
+            loginForm.style.display = "block";
+            registerForm.style.display = "none";
+        });
+
+        registerTab.addEventListener("click", () => {
+            registerTab.classList.add("active");
+            loginTab.classList.remove("active");
+            registerForm.style.display = "block";
+            loginForm.style.display = "none";
+        });
+    </script>
 </body>
 </html>
