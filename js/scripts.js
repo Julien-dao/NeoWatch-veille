@@ -101,6 +101,14 @@ if (acceptCgvCheckbox && registerSubmitButton) {
     acceptCgvCheckbox.addEventListener("change", () => {
         registerSubmitButton.disabled = !acceptCgvCheckbox.checked; // Activer/désactiver selon la case
     });
+
+    // Ajout de la redirection après clic sur le bouton "S'inscrire"
+    registerSubmitButton.addEventListener("click", (event) => {
+        event.preventDefault(); // Empêche l'envoi du formulaire par défaut
+        // Simulation d'une action (par exemple enregistrement des données)
+        alert("Inscription réussie !");
+        window.location.href = "newusers.html"; // Redirection vers la page newusers.html
+    });
 }
 
 // Check Elements
