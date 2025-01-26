@@ -573,3 +573,13 @@ body.light-theme tr:hover {
     margin-top: 0.5rem;
     line-height: 1.4;
 }
+.logo-container {
+    text-align: center;
+    margin-bottom: 1.5rem; /* Espace sous le logo */
+}
+
+.auth-logo {
+    width: 2.5cm;
+    height: 2.5cm;
+    object-fit: contain; /* Ajuste l'image sans la déformer */
+}
