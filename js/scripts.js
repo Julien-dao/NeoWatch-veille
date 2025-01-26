@@ -22,6 +22,8 @@ const exportXlsButton = document.getElementById("export-xls-btn");
 // Nouveaux éléments pour l'authentification
 const loginButton = document.getElementById("login-btn"); // Bouton Se connecter
 const registerButton = document.getElementById("register-btn"); // Bouton Créer un compte
+const acceptCgvCheckbox = document.getElementById("accept-cgv"); // Case à cocher CGV
+const registerSubmitButton = document.getElementById("register-btn"); // Bouton "S'inscrire"
 
 // Gestion des redirections pour les boutons "Se connecter" et "Créer un compte"
 if (loginButton) {
@@ -46,6 +48,14 @@ if (section === "register" && document.getElementById("register-tab")) {
 } else if (section === "login" && document.getElementById("login-tab")) {
     // Active l'onglet "Se connecter" si l'URL contient section=login (par défaut)
     document.getElementById("login-tab").click();
+}
+
+// Gestion de l'activation du bouton "S'inscrire" en fonction de la case CGV
+if (acceptCgvCheckbox && registerSubmitButton) {
+    registerSubmitButton.disabled = true; // Désactiver par défaut
+    acceptCgvCheckbox.addEventListener("change", () => {
+        registerSubmitButton.disabled = !acceptCgvCheckbox.checked; // Activer/désactiver selon la case
+    });
 }
 
 // Check Elements

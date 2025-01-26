@@ -548,3 +548,28 @@ body.light-theme tr:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.checkbox-container a {
+    color: #5BC0EB; /* Couleur pour le lien */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.checkbox-container a:hover {
+    text-decoration: underline;
+}
+
+.privacy-note {
+    font-size: 0.8rem;
+    color: #999;
+    margin-top: 0.5rem;
+    line-height: 1.4;
+}

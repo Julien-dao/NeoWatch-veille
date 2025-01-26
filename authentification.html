@@ -28,7 +28,22 @@
                     <input type="email" name="email" placeholder="Adresse e-mail" required>
                     <input type="password" name="password" placeholder="Mot de passe" required>
                     <input type="password" name="confirm-password" placeholder="Confirmer le mot de passe" required>
-                    <button type="submit" class="btn primary">S'inscrire</button>
+
+                    <!-- Case à cocher pour accepter les CGV -->
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="accept-cgv" name="accept-cgv">
+                        <label for="accept-cgv">
+                            J'affirme avoir lu et accepté les <a href="conditions-generales.html" target="_blank">conditions générales de vente</a>.
+                        </label>
+                    </div>
+
+                    <!-- Phrase de garantie sur la confidentialité -->
+                    <p class="privacy-note">
+                        Vos données ne seront jamais communiquées à des tiers, ni utilisées à des fins de prospection. Elles serviront uniquement à assurer une communication optimale entre MONITO et vous.
+                    </p>
+
+                    <!-- Bouton d'inscription désactivé par défaut -->
+                    <button type="submit" id="register-btn" class="btn primary" disabled>S'inscrire</button>
                 </form>
             </div>
         </div>
@@ -70,6 +85,17 @@
             registerForm.style.display = "block";
             loginForm.style.display = "none";
         });
+
+        // Gestion de l'activation du bouton "S'inscrire"
+        const acceptCgvCheckbox = document.getElementById("accept-cgv");
+        const registerButton = document.getElementById("register-btn");
+
+        if (acceptCgvCheckbox && registerButton) {
+            acceptCgvCheckbox.addEventListener("change", () => {
+                // Activer ou désactiver le bouton en fonction de la case cochée
+                registerButton.disabled = !acceptCgvCheckbox.checked;
+            });
+        }
     </script>
 </body>
 </html>
