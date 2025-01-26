@@ -735,3 +735,33 @@ body.light-theme tr:hover {
         gap: 1.5rem;
     }
 }
+/* Styles spécifiques pour la page newusers */
+body.newusers-theme {
+    background-color: #121212; /* Conserve le fond sombre */
+    color: #E0E0E0; /* Texte par défaut */
+}
+
+.newusers-theme .card {
+    color: #FFFFFF; /* Texte des cartes en blanc */
+}
+
+.newusers-theme .card h3 {
+    color: #FFFFFF; /* Titre des cartes en blanc */
+    background: none; /* Désactive le dégradé pour les titres */
+}
+
+.newusers-theme .card p,
+.newusers-theme .card ul,
+.newusers-theme .card li {
+    color: #FFFFFF; /* Texte et listes des cartes en blanc */
+}
+
+.newusers-theme .card button {
+    background: linear-gradient(90deg, #5BC0EB, #00FF87); /* Bouton avec dégradé */
+    color: white;
+}
+
+.newusers-theme .card button:hover {
+    transform: scale(1.05); /* Zoom léger au survol */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); /* Ombre au survol */
+}
