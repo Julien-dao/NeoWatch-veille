@@ -84,11 +84,11 @@
     <script>
         // Gestion des redirections
         document.getElementById("login-btn").addEventListener("click", () => {
-            window.location.href = "authentification.html"; // Redirige vers la page d'authentification
+            window.location.href = "authentification.html?section=login"; // Redirige vers la section connexion
         });
 
         document.getElementById("register-btn").addEventListener("click", () => {
-            window.location.href = "authentification.html"; // Redirige vers la page de création de compte
+            window.location.href = "authentification.html?section=register"; // Redirige vers la section inscription
         });
     </script>
 </body>
