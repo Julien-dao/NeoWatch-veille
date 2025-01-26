@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentification | Création de compte</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Lien vers ton CSS existant -->
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="tabs">
+                <button id="login-tab" class="tab active">Se connecter</button>
+                <button id="register-tab" class="tab">Créer un compte</button>
+            </div>
+            <div class="form-container">
+                <!-- Formulaire de connexion -->
+                <form id="login-form" class="auth-form active">
+                    <h2>Connexion</h2>
+                    <input type="email" name="email" placeholder="Adresse e-mail" required>
+                    <input type="password" name="password" placeholder="Mot de passe" required>
+                    <button type="submit" class="btn primary">Se connecter</button>
+                </form>
+                <!-- Formulaire d'inscription -->
+                <form id="register-form" class="auth-form">
+                    <h2>Créer un compte</h2>
+                    <input type="text" name="username" placeholder="Nom d'utilisateur" required>
+                    <input type="email" name="email" placeholder="Adresse e-mail" required>
+                    <input type="password" name="password" placeholder="Mot de passe" required>
+                    <input type="password" name="confirm-password" placeholder="Confirmer le mot de passe" required>
+                    <button type="submit" class="btn primary">S'inscrire</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script> <!-- Lien vers le JS -->
+</body>
+</html>

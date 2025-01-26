@@ -19,6 +19,44 @@ const searchButton = document.getElementById("search-btn");
 const entriesTable = document.getElementById("entries-tbody");
 const exportXlsButton = document.getElementById("export-xls-btn");
 
+// Nouveaux éléments pour l'authentification
+const loginTab = document.getElementById("login-tab");
+const registerTab = document.getElementById("register-tab");
+const loginForm = document.getElementById("login-form");
+const registerForm = document.getElementById("register-form");
+const loginButton = document.querySelector(".btn.login"); // Bouton Se connecter
+const registerButton = document.querySelector(".btn.register"); // Bouton Créer un compte
+
+// Gestion des onglets (connexion/inscription)
+if (loginTab && registerTab && loginForm && registerForm) {
+    loginTab.addEventListener("click", () => {
+        loginTab.classList.add("active");
+        registerTab.classList.remove("active");
+        loginForm.classList.add("active");
+        registerForm.classList.remove("active");
+    });
+
+    registerTab.addEventListener("click", () => {
+        registerTab.classList.add("active");
+        loginTab.classList.remove("active");
+        registerForm.classList.add("active");
+        loginForm.classList.remove("active");
+    });
+}
+
+// Redirection des boutons "Se connecter" et "Créer un compte"
+if (loginButton) {
+    loginButton.addEventListener("click", () => {
+        window.location.href = "authentification.html"; // Redirection vers la page de connexion
+    });
+}
+
+if (registerButton) {
+    registerButton.addEventListener("click", () => {
+        window.location.href = "authentification.html"; // Redirection vers la page de création de compte
+    });
+}
+
 // Check Elements
 const checkElement = (element, name) => {
     if (!element) console.warn(`${name} introuvable.`);

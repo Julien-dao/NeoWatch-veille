@@ -458,3 +458,93 @@ body.light-theme tr:hover {
         gap: 0.5rem;
     }
 }
+/* Styles pour la page d'authentification */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #121212; /* Fond sombre */
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 2rem;
+    background: #1e1e1e;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    color: #e0e0e0;
+    text-align: center;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.tab {
+    flex: 1;
+    padding: 0.8rem 0;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 8px;
+    color: #e0e0e0;
+    font-weight: bold;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.tab.active {
+    background: linear-gradient(90deg, #5BC0EB, #00FF87);
+    color: white;
+}
+
+.auth-form {
+    display: none;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.auth-form.active {
+    display: flex;
+}
+
+.auth-form h2 {
+    margin-bottom: 1rem;
+}
+
+.auth-form input {
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #e0e0e0;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.auth-form input:focus {
+    border-color: #5BC0EB;
+    background: rgba(255, 255, 255, 0.2);
+    outline: none;
+}
+
+.auth-form button {
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    background: linear-gradient(90deg, #5BC0EB, #00FF87);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auth-form button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
