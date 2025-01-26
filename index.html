@@ -8,8 +8,10 @@
 </head>
 <body>
     <nav class="nav-buttons">
-        <button class="btn primary" onclick="alert('Fonction Se Connecter à implémenter')">Se connecter</button>
-        <button class="btn primary" onclick="alert('Fonction Créer un compte à implémenter')">Créer un compte</button>
+        <!-- Bouton Se connecter -->
+        <button id="login-btn" class="btn primary">Se connecter</button>
+        <!-- Bouton Créer un compte -->
+        <button id="register-btn" class="btn primary">Créer un compte</button>
     </nav>
     <main>
         <div class="logo-container">
@@ -77,5 +79,17 @@
             </nav>
         </div>
     </footer>
+
+    <!-- Script JS -->
+    <script>
+        // Gestion des redirections
+        document.getElementById("login-btn").addEventListener("click", () => {
+            window.location.href = "authentification.html"; // Redirige vers la page d'authentification
+        });
+
+        document.getElementById("register-btn").addEventListener("click", () => {
+            window.location.href = "authentification.html"; // Redirige vers la page de création de compte
+        });
+    </script>
 </body>
 </html>
