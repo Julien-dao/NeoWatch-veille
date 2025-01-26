@@ -593,3 +593,145 @@ body.light-theme tr:hover {
     height: 2.5cm;
     object-fit: contain; /* Maintient les proportions */
 }
+
+/* Section Formulaire utilisateur */
+.user-form-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #1e1e1e; /* Fond sombre pour s'aligner avec le reste */
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    color: #e0e0e0;
+}
+
+.user-form h2 {
+    color: #5BC0EB; /* Bleu lumineux pour le titre */
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #E0E0E0;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #E0E0E0;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: #5BC0EB;
+    background-color: rgba(255, 255, 255, 0.2);
+    outline: none;
+}
+
+.user-form button {
+    margin-top: 1.5rem;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #5BC0EB, #00FF87); /* Dégradé */
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.user-form button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* Section des forfaits */
+.plans-section {
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.plans-section h2 {
+    color: #5BC0EB;
+    margin-bottom: 1.5rem;
+}
+
+.plans-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.card {
+    flex: 1;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.1); /* Fond semi-transparent */
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    color: #E0E0E0;
+}
+
+.card h3 {
+    background: linear-gradient(90deg, #5BC0EB, #00FF87);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.card ul {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+
+.card ul li {
+    margin-bottom: 0.5rem;
+}
+
+.card button {
+    margin-top: 1rem;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.card button.primary {
+    background: linear-gradient(90deg, #5BC0EB, #00FF87);
+    color: white;
+}
+
+.card button.secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #E0E0E0;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* Responsiveness pour les forfaits */
+@media (max-width: 768px) {
+    .plans-container {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+}

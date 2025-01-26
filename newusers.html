@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monito - Page Utilisateur</title>
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="LOGOMONITO.png" alt="Logo Monito" class="auth-logo">
+        </div>
+        <h1>Bienvenue dans votre espace utilisateur</h1>
+        <p>Enregistrez vos informations personnelles et professionnelles pour une meilleure expérience avec Monito.</p>
+    </header>
+
+    <main class="user-form-container">
+        <!-- Formulaire d'enregistrement des informations -->
+        <form id="user-info-form" class="user-form">
+            <h2>Vos informations</h2>
+            <div class="form-group">
+                <label for="firstname">Prénom :</label>
+                <input type="text" id="firstname" name="firstname" placeholder="Entrez votre prénom" required>
+            </div>
+            <div class="form-group">
+                <label for="lastname">Nom :</label>
+                <input type="text" id="lastname" name="lastname" placeholder="Entrez votre nom" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Adresse e-mail :</label>
+                <input type="email" id="email" name="email" placeholder="Entrez votre e-mail" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Téléphone :</label>
+                <input type="tel" id="phone" name="phone" placeholder="Entrez votre numéro de téléphone">
+            </div>
+            <div class="form-group">
+                <label for="profession">Profession :</label>
+                <input type="text" id="profession" name="profession" placeholder="Entrez votre profession">
+            </div>
+            <div class="form-group">
+                <label for="company">Entreprise :</label>
+                <input type="text" id="company" name="company" placeholder="Entrez le nom de votre entreprise">
+            </div>
+
+            <button type="submit" class="btn primary">Enregistrer mes informations</button>
+        </form>
+
+        <!-- Cartes pour les forfaits -->
+        <section class="plans-section">
+            <h2>Choisissez votre forfait</h2>
+            <div class="plans-container">
+                <!-- Carte Freemium -->
+                <div class="card freemium-plan">
+                    <h3>Forfait Freemium</h3>
+                    <ul>
+                        <li>3 recherches différentes par jour</li>
+                        <li>Export Excel inclus</li>
+                        <li>Modification des actions directement sur le tableau des entrées récentes</li>
+                        <li>Limite de recherche : 10 résultats par thème (environ 30 articles par tranche de 48 heures)</li>
+                        <li>Accès à la FAQ</li>
+                    </ul>
+                    <button class="btn secondary">Choisir Freemium</button>
+                </div>
+                <!-- Carte Premium -->
+                <div class="card premium-plan">
+                    <h3>Forfait Premium</h3>
+                    <ul>
+                        <li>Fonctionnalités Freemium incluses</li>
+                        <li>Vue d'ensemble des veilles observées sur la semaine écoulée</li>
+                        <li>Tableau d'entrées plus poussé avec colonnes personnalisables</li>
+                        <li>Export Excel illimité</li>
+                        <li>Accès à la FAQ</li>
+                    </ul>
+                    <button class="btn primary">Choisir Premium</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Monito. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        // Ajout d'un événement pour le formulaire utilisateur
+        const userInfoForm = document.getElementById("user-info-form");
+        userInfoForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            alert("Vos informations ont été enregistrées avec succès !");
+            // Logique future pour enregistrer les données dans la base de données
+        });
+    </script>
+</body>
+</html>
