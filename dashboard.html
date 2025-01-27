@@ -15,7 +15,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" crossorigin="anonymous"></script>
 
     <!-- Script principal -->
-    <script src="./main.js" defer></script>
+    <script src="./scripts.js" defer></script>
 </head>
 <body>
     <div class="dashboard">
@@ -116,6 +116,24 @@
             </section>
         </main>
     </div>
+
+    <!-- Ajout d'un script personnalisé -->
+    <script>
+        // Vérification et affichage d'un message de bienvenue
+        document.addEventListener("DOMContentLoaded", () => {
+            const userName = "[Nom de l'utilisateur]"; // Remplacer par la valeur dynamique
+            if (userName) {
+                alert(`Bienvenue sur le tableau de bord, ${userName} !`);
+            }
+        });
+
+        // Gestion des boutons de filtre (interactivité)
+        const filterCards = document.querySelectorAll(".filter-card");
+        filterCards.forEach((card) => {
+            card.addEventListener("click", () => {
+                alert(`Filtre sélectionné : ${card.dataset.filter}`);
+            });
+        });
+    </script>
 </body>
 </html>
-
