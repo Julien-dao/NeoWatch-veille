@@ -64,50 +64,73 @@ if (premiumPlanButton) {
     });
 }
 
-// Gestion des redirections pour les boutons "Se connecter" et "Créer un compte"
-const loginButton = document.getElementById("login-btn"); // Bouton Se connecter
-const registerButton = document.getElementById("register-btn"); // Bouton Créer un compte
-
-if (loginButton) {
-    loginButton.addEventListener("click", () => {
-        window.location.href = "authentification.html?section=login"; // Redirection vers la section connexion
-    });
-}
-
-if (registerButton) {
-    registerButton.addEventListener("click", () => {
-        window.location.href = "authentification.html?section=register"; // Redirection vers la section inscription
-    });
-}
-
-// Gestion des onglets (connexion/inscription) sur la page authentification.html
+// Gérer les paramètres de l'URL pour afficher le bon formulaire
 const params = new URLSearchParams(window.location.search);
 const section = params.get("section");
 
-if (section === "register" && document.getElementById("register-tab")) {
-    // Active l'onglet "Créer un compte" si l'URL contient section=register
-    document.getElementById("register-tab").click();
-} else if (section === "login" && document.getElementById("login-tab")) {
-    // Active l'onglet "Se connecter" si l'URL contient section=login (par défaut)
-    document.getElementById("login-tab").click();
+const loginTab = document.getElementById("login-tab");
+const registerTab = document.getElementById("register-tab");
+const loginForm = document.getElementById("login-form");
+const registerForm = document.getElementById("register-form");
+
+// Afficher le bon formulaire en fonction de l'URL
+if (section === "register") {
+    registerTab.classList.add("active");
+    registerForm.style.display = "block";
+    loginForm.style.display = "none";
+} else {
+    loginTab.classList.add("active");
+    loginForm.style.display = "block";
+    registerForm.style.display = "none";
 }
 
-// Gestion de l'activation du bouton "S'inscrire" en fonction de la case CGV
-const acceptCgvCheckbox = document.getElementById("accept-cgv"); // Case à cocher CGV
-const registerSubmitButton = document.getElementById("register-btn"); // Bouton "S'inscrire"
+// Gestion des clics sur les onglets
+loginTab.addEventListener("click", () => {
+    loginTab.classList.add("active");
+    registerTab.classList.remove("active");
+    loginForm.style.display = "block";
+    registerForm.style.display = "none";
+});
 
-if (acceptCgvCheckbox && registerSubmitButton) {
-    registerSubmitButton.disabled = true; // Désactiver par défaut
+registerTab.addEventListener("click", () => {
+    registerTab.classList.add("active");
+    loginTab.classList.remove("active");
+    registerForm.style.display = "block";
+    loginForm.style.display = "none";
+});
+
+// Gestion de l'activation du bouton "S'inscrire"
+const acceptCgvCheckbox = document.getElementById("accept-cgv");
+const registerButton = document.getElementById("register-btn");
+
+if (acceptCgvCheckbox && registerButton) {
     acceptCgvCheckbox.addEventListener("change", () => {
-        registerSubmitButton.disabled = !acceptCgvCheckbox.checked; // Activer/désactiver selon la case
+        // Activer ou désactiver le bouton "S'inscrire" en fonction de la case cochée
+        registerButton.disabled = !acceptCgvCheckbox.checked;
     });
+}
 
-    // Ajout de la redirection après clic sur le bouton "S'inscrire"
+// Ajout des nouvelles fonctionnalités demandées :
+
+// Gestion de la redirection du bouton "Se connecter"
+const loginSubmitButton = document.querySelector("#login-form .btn.primary");
+if (loginSubmitButton) {
+    loginSubmitButton.addEventListener("click", (event) => {
+        event.preventDefault(); // Empêche l'envoi par défaut
+        window.location.href = "dashboard.html"; // Redirige vers le tableau de bord
+    });
+}
+
+// Gestion de la redirection du bouton "S'inscrire"
+const registerSubmitButton = document.querySelector("#register-form .btn.primary");
+if (registerSubmitButton) {
     registerSubmitButton.addEventListener("click", (event) => {
-        event.preventDefault(); // Empêche l'envoi du formulaire par défaut
-        // Simulation d'une action (par exemple enregistrement des données)
-        alert("Inscription réussie !");
-        window.location.href = "newusers.html"; // Redirection vers la page newusers.html
+        event.preventDefault(); // Empêche l'envoi par défaut
+        if (acceptCgvCheckbox.checked) {
+            window.location.href = "newusers.html"; // Redirige vers la page nouvel utilisateur
+        } else {
+            alert("Veuillez accepter les conditions générales de vente pour continuer.");
+        }
     });
 }
 

@@ -100,6 +100,28 @@
                 registerButton.disabled = !acceptCgvCheckbox.checked;
             });
         }
+
+        // Ajout des redirections demandées
+        const loginSubmitButton = document.querySelector("#login-form .btn.primary");
+        const registerSubmitButton = document.querySelector("#register-form .btn.primary");
+
+        if (loginSubmitButton) {
+            loginSubmitButton.addEventListener("click", (event) => {
+                event.preventDefault(); // Empêche le comportement par défaut du bouton
+                window.location.href = "dashboard.html"; // Redirige vers le tableau de bord
+            });
+        }
+
+        if (registerSubmitButton) {
+            registerSubmitButton.addEventListener("click", (event) => {
+                event.preventDefault(); // Empêche le comportement par défaut du bouton
+                if (acceptCgvCheckbox.checked) {
+                    window.location.href = "newusers.html"; // Redirige vers la page nouvel utilisateur
+                } else {
+                    alert("Veuillez accepter les conditions générales de vente pour continuer.");
+                }
+            });
+        }
     </script>
 </body>
 </html>
