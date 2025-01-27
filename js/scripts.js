@@ -156,6 +156,10 @@ const generateQuery = selectedFilters => {
         competence: "Évolution des métiers",
         innovation: "Technologie OR IA",
         handicap: "Accessibilité",
+        financement: "Financement",
+        evaluation: "Évaluation et certification",
+        reformes: "Réformes",
+        developpement_durable: "Développement durable",
     };
     return selectedFilters.map(filter => queries[filter] || "").join(" ");
 };
@@ -210,21 +214,15 @@ const clearTable = () => {
 };
 
 // Perform Google Search
-const performGoogleSearch = async () => {
-    const selectedFilters = Array.from(filters)
-        .filter(filter => filter.checked)
-        .map(filter => filter.value);
-    const query = generateQuery(selectedFilters);
+const performGoogleSearch = async (filter) => {
+    const query = generateQuery([filter]); // Utilise uniquement le filtre sélectionné
 
     if (!query.trim()) {
         alert(MESSAGES.emptyFilters);
         return;
     }
 
-    const startDate = startDateInput?.value ? ` after:${startDateInput.value}` : "";
-    const endDate = endDateInput?.value ? ` before:${endDateInput.value}` : "";
-
-    const apiUrl = `${GOOGLE_SEARCH_API_URL}?q=${encodeURIComponent(query + startDate + endDate)}&key=${GOOGLE_API_KEY}&cx=${GOOGLE_SEARCH_ENGINE_ID}&lr=lang_fr`;
+    const apiUrl = `${GOOGLE_SEARCH_API_URL}?q=${encodeURIComponent(query)}&key=${GOOGLE_API_KEY}&cx=${GOOGLE_SEARCH_ENGINE_ID}&lr=lang_fr`;
 
     console.log("Requête générée :", apiUrl);
 
