@@ -85,14 +85,14 @@ if (section === "register") {
 }
 
 // Gestion des clics sur les onglets
-loginTab.addEventListener("click", () => {
+loginTab?.addEventListener("click", () => {
     loginTab.classList.add("active");
     registerTab.classList.remove("active");
     loginForm.style.display = "block";
     registerForm.style.display = "none";
 });
 
-registerTab.addEventListener("click", () => {
+registerTab?.addEventListener("click", () => {
     registerTab.classList.add("active");
     loginTab.classList.remove("active");
     registerForm.style.display = "block";
@@ -134,23 +134,19 @@ if (registerSubmitButton) {
     });
 }
 
-// Check Elements
-const checkElement = (element, name) => {
-    if (!element) console.warn(`${name} introuvable.`);
-};
-checkElement(entriesTable, "Élément 'entries-tbody'");
-checkElement(searchButton, "Bouton 'search-btn'");
-checkElement(exportXlsButton, "Bouton 'export-xls-btn'");
+// Liaison des cartes filtres à la recherche
+document.addEventListener("DOMContentLoaded", () => {
+    const filterCards = document.querySelectorAll(".filter-card");
+    filterCards.forEach((card) => {
+        card.addEventListener("click", () => {
+            const filter = card.dataset.filter; // Récupère le filtre
+            performGoogleSearch(filter); // Appelle la recherche avec le filtre
+        });
+    });
+});
 
-// Clean Text
-const cleanText = text => {
-    const tempDiv = document.createElement("div");
-    tempDiv.innerHTML = text;
-    return tempDiv.textContent || tempDiv.innerText || "";
-};
-
-// Generate Query
-const generateQuery = selectedFilters => {
+// Perform Google Search
+const performGoogleSearch = async (filter) => {
     const queries = {
         legale: "Lois OR réglementation",
         competence: "Évolution des métiers",
@@ -161,12 +157,42 @@ const generateQuery = selectedFilters => {
         reformes: "Réformes",
         developpement_durable: "Développement durable",
     };
-    return selectedFilters.map(filter => queries[filter] || "").join(" ");
+
+    const query = queries[filter];
+
+    if (!query) {
+        alert("Filtre inconnu ou non défini.");
+        return;
+    }
+
+    const apiUrl = `${GOOGLE_SEARCH_API_URL}?q=${encodeURIComponent(query)}&key=${GOOGLE_API_KEY}&cx=${GOOGLE_SEARCH_ENGINE_ID}&lr=lang_fr`;
+
+    console.log("Requête générée :", apiUrl);
+
+    try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
+
+        const data = await response.json();
+        console.log("Réponse API :", data);
+
+        if (!data.items || data.items.length === 0) {
+            alert(MESSAGES.noResults);
+            clearTable();
+            return;
+        }
+
+        const results = parseGoogleSearchResults(data);
+        appendToTable(results);
+    } catch (error) {
+        alert(MESSAGES.errorFetching);
+        console.error("Erreur lors de la recherche :", error);
+    }
 };
 
 // Parse Results
-const parseGoogleSearchResults = data => {
-    return data.items.map(item => ({
+const parseGoogleSearchResults = (data) => {
+    return data.items.map((item) => ({
         date: item.pagemap?.metatags?.[0]?.["article:published_time"] || "Non disponible",
         source: `<a href="${item.link}" target="_blank">${item.displayLink}</a>`,
         content: item.snippet || "Résumé non disponible",
@@ -186,7 +212,7 @@ const generateActionList = () => `
 `;
 
 // Update Table
-const appendToTable = results => {
+const appendToTable = (results) => {
     if (!results || results.length === 0) {
         clearTable();
         alert(MESSAGES.noResults);
@@ -194,7 +220,8 @@ const appendToTable = results => {
     }
 
     entriesTable.innerHTML = results
-        .map(result => `
+        .map(
+            (result) => `
             <tr>
                 <td><input type="checkbox" class="select-row"></td>
                 <td>${result.date}</td>
@@ -204,7 +231,8 @@ const appendToTable = results => {
                 <td>${result.deadline}</td>
                 <td>${result.category}</td>
             </tr>
-        `)
+        `
+        )
         .join("");
 };
 
@@ -213,53 +241,19 @@ const clearTable = () => {
     entriesTable.innerHTML = `<tr><td colspan="7">Aucune donnée disponible</td></tr>`;
 };
 
-// Perform Google Search
-const performGoogleSearch = async (filter) => {
-    const query = generateQuery([filter]); // Utilise uniquement le filtre sélectionné
-
-    if (!query.trim()) {
-        alert(MESSAGES.emptyFilters);
-        return;
-    }
-
-    const apiUrl = `${GOOGLE_SEARCH_API_URL}?q=${encodeURIComponent(query)}&key=${GOOGLE_API_KEY}&cx=${GOOGLE_SEARCH_ENGINE_ID}&lr=lang_fr`;
-
-    console.log("Requête générée :", apiUrl);
-
-    try {
-        const response = await fetch(apiUrl);
-        if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
-        
-        const data = await response.json();
-        console.log("Réponse API :", data);
-
-        if (!data.items || data.items.length === 0) {
-            alert(MESSAGES.noResults);
-            clearTable();
-            return;
-        }
-
-        const results = parseGoogleSearchResults(data);
-        appendToTable(results);
-    } catch (error) {
-        alert(MESSAGES.errorFetching);
-        console.error("Erreur lors de la recherche :", error);
-    }
-};
-
 // Export to XLS
 const exportToXLS = () => {
-    const selectedRows = Array.from(document.querySelectorAll(".select-row:checked")).map(row =>
-        row.closest("tr")
-    );
+    const selectedRows = Array.from(
+        document.querySelectorAll(".select-row:checked")
+    ).map((row) => row.closest("tr"));
 
     if (selectedRows.length === 0) {
         alert(MESSAGES.exportNoSelection);
         return;
     }
 
-    const rows = selectedRows.map(row =>
-        Array.from(row.querySelectorAll("td")).map(cell => cleanText(cell.innerHTML))
+    const rows = selectedRows.map((row) =>
+        Array.from(row.querySelectorAll("td")).map((cell) => cleanText(cell.innerHTML))
     );
 
     const worksheet = XLSX.utils.aoa_to_sheet([
@@ -270,6 +264,13 @@ const exportToXLS = () => {
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Veille");
     XLSX.writeFile(workbook, "resultats_veille.xlsx");
+};
+
+// Clean Text
+const cleanText = (text) => {
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = text;
+    return tempDiv.textContent || tempDiv.innerText || "";
 };
 
 // Event Listeners
