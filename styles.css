@@ -320,7 +320,7 @@ body.light-theme tr:hover {
 .card p, .card ul {
     font-size: 1rem;
     line-height: 1.5;
-    color: #1E1E1E; /* Texte plus foncé pour un meilleur contraste */
+    color: #ffffff; /* Texte plus foncé pour un meilleur contraste */
 }
 
 /* Effet de zoom au survol */
