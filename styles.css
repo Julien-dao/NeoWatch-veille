@@ -115,7 +115,7 @@ body.light-theme .main {
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    color: inherit;
+    color: white; /* Correction : texte des cartes défini en blanc */
     cursor: pointer;
     transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
 }
@@ -154,7 +154,6 @@ body.light-theme .filters {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     overflow-x: auto;
 }
-
 table {
     width: 100%;
     border-collapse: collapse;

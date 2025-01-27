@@ -131,7 +131,8 @@
         const filterCards = document.querySelectorAll(".filter-card");
         filterCards.forEach((card) => {
             card.addEventListener("click", () => {
-                alert(`Filtre sélectionné : ${card.dataset.filter}`);
+                const filter = card.dataset.filter; // Récupère le filtre
+                performGoogleSearch(filter); // Appelle la recherche avec le filtre
             });
         });
     </script>
