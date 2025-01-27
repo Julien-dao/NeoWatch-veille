@@ -6,8 +6,7 @@
     <title>Monito - Page Utilisateur</title>
     <link href="styles.css" rel="stylesheet">
 </head>
-<body>
-    <body class="newusers-theme">
+<body class="newusers-theme">
     <header>
         <div class="logo-container">
             <img src="LOGOMONITO.png" alt="Logo Monito" class="auth-logo">
@@ -87,11 +86,29 @@
     <script>
         // Ajout d'un événement pour le formulaire utilisateur
         const userInfoForm = document.getElementById("user-info-form");
-        userInfoForm.addEventListener("submit", (event) => {
-            event.preventDefault();
-            alert("Vos informations ont été enregistrées avec succès !");
-            // Logique future pour enregistrer les données dans la base de données
-        });
+        if (userInfoForm) {
+            userInfoForm.addEventListener("submit", (event) => {
+                event.preventDefault();
+                alert("Vos informations ont été enregistrées avec succès !");
+                // Logique future pour enregistrer les données dans la base de données
+            });
+        }
+
+        // Ajout des événements pour les boutons des forfaits
+        const freemiumPlanButton = document.querySelector(".freemium-plan .btn");
+        const premiumPlanButton = document.querySelector(".premium-plan .btn");
+
+        if (freemiumPlanButton) {
+            freemiumPlanButton.addEventListener("click", () => {
+                alert("Vous avez sélectionné le forfait Freemium.");
+            });
+        }
+
+        if (premiumPlanButton) {
+            premiumPlanButton.addEventListener("click", () => {
+                alert("Vous avez sélectionné le forfait Premium.");
+            });
+        }
     </script>
 </body>
 </html>
