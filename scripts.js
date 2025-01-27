@@ -7,7 +7,7 @@ const GOOGLE_SEARCH_API_URL = "https://www.googleapis.com/customsearch/v1";
 const MESSAGES = {
     noResults: "Aucun résultat trouvé pour votre recherche.",
     errorFetching: "Une erreur s'est produite lors de la récupération des données.",
-    emptyFilters: "Veuillez sélectionner au moins un filtre ou fournir des critères valides.",
+    emptyFilters: "Veuillez sélectionner un filtre valide.",
     exportNoSelection: "Veuillez sélectionner au moins une entrée pour l'exportation.",
     successSave: "Vos informations ont été enregistrées avec succès.",
     planSelection: "Vous avez sélectionné le forfait : ",
@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (filter) {
                 performGoogleSearch(filter);
             } else {
-                alert("Filtre non valide !");
+                alert(MESSAGES.emptyFilters);
             }
         });
     });
@@ -261,5 +261,5 @@ const cleanText = (text) => {
 };
 
 // Event Listeners
-if (searchButton) searchButton.addEventListener("click", performGoogleSearch);
+if (searchButton) searchButton.addEventListener("click", () => performGoogleSearch(""));
 if (exportXlsButton) exportXlsButton.addEventListener("click", exportToXLS);
