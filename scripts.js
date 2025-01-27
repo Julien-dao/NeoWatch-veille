@@ -22,16 +22,14 @@ const entriesTable = document.getElementById("entries-tbody");
 const exportXlsButton = document.getElementById("export-xls-btn");
 
 // Nouveaux éléments pour la page utilisateur
-const userInfoForm = document.getElementById("user-info-form"); // Formulaire utilisateur
-const freemiumPlanButton = document.querySelector(".freemium-plan .btn"); // Bouton forfait Freemium
-const premiumPlanButton = document.querySelector(".premium-plan .btn"); // Bouton forfait Premium
+const userInfoForm = document.getElementById("user-info-form");
+const freemiumPlanButton = document.querySelector(".freemium-plan .btn");
+const premiumPlanButton = document.querySelector(".premium-plan .btn");
 
 // Gestion du formulaire utilisateur
 if (userInfoForm) {
     userInfoForm.addEventListener("submit", (event) => {
         event.preventDefault();
-
-        // Récupération des données du formulaire
         const formData = new FormData(userInfoForm);
         const userData = {
             firstname: formData.get("firstname"),
@@ -41,10 +39,7 @@ if (userInfoForm) {
             profession: formData.get("profession"),
             company: formData.get("company"),
         };
-
         console.log("Données utilisateur :", userData);
-
-        // Simule un enregistrement des données (API ou base de données plus tard)
         alert(MESSAGES.successSave);
     });
 }
@@ -53,14 +48,12 @@ if (userInfoForm) {
 if (freemiumPlanButton) {
     freemiumPlanButton.addEventListener("click", () => {
         alert(`${MESSAGES.planSelection}Freemium`);
-        console.log("Forfait Freemium sélectionné");
     });
 }
 
 if (premiumPlanButton) {
     premiumPlanButton.addEventListener("click", () => {
         alert(`${MESSAGES.planSelection}Premium`);
-        console.log("Forfait Premium sélectionné");
     });
 }
 
@@ -73,18 +66,16 @@ const registerTab = document.getElementById("register-tab");
 const loginForm = document.getElementById("login-form");
 const registerForm = document.getElementById("register-form");
 
-// Afficher le bon formulaire en fonction de l'URL
 if (section === "register") {
-    registerTab.classList.add("active");
-    registerForm.style.display = "block";
-    loginForm.style.display = "none";
+    registerTab?.classList.add("active");
+    registerForm?.style.display = "block";
+    loginForm?.style.display = "none";
 } else {
-    loginTab.classList.add("active");
-    loginForm.style.display = "block";
-    registerForm.style.display = "none";
+    loginTab?.classList.add("active");
+    loginForm?.style.display = "block";
+    registerForm?.style.display = "none";
 }
 
-// Gestion des clics sur les onglets
 loginTab?.addEventListener("click", () => {
     loginTab.classList.add("active");
     registerTab.classList.remove("active");
@@ -105,19 +96,16 @@ const registerButton = document.getElementById("register-btn");
 
 if (acceptCgvCheckbox && registerButton) {
     acceptCgvCheckbox.addEventListener("change", () => {
-        // Activer ou désactiver le bouton "S'inscrire" en fonction de la case cochée
         registerButton.disabled = !acceptCgvCheckbox.checked;
     });
 }
-
-// Ajout des nouvelles fonctionnalités demandées :
 
 // Gestion de la redirection du bouton "Se connecter"
 const loginSubmitButton = document.querySelector("#login-form .btn.primary");
 if (loginSubmitButton) {
     loginSubmitButton.addEventListener("click", (event) => {
-        event.preventDefault(); // Empêche l'envoi par défaut
-        window.location.href = "dashboard.html"; // Redirige vers le tableau de bord
+        event.preventDefault();
+        window.location.href = "dashboard.html";
     });
 }
 
@@ -125,22 +113,26 @@ if (loginSubmitButton) {
 const registerSubmitButton = document.querySelector("#register-form .btn.primary");
 if (registerSubmitButton) {
     registerSubmitButton.addEventListener("click", (event) => {
-        event.preventDefault(); // Empêche l'envoi par défaut
-        if (acceptCgvCheckbox.checked) {
-            window.location.href = "newusers.html"; // Redirige vers la page nouvel utilisateur
+        event.preventDefault();
+        if (acceptCgvCheckbox?.checked) {
+            window.location.href = "newusers.html";
         } else {
             alert("Veuillez accepter les conditions générales de vente pour continuer.");
         }
     });
 }
 
-// Liaison des cartes filtres à la recherche
+// Liaison des cartes filtres
 document.addEventListener("DOMContentLoaded", () => {
     const filterCards = document.querySelectorAll(".filter-card");
     filterCards.forEach((card) => {
         card.addEventListener("click", () => {
-            const filter = card.dataset.filter; // Récupère le filtre
-            performGoogleSearch(filter); // Appelle la recherche avec le filtre
+            const filter = card.dataset.filter;
+            if (filter) {
+                performGoogleSearch(filter);
+            } else {
+                alert("Filtre non valide !");
+            }
         });
     });
 });
@@ -159,7 +151,6 @@ const performGoogleSearch = async (filter) => {
     };
 
     const query = queries[filter];
-
     if (!query) {
         alert("Filtre inconnu ou non défini.");
         return;
@@ -167,15 +158,11 @@ const performGoogleSearch = async (filter) => {
 
     const apiUrl = `${GOOGLE_SEARCH_API_URL}?q=${encodeURIComponent(query)}&key=${GOOGLE_API_KEY}&cx=${GOOGLE_SEARCH_ENGINE_ID}&lr=lang_fr`;
 
-    console.log("Requête générée :", apiUrl);
-
     try {
         const response = await fetch(apiUrl);
         if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
 
         const data = await response.json();
-        console.log("Réponse API :", data);
-
         if (!data.items || data.items.length === 0) {
             alert(MESSAGES.noResults);
             clearTable();
@@ -243,9 +230,9 @@ const clearTable = () => {
 
 // Export to XLS
 const exportToXLS = () => {
-    const selectedRows = Array.from(
-        document.querySelectorAll(".select-row:checked")
-    ).map((row) => row.closest("tr"));
+    const selectedRows = Array.from(document.querySelectorAll(".select-row:checked")).map((row) =>
+        row.closest("tr")
+    );
 
     if (selectedRows.length === 0) {
         alert(MESSAGES.exportNoSelection);
