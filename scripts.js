@@ -15,90 +15,9 @@ const MESSAGES = {
 
 // DOM Elements
 const filters = document.querySelectorAll(".filters input[type='checkbox']");
-const startDateInput = document.getElementById("start-date");
-const endDateInput = document.getElementById("end-date");
 const searchButton = document.getElementById("search-btn");
 const entriesTable = document.getElementById("entries-tbody");
 const exportXlsButton = document.getElementById("export-xls-btn");
-
-// Nouveaux éléments pour la page utilisateur
-const userInfoForm = document.getElementById("user-info-form");
-const freemiumPlanButton = document.querySelector(".freemium-plan .btn");
-const premiumPlanButton = document.querySelector(".premium-plan .btn");
-
-// Gestion du formulaire utilisateur
-if (userInfoForm) {
-    userInfoForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-        const formData = new FormData(userInfoForm);
-        const userData = {
-            firstname: formData.get("firstname"),
-            lastname: formData.get("lastname"),
-            email: formData.get("email"),
-            phone: formData.get("phone"),
-            profession: formData.get("profession"),
-            company: formData.get("company"),
-        };
-        console.log("Données utilisateur :", userData);
-        alert(MESSAGES.successSave);
-    });
-}
-
-// Gestion des boutons des forfaits
-if (freemiumPlanButton) {
-    freemiumPlanButton.addEventListener("click", () => {
-        alert(`${MESSAGES.planSelection}Freemium`);
-    });
-}
-
-if (premiumPlanButton) {
-    premiumPlanButton.addEventListener("click", () => {
-        alert(`${MESSAGES.planSelection}Premium`);
-    });
-}
-
-// Gérer les paramètres de l'URL pour afficher le bon formulaire
-const params = new URLSearchParams(window.location.search);
-const section = params.get("section");
-
-const loginTab = document.getElementById("login-tab");
-const registerTab = document.getElementById("register-tab");
-const loginForm = document.getElementById("login-form");
-const registerForm = document.getElementById("register-form");
-
-if (section === "register") {
-    registerTab?.classList.add("active");
-    registerForm?.style.display = "block";
-    loginForm?.style.display = "none";
-} else {
-    loginTab?.classList.add("active");
-    loginForm?.style.display = "block";
-    registerForm?.style.display = "none";
-}
-
-loginTab?.addEventListener("click", () => {
-    loginTab.classList.add("active");
-    registerTab.classList.remove("active");
-    loginForm.style.display = "block";
-    registerForm.style.display = "none";
-});
-
-registerTab?.addEventListener("click", () => {
-    registerTab.classList.add("active");
-    loginTab.classList.remove("active");
-    registerForm.style.display = "block";
-    loginForm.style.display = "none";
-});
-
-// Gestion de l'activation du bouton "S'inscrire"
-const acceptCgvCheckbox = document.getElementById("accept-cgv");
-const registerButton = document.getElementById("register-btn");
-
-if (acceptCgvCheckbox && registerButton) {
-    acceptCgvCheckbox.addEventListener("change", () => {
-        registerButton.disabled = !acceptCgvCheckbox.checked;
-    });
-}
 
 // Liaison des cartes filtres
 document.addEventListener("DOMContentLoaded", () => {
@@ -115,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// Perform Google Search avec 20 articles minimum
+// **Perform Google Search avec 20 articles minimum**
 const performGoogleSearch = async (filter) => {
     const queries = {
         legale: "Lois OR réglementation",
@@ -158,10 +77,9 @@ const performGoogleSearch = async (filter) => {
 // Rendre `performGoogleSearch` accessible depuis `dashboard.html`
 window.performGoogleSearch = performGoogleSearch;
 
-// Parse Results
+// **Correction : suppression de la colonne "Date"**
 const parseGoogleSearchResults = (data) => {
     return data.items.map((item) => ({
-        date: item.pagemap?.metatags?.[0]?.["article:published_time"] || "Non disponible",
         source: `<a href="${item.link}" target="_blank">${item.displayLink}</a>`,
         content: item.snippet || "Résumé non disponible",
         action: generateActionList(),
@@ -170,7 +88,7 @@ const parseGoogleSearchResults = (data) => {
     }));
 };
 
-// Generate Actions
+// **Génération des actions**
 const generateActionList = () => `
     <ul class="todo-list">
         <li><input type="checkbox"> Lire</li>
@@ -179,7 +97,7 @@ const generateActionList = () => `
     </ul>
 `;
 
-// Update Table
+// **Correction : suppression de la colonne "Date" dans l'affichage du tableau**
 const appendToTable = (results) => {
     if (!results || results.length === 0) {
         clearTable();
@@ -192,7 +110,6 @@ const appendToTable = (results) => {
             (result) => `
             <tr>
                 <td><input type="checkbox" class="select-row"></td>
-                <td>${result.date}</td>
                 <td>${result.source}</td>
                 <td>${result.content}</td>
                 <td>${result.action}</td>
@@ -204,16 +121,43 @@ const appendToTable = (results) => {
         .join("");
 };
 
-// Clear Table
+// **Efface le tableau si aucune donnée**
 const clearTable = () => {
-    entriesTable.innerHTML = `<tr><td colspan="7">Aucune donnée disponible</td></tr>`;
+    entriesTable.innerHTML = `<tr><td colspan="6">Aucune donnée disponible</td></tr>`;
 };
 
-// Export to XLS
+// **Export to XLS**
 const exportToXLS = () => {
-    alert("Export en XLS non implémenté !");
+    const selectedRows = Array.from(document.querySelectorAll(".select-row:checked")).map((row) =>
+        row.closest("tr")
+    );
+
+    if (selectedRows.length === 0) {
+        alert(MESSAGES.exportNoSelection);
+        return;
+    }
+
+    const rows = selectedRows.map((row) =>
+        Array.from(row.querySelectorAll("td")).map((cell) => cleanText(cell.innerHTML))
+    );
+
+    const worksheet = XLSX.utils.aoa_to_sheet([
+        ["NEOWATCH - Veille : Résultats"],
+        ["Source", "Contenu", "Actions", "Échéance", "Catégorie"],
+        ...rows,
+    ]);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Veille");
+    XLSX.writeFile(workbook, "resultats_veille.xlsx");
 };
 
-// Event Listeners
+// **Nettoie le texte HTML**
+const cleanText = (text) => {
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = text;
+    return tempDiv.textContent || tempDiv.innerText || "";
+};
+
+// **Event Listeners**
 if (searchButton) searchButton.addEventListener("click", () => performGoogleSearch(""));
 if (exportXlsButton) exportXlsButton.addEventListener("click", exportToXLS);
