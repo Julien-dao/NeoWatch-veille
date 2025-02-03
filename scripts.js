@@ -57,71 +57,6 @@ if (premiumPlanButton) {
     });
 }
 
-// Gérer les paramètres de l'URL pour afficher le bon formulaire
-const params = new URLSearchParams(window.location.search);
-const section = params.get("section");
-
-const loginTab = document.getElementById("login-tab");
-const registerTab = document.getElementById("register-tab");
-const loginForm = document.getElementById("login-form");
-const registerForm = document.getElementById("register-form");
-
-if (section === "register") {
-    registerTab?.classList.add("active");
-    registerForm?.style.display = "block";
-    loginForm?.style.display = "none";
-} else {
-    loginTab?.classList.add("active");
-    loginForm?.style.display = "block";
-    registerForm?.style.display = "none";
-}
-
-loginTab?.addEventListener("click", () => {
-    loginTab.classList.add("active");
-    registerTab.classList.remove("active");
-    loginForm.style.display = "block";
-    registerForm.style.display = "none";
-});
-
-registerTab?.addEventListener("click", () => {
-    registerTab.classList.add("active");
-    loginTab.classList.remove("active");
-    registerForm.style.display = "block";
-    loginForm.style.display = "none";
-});
-
-// Gestion de l'activation du bouton "S'inscrire"
-const acceptCgvCheckbox = document.getElementById("accept-cgv");
-const registerButton = document.getElementById("register-btn");
-
-if (acceptCgvCheckbox && registerButton) {
-    acceptCgvCheckbox.addEventListener("change", () => {
-        registerButton.disabled = !acceptCgvCheckbox.checked;
-    });
-}
-
-// Gestion de la redirection du bouton "Se connecter"
-const loginSubmitButton = document.querySelector("#login-form .btn.primary");
-if (loginSubmitButton) {
-    loginSubmitButton.addEventListener("click", (event) => {
-        event.preventDefault();
-        window.location.href = "dashboard.html";
-    });
-}
-
-// Gestion de la redirection du bouton "S'inscrire"
-const registerSubmitButton = document.querySelector("#register-form .btn.primary");
-if (registerSubmitButton) {
-    registerSubmitButton.addEventListener("click", (event) => {
-        event.preventDefault();
-        if (acceptCgvCheckbox?.checked) {
-            window.location.href = "newusers.html";
-        } else {
-            alert("Veuillez accepter les conditions générales de vente pour continuer.");
-        }
-    });
-}
-
 // Liaison des cartes filtres
 document.addEventListener("DOMContentLoaded", () => {
     const filterCards = document.querySelectorAll(".filter-card");
@@ -259,6 +194,9 @@ const cleanText = (text) => {
     tempDiv.innerHTML = text;
     return tempDiv.textContent || tempDiv.innerText || "";
 };
+
+// Rendre performGoogleSearch accessible globalement
+window.performGoogleSearch = performGoogleSearch;
 
 // Event Listeners
 if (searchButton) searchButton.addEventListener("click", () => performGoogleSearch(""));
