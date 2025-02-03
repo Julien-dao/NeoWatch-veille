@@ -21,42 +21,6 @@ const searchButton = document.getElementById("search-btn");
 const entriesTable = document.getElementById("entries-tbody");
 const exportXlsButton = document.getElementById("export-xls-btn");
 
-// Nouveaux éléments pour la page utilisateur
-const userInfoForm = document.getElementById("user-info-form");
-const freemiumPlanButton = document.querySelector(".freemium-plan .btn");
-const premiumPlanButton = document.querySelector(".premium-plan .btn");
-
-// Gestion du formulaire utilisateur
-if (userInfoForm) {
-    userInfoForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-        const formData = new FormData(userInfoForm);
-        const userData = {
-            firstname: formData.get("firstname"),
-            lastname: formData.get("lastname"),
-            email: formData.get("email"),
-            phone: formData.get("phone"),
-            profession: formData.get("profession"),
-            company: formData.get("company"),
-        };
-        console.log("Données utilisateur :", userData);
-        alert(MESSAGES.successSave);
-    });
-}
-
-// Gestion des boutons des forfaits
-if (freemiumPlanButton) {
-    freemiumPlanButton.addEventListener("click", () => {
-        alert(`${MESSAGES.planSelection}Freemium`);
-    });
-}
-
-if (premiumPlanButton) {
-    premiumPlanButton.addEventListener("click", () => {
-        alert(`${MESSAGES.planSelection}Premium`);
-    });
-}
-
 // Liaison des cartes filtres
 document.addEventListener("DOMContentLoaded", () => {
     const filterCards = document.querySelectorAll(".filter-card");
