@@ -9,12 +9,9 @@ const MESSAGES = {
     errorFetching: "Une erreur s'est produite lors de la récupération des données.",
     emptyFilters: "Veuillez sélectionner un filtre valide.",
     exportNoSelection: "Veuillez sélectionner au moins une entrée pour l'exportation.",
-    successSave: "Vos informations ont été enregistrées avec succès.",
-    planSelection: "Vous avez sélectionné le forfait : ",
 };
 
 // DOM Elements
-const filters = document.querySelectorAll(".filters input[type='checkbox']");
 const searchButton = document.getElementById("search-btn");
 const entriesTable = document.getElementById("entries-tbody");
 const exportXlsButton = document.getElementById("export-xls-btn");
@@ -46,7 +43,7 @@ const QUERY_MAP = {
     developpement_durable: "Développement durable OR écologie",
 };
 
-// Recherche Google
+// 🔍 **Requête de recherche Google**
 const performGoogleSearch = async (filter) => {
     if (!QUERY_MAP[filter]) {
         alert("Filtre inconnu ou non défini.");
@@ -55,7 +52,7 @@ const performGoogleSearch = async (filter) => {
 
     const query = QUERY_MAP[filter];
 
-    // 🔥 Correction : Encodage et construction propre de l'URL API 🔥
+    // 🔥 Correction : Encodage de l'URL et ajout du paramètre `num=20` pour récupérer 20 articles
     const params = new URLSearchParams({
         q: query,
         key: GOOGLE_API_KEY,
@@ -70,7 +67,9 @@ const performGoogleSearch = async (filter) => {
 
     try {
         const response = await fetch(apiUrl);
-        if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
+        if (!response.ok) {
+            throw new Error(`Erreur HTTP : ${response.status} - ${response.statusText}`);
+        }
 
         const data = await response.json();
         console.log("✅ Réponse API :", data);
@@ -88,10 +87,10 @@ const performGoogleSearch = async (filter) => {
     }
 };
 
-// Rendre `performGoogleSearch` accessible dans `dashboard.html`
+// Rendre `performGoogleSearch` accessible depuis `dashboard.html`
 window.performGoogleSearch = performGoogleSearch;
 
-// Analyser les résultats Google
+// 🔄 **Analyser les résultats Google**
 const parseGoogleSearchResults = (data) => {
     return data.items.map((item) => ({
         source: `<a href="${item.link}" target="_blank">${item.displayLink}</a>`,
@@ -102,7 +101,7 @@ const parseGoogleSearchResults = (data) => {
     }));
 };
 
-// Générer la liste des actions
+// ✅ **Générer la liste des actions**
 const generateActionList = () => `
     <ul class="todo-list">
         <li><input type="checkbox"> Lire</li>
@@ -111,7 +110,7 @@ const generateActionList = () => `
     </ul>
 `;
 
-// Mettre à jour le tableau
+// 📊 **Mettre à jour le tableau avec les résultats**
 const appendToTable = (results) => {
     if (!results || results.length === 0) {
         clearTable();
@@ -133,16 +132,16 @@ const appendToTable = (results) => {
         .join("");
 };
 
-// Nettoyer le tableau
+// 🗑️ **Nettoyer le tableau**
 const clearTable = () => {
     entriesTable.innerHTML = `<tr><td colspan="6">Aucune donnée disponible</td></tr>`;
 };
 
-// Exporter en XLS
+// 📥 **Exporter en XLS**
 const exportToXLS = () => {
     alert("Export en XLS non implémenté !");
 };
 
-// Ajouter les événements
-if (searchButton) searchButton.addEventListener("click", () => performGoogleSearch(""));
+// 🎯 **Ajouter les événements**
+if (searchButton) searchButton.addEventListener("click", () => performGoogleSearch("legale"));  
 if (exportXlsButton) exportXlsButton.addEventListener("click", exportToXLS);
