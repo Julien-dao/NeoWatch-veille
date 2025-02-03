@@ -100,28 +100,6 @@ if (acceptCgvCheckbox && registerButton) {
     });
 }
 
-// Gestion de la redirection du bouton "Se connecter"
-const loginSubmitButton = document.querySelector("#login-form .btn.primary");
-if (loginSubmitButton) {
-    loginSubmitButton.addEventListener("click", (event) => {
-        event.preventDefault();
-        window.location.href = "dashboard.html";
-    });
-}
-
-// Gestion de la redirection du bouton "S'inscrire"
-const registerSubmitButton = document.querySelector("#register-form .btn.primary");
-if (registerSubmitButton) {
-    registerSubmitButton.addEventListener("click", (event) => {
-        event.preventDefault();
-        if (acceptCgvCheckbox?.checked) {
-            window.location.href = "newusers.html";
-        } else {
-            alert("Veuillez accepter les conditions générales de vente pour continuer.");
-        }
-    });
-}
-
 // Liaison des cartes filtres
 document.addEventListener("DOMContentLoaded", () => {
     const filterCards = document.querySelectorAll(".filter-card");
@@ -137,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// Perform Google Search
+// Perform Google Search avec 20 articles minimum
 const performGoogleSearch = async (filter) => {
     const queries = {
         legale: "Lois OR réglementation",
@@ -156,7 +134,7 @@ const performGoogleSearch = async (filter) => {
         return;
     }
 
-    const apiUrl = `${GOOGLE_SEARCH_API_URL}?q=${encodeURIComponent(query)}&key=${GOOGLE_API_KEY}&cx=${GOOGLE_SEARCH_ENGINE_ID}&lr=lang_fr`;
+    const apiUrl = `${GOOGLE_SEARCH_API_URL}?q=${encodeURIComponent(query)}&key=${GOOGLE_API_KEY}&cx=${GOOGLE_SEARCH_ENGINE_ID}&lr=lang_fr&num=20`;
 
     try {
         const response = await fetch(apiUrl);
@@ -192,13 +170,6 @@ const parseGoogleSearchResults = (data) => {
     }));
 };
 
-// Clean Text
-const cleanText = (text) => {
-    const tempDiv = document.createElement("div");
-    tempDiv.innerHTML = text;
-    return tempDiv.textContent || tempDiv.innerText || "";
-};
-
 // Generate Actions
 const generateActionList = () => `
     <ul class="todo-list">
@@ -208,11 +179,41 @@ const generateActionList = () => `
     </ul>
 `;
 
+// Update Table
+const appendToTable = (results) => {
+    if (!results || results.length === 0) {
+        clearTable();
+        alert(MESSAGES.noResults);
+        return;
+    }
+
+    entriesTable.innerHTML = results
+        .map(
+            (result) => `
+            <tr>
+                <td><input type="checkbox" class="select-row"></td>
+                <td>${result.date}</td>
+                <td>${result.source}</td>
+                <td>${result.content}</td>
+                <td>${result.action}</td>
+                <td>${result.deadline}</td>
+                <td>${result.category}</td>
+            </tr>
+        `
+        )
+        .join("");
+};
+
+// Clear Table
+const clearTable = () => {
+    entriesTable.innerHTML = `<tr><td colspan="7">Aucune donnée disponible</td></tr>`;
+};
+
 // Export to XLS
 const exportToXLS = () => {
     alert("Export en XLS non implémenté !");
 };
 
 // Event Listeners
-if (searchButton) searchButton.addEventListener("click", () => performGoogleSearch(""));  
+if (searchButton) searchButton.addEventListener("click", () => performGoogleSearch(""));
 if (exportXlsButton) exportXlsButton.addEventListener("click", exportToXLS);
